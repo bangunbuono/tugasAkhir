@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    tools:context="com.example.fixinventori.Activity.Report.StatFrag">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/filter_background"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <Spinner
+            android:paddingLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerStatFilter"/>
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerStatFilter2"/>
+    </LinearLayout>
+
+    <RadioGroup
+        android:layout_margin="10dp"
+        android:id="@+id/radioGroupFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <RadioButton
+            android:id="@+id/radioBahanKeluar"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/usageauto_selector"
+            android:button="@drawable/null_usage_button"
+            android:textColor="@drawable/usage_text_selector"
+            android:text="Bahan keluar"
+            android:gravity="center"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/radioBahanMasuk"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/usagemanual_selector"
+            android:textColor="@drawable/usage_text_selector"
+            android:gravity="center"
+            android:text="Bahan masuk"
+            android:button="@drawable/null_usage_button"/>
+
+    </RadioGroup>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:id="@+id/barChartStat" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:id="@+id/lineChartStat"
+        android:visibility="gone"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroupTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioTimeWeek"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="1 minggu"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:button="@drawable/null_usage_button"
+            android:textColor="@drawable/stat_text_time_selector"/>
+
+        <RadioButton
+            android:id="@+id/radioTimeMonth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1 bulan"
+            android:textStyle="bold"
+            android:button="@drawable/null_usage_button"
+            android:gravity="center_horizontal"
+            android:textColor="@drawable/stat_text_time_selector"/>
+
+        <RadioButton
+            android:id="@+id/radioTimeYear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="1 tahun"
+            android:gravity="center_horizontal"
+            android:button="@drawable/null_usage_button"
+            android:textColor="@drawable/stat_text_time_selector"/>
+
+    </RadioGroup>
+
+
+</LinearLayout>

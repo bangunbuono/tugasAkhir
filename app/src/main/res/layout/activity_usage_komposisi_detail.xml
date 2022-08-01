@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    tools:context="com.example.fixinventori.Activity.Usage.UsageKomposisiDetail">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:textStyle="bold"
+        android:fontFamily="serif"
+        android:text="Pesanan No. "
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="19sp"
+        android:id="@+id/tvOrderDetail"
+        />
+
+    <ListView
+        android:id="@+id/lvOrderDetail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancelOrder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:text="Batalkan"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="6dp"
+            app:cornerRadius="25dp" />
+
+        <Button
+            android:id="@+id/btnConfirmOrder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:text="Konfirmasi"
+
+            android:textAllCaps="false"
+            app:cornerRadius="25dp" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    tools:context="com.example.fixinventori.Activity.Report.ReportDetail">
+
+    <TextView
+        android:id="@+id/tvReportDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_margin="5dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/tvRecordDateDetail"
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="Bahan"
+
+            android:textSize="17sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Jumlah"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Satuan"
+            android:textSize="17sp"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvRecordDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:layout_marginTop="20dp"
+        android:id="@+id/barChart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+</LinearLayout>

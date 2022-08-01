@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    tools:context="com.example.fixinventori.Activity.User.ManagerLoginActivity">
+
+    <TextView
+        android:id="@+id/tvInventori"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:fontFamily="serif"
+        android:gravity="center_horizontal"
+        android:text="Inventori"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Manajer"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:id="@+id/tvManager"
+        android:layout_below="@id/tvInventori"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/llUserLoginField"
+        android:layout_below="@+id/tvManager">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            app:cardCornerRadius="15dp"
+            android:backgroundTint="#eaeaea">
+
+            <EditText
+                android:id="@+id/etManagerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:textColor="@color/black"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:drawableStart="@drawable/ic_baseline_person_24"
+                android:drawablePadding="10dp"
+                android:textSize="20sp"/>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="15dp"
+            android:backgroundTint="#eaeaea">
+
+            <EditText
+                android:id="@+id/etManagerPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:drawableStart="@drawable/ic_baseline_lock_24"
+                android:drawablePadding="10dp"
+                android:textSize="20sp"/>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <Button
+            android:id="@+id/btnLoginManager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cornerRadius="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Masuk"
+            android:textSize="16sp"
+            android:padding="14dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@id/llUserLoginField"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Belum punya akun manager?"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textAlignment="textEnd"
+            android:fontFamily="serif"/>
+        <TextView
+            android:id="@+id/tvManagerDaftar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daftar."
+            android:paddingLeft="5dp"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:fontFamily="serif"
+            android:clickable="true"
+            android:textColor="#242DCA"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Masuk sebagai user"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:padding="10sp"
+        android:textSize="15sp"
+        android:id="@+id/tvUserLogin"/>
+</RelativeLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Riwayat"
+        android:icon="@drawable/history_nav_selector"
+        android:id="@+id/historyNav"/>
+
+    <item
+        android:id="@+id/statNav"
+        android:icon="@drawable/stat_nav_selector"
+        android:title="Statistik"/>
+
+</menu>
