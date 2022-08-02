@@ -37,6 +37,7 @@ public class ManagerMainActivity extends AppCompatActivity {
         userSession = new UserSession(this);
         if(!userSession.isLoggedIn()) moveToLogin();
         else manager=userSession.getManagerDetail().get("manager");
+        System.out.println(manager);
 
         flManagerMainLayout = findViewById(R.id.flManagerMainLayout);
         bottomNavigationView = findViewById(R.id.navView);
@@ -83,6 +84,8 @@ public class ManagerMainActivity extends AppCompatActivity {
                 .document(userSession.getString(Constants.KEY_MANAGER_ID));
 
         documentReference.update(Constants.KEY_FCM_TOKEN, token)
+                .addOnSuccessListener(documentReference1 ->
+                        Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(
                         this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }

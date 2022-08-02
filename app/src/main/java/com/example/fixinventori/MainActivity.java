@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
                         .document(userSession.getString(Constants.KEY_USER_ID));
 
         documentReference.update(Constants.KEY_FCM_TOKEN, token)
+                .addOnSuccessListener(documentReference1 ->
+                        Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(
                         this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }

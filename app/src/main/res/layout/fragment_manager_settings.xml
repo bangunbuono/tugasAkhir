@@ -1,22 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".BottomNavBar.ManagerSettingsFragment">
 
-
-    <TextView
-        android:id="@+id/tvLogOut"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Keluar akun"
-        android:clickable="true"
-        android:textStyle="bold"
-        android:fontFamily="serif"
-        android:textSize="18sp"
-        android:layout_margin="10dp"
-        android:drawablePadding="10dp"
-        android:drawableStart="@drawable/ic_baseline_power_settings_new_24"/>
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/secondary_text">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:id="@+id/rivUserProfile"
+                    android:clickable="true"
+                    android:src="@drawable/ic_baseline_account_circle_24"
+                    />
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:textSize="@dimen/_18ssp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/secondary_text">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvUserConnect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sambungkan ke user"
+                    android:clickable="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_16ssp"
+                    android:padding="@dimen/_10sdp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_outline_fiber_smart_record_24"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/black"/>
+
+                <TextView
+                    android:id="@+id/tvInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Info"
+                    android:clickable="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_16ssp"
+                    android:padding="@dimen/_10sdp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_outline_info_24"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/black"/>
+
+                <TextView
+                    android:id="@+id/tvBantuan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bantuan"
+                    android:clickable="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_16ssp"
+                    android:padding="@dimen/_10sdp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_outline_help_outline_24"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/black"/>
+
+                <TextView
+                    android:id="@+id/tvLogOut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Keluar akun"
+                    android:clickable="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_16ssp"
+                    android:padding="@dimen/_10sdp"
+                    android:drawablePadding="10dp"
+
+                    android:drawableStart="@drawable/ic_baseline_power_settings_new_24"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
+</ScrollView>

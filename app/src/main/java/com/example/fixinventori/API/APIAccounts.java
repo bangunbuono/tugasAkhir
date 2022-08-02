@@ -16,7 +16,6 @@ public interface APIAccounts {
             @Field("password") String password
     );
 
-
     @FormUrlEncoded
     @POST("register.php")
     Call<ResponseModel> register(
@@ -28,6 +27,13 @@ public interface APIAccounts {
     @POST("deleteUser.php")
     Call<ResponseModel> deleteUser(
             @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("generateToken.php")
+    Call<ResponseModel> generateToken(
+        @Field("username") String user,
+        @Field("token") int token
     );
 
 
@@ -51,4 +57,28 @@ public interface APIAccounts {
             @Field("manager_name") String username,
             @Field("password") String password
     );
+
+    //connection
+
+    @FormUrlEncoded
+    @POST("connectUser.php")
+    Call<ResponseModel> connectUser(
+            @Field("username") String user,
+            @Field("token") int token,
+            @Field("manager_name") String username
+    );
+
+    @FormUrlEncoded
+    @POST("getManager.php")
+    Call<ResponseModel> getManager(
+            @Field("username") String user
+    );
+
+    @FormUrlEncoded
+    @POST("getUser.php")
+    Call<ResponseModel> getUser(
+            @Field("manager_name") String manager
+    );
+
+
 }

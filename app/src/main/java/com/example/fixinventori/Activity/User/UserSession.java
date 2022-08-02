@@ -59,6 +59,8 @@ public class UserSession {
 
     public void logOutSession(){
         editor.clear();
+        editor.apply();
         editor.commit();
+
     }
 }

@@ -1,5 +1,7 @@
 package com.example.fixinventori.model;
 
+import com.example.fixinventori.Chat.Model.ManagerModel;
+import com.example.fixinventori.Chat.Model.UserModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -17,6 +19,11 @@ public class ResponseModel {
     private List<RecordModel> date;
     private List<StatModel> statmodel;
     private List<StatModel> statSatuan;
+    private List<ManagerModel> recordManager;
+
+    public List<ManagerModel> getRecordManager() {
+        return recordManager;
+    }
 
     public List<StatModel> getStatBahan() {
         return statBahan;
