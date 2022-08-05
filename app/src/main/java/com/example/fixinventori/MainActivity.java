@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(
                         this, e.getMessage(), Toast.LENGTH_SHORT).show());
+        userSession.putString(Constants.KEY_FCM_TOKEN, token);
+        System.out.println("main " + token);
     }
 
 

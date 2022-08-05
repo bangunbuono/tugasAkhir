@@ -331,53 +331,51 @@ public class StatFrag extends Fragment {
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 if (response.body() != null) {
                     list = response.body().getStatSatuan();
-                }
-                if(list!=null) {
-                    barEntries = new ArrayList<>();
-                    xValue = new ArrayList<>();
-                    int index = 0;
-                    for (StatModel model: list) {
-                        barEntries.add(new BarEntry(index++, model.getJumlah()));
-                    }
-                    for (StatModel a: list) {
-                        xValue.add(a.getBahan());
-                    }
-                    barDataSet = new BarDataSet(barEntries, list.get(0).getSatuan());
-                    barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                    barDataSet.setValueTextSize(15f);
-                    BarData barData = new BarData(barDataSet);
-                    barData.setDrawValues(true);
-                    Legend legend = barChartStat.getLegend();
-                    legend.setTextSize(13f);
-                    barData.setBarWidth(0.5f);
-                    XAxis xAxis = barChartStat.getXAxis();
-                    xAxis.setTextSize(15f);
-                    xAxis.setGranularityEnabled(true);
-                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    xAxis.setDrawGridLines(false);
-                    xAxis.setValueFormatter(new IAxisValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value, AxisBase axis) {
+                    if(list!=null) {
+                        barEntries = new ArrayList<>();
+                        xValue = new ArrayList<>();
+                        int index = 0;
+                        for (StatModel model: list) {
+                            barEntries.add(new BarEntry(index++, model.getJumlah()));
+                        }
+                        for (StatModel a: list) {
+                            xValue.add(a.getBahan());
+                        }
+                        barDataSet = new BarDataSet(barEntries, list.get(0).getSatuan());
+                        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+                        barDataSet.setValueTextSize(15f);
+                        BarData barData = new BarData(barDataSet);
+                        barData.setDrawValues(true);
+                        Legend legend = barChartStat.getLegend();
+                        legend.setTextSize(13f);
+                        barData.setBarWidth(0.5f);
+                        XAxis xAxis = barChartStat.getXAxis();
+                        xAxis.setTextSize(15f);
+                        xAxis.setGranularityEnabled(true);
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        xAxis.setDrawGridLines(false);
+                        xAxis.setValueFormatter((value, axis) -> {
                             try {
-                                int index = (int) value;
-                                return xValue.get((index));
+                                int index1 = (int) value;
+                                return xValue.get((index1));
                             }catch (Exception e){
                                 return "";
                             }
-                        }
-                    });
+                        });
 
-                    barChartStat.setVisibility(View.VISIBLE);
-                    barChartStat.getAxisLeft().setDrawGridLines(false);
-                    barChartStat.getAxisRight().setDrawLabels(false);
-                    barChartStat.setData(barData);
+                        barChartStat.setVisibility(View.VISIBLE);
+                        barChartStat.getAxisLeft().setDrawGridLines(false);
+                        barChartStat.getAxisRight().setDrawLabels(false);
+                        barChartStat.setData(barData);
 
-                    barChartStat.animateY(1000);
-                    barChartStat.getDescription().setText("bahan");
-                    barChartStat.getDescription().setTextColor(Color.RED);
-                }else {
-                    barChartStat.clear();
+                        barChartStat.animateY(1000);
+                        barChartStat.getDescription().setText("bahan");
+                        barChartStat.getDescription().setTextColor(Color.RED);
+                    }else {
+                        barChartStat.clear();
+                    }
                 }
+
             }
 
             @Override
@@ -419,15 +417,12 @@ public class StatFrag extends Fragment {
                     xAxis.setGranularityEnabled(true);
                     xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                     xAxis.setDrawGridLines(false);
-                    xAxis.setValueFormatter(new IAxisValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value, AxisBase axis) {
-                            try {
-                                int index = (int) value;
-                                return xValue.get((index));
-                            }catch (Exception e){
-                                return "";
-                            }
+                    xAxis.setValueFormatter((value, axis) -> {
+                        try {
+                            int index1 = (int) value;
+                            return xValue.get((index1));
+                        }catch (Exception e){
+                            return "";
                         }
                     });
 
@@ -479,15 +474,12 @@ public class StatFrag extends Fragment {
                     xAxis.setGranularityEnabled(true);
                     xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                     xAxis.setDrawGridLines(false);
-                    xAxis.setValueFormatter(new IAxisValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value, AxisBase axis) {
-                            try {
-                                int index = (int) value;
-                                return xValue.get((index));
-                            }catch (Exception e){
-                                return "";
-                            }
+                    xAxis.setValueFormatter((value, axis) -> {
+                        try {
+                            int index1 = (int) value;
+                            return xValue.get((index1));
+                        }catch (Exception e){
+                            return "";
                         }
                     });
                     lineChartSat.setVisibility(View.VISIBLE);
@@ -541,15 +533,12 @@ public class StatFrag extends Fragment {
                     xAxis.setGranularityEnabled(true);
                     xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                     xAxis.setDrawGridLines(false);
-                    xAxis.setValueFormatter(new IAxisValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value, AxisBase axis) {
-                            try {
-                                int index = (int) value;
-                                return xValue.get((index));
-                            }catch (Exception e){
-                                return "";
-                            }
+                    xAxis.setValueFormatter((value, axis) -> {
+                        try {
+                            int index1 = (int) value;
+                            return xValue.get((index1));
+                        }catch (Exception e){
+                            return "";
                         }
                     });
                     barChartStat.setVisibility(View.VISIBLE);
@@ -601,15 +590,12 @@ public class StatFrag extends Fragment {
                     xAxis.setGranularityEnabled(true);
                     xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                     xAxis.setDrawGridLines(false);
-                    xAxis.setValueFormatter(new IAxisValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value, AxisBase axis) {
-                            try {
-                                int index = (int) value;
-                                return xValue.get((index));
-                            }catch (Exception e){
-                                return "";
-                            }
+                    xAxis.setValueFormatter((value, axis) -> {
+                        try {
+                            int index1 = (int) value;
+                            return xValue.get((index1));
+                        }catch (Exception e){
+                            return "";
                         }
                     });
                     lineChartSat.setVisibility(View.VISIBLE);

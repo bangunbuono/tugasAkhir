@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.fixinventori.Activity.User.UserSession;
-import com.example.fixinventori.Chat.Adapter.ConversationList;
+import com.example.fixinventori.Chat.Adapter.ConversationListAdapter;
 import com.example.fixinventori.Chat.Model.ChatMessageModel;
-import com.example.fixinventori.Chat.UserActivity;
+import com.example.fixinventori.Chat.Activity.UserActivity;
 import com.example.fixinventori.Chat.utils.Constants;
 import com.example.fixinventori.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,16 +24,18 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class chattFragment extends Fragment {
+public class chattFragment extends Fragment  {
 
     RecyclerView rvRecentConversation;
     FloatingActionButton fabNewChat;
     UserSession session;
-    List<ChatMessageModel> conversations;
-    ConversationList adapter;
+    List<ChatMessageModel> conversations = new ArrayList<>();
+    ConversationListAdapter adapter;
     FirebaseFirestore database;
+    ProgressBar progressBar;
 
     public chattFragment() {
         // Required empty public constructor
@@ -42,6 +46,7 @@ public class chattFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         session = new UserSession(getActivity());
+        database = FirebaseFirestore.getInstance();
 
     }
 
@@ -50,6 +55,8 @@ public class chattFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chatt, container, false);
+
+        progressBar = view.findViewById(R.id.progressRegist);
         rvRecentConversation = view.findViewById(R.id.rvRecentConversation);
         fabNewChat = view.findViewById(R.id.fabNewChat);
 
@@ -57,6 +64,7 @@ public class chattFragment extends Fragment {
                 new Intent(getActivity(), UserActivity.class)
         ));
 
+        listenConversations();
         return view;
     }
 
@@ -71,7 +79,8 @@ public class chattFragment extends Fragment {
     }
 
     private final EventListener<QuerySnapshot> eventListener = ((value, error) -> {
-        if(error!=null) return;
+        loading(true);
+        if(error!=null) Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
         else if(value!=null){
             for (DocumentChange documentChange: value.getDocumentChanges()){
                 if(documentChange.getType() == DocumentChange.Type.ADDED){
@@ -81,11 +90,11 @@ public class chattFragment extends Fragment {
                     chatMessageModel.senderId = senderId;
                     chatMessageModel.receiverId = receiverId;
                     if(session.getString(Constants.KEY_USER_ID).equals(senderId)){
-                        chatMessageModel.conversionImage = documentChange.getDocument().getString(Constants.KEY_RECEIVER_IMAGE);
+//                        chatMessageModel.conversionImage = documentChange.getDocument().getString(Constants.KEY_RECEIVER_IMAGE);
                         chatMessageModel.conversionName = documentChange.getDocument().getString(Constants.KEY_RECEIVER_NAME);
                         chatMessageModel.conversionId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
                     }else {
-                        chatMessageModel.conversionImage = documentChange.getDocument().getString(Constants.KEY_SENDER_IMAGE);
+//                        chatMessageModel.conversionImage = documentChange.getDocument().getString(Constants.KEY_SENDER_IMAGE);
                         chatMessageModel.conversionName = documentChange.getDocument().getString(Constants.KEY_SENDER_NAME);
                         chatMessageModel.conversionId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
                     }
@@ -105,14 +114,21 @@ public class chattFragment extends Fragment {
                     }
                 }
             }
+            loading(false);
             conversations.sort((obj1, obj2) -> obj2.dateObject.compareTo(obj1.dateObject));
-            adapter.notifyDataSetChanged();
+            adapter = new ConversationListAdapter(getActivity(), conversations);
+            rvRecentConversation.setAdapter(adapter);
             rvRecentConversation.smoothScrollToPosition(0);
             rvRecentConversation.setVisibility(View.VISIBLE);
+            adapter.notifyDataSetChanged();
         }
     });
 
-    private void getContact(){
-
+    private void loading(Boolean isLoading){
+        if (isLoading) {
+            progressBar.setVisibility(View.VISIBLE);
+        }else {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 }

@@ -14,6 +14,7 @@ public class Constants {
     public static final String KEY_MANAGER_ID= "managerId";
     public static final String KEY_IMAGE= "image";
     public static final String KEY_FCM_TOKEN= "fcmToken";
+    public static final String KEY_FCM_TOKEN_MANAGER= "fcmToken";
     public static final String KEY_USER= "user";
     public static final String KEY_MANAGER= "manager";
     public static final String KEY_COLLECTION_CHAT= "chat";
@@ -37,7 +38,8 @@ public class Constants {
     public static HashMap<String, String > getRemoteMsgHeaders(){
         if(remoteMsgHeaders==null){
             remoteMsgHeaders = new HashMap<>();
-            remoteMsgHeaders.put(REMOTE_MESSAGE_AUTHORIZATION, "");
+            remoteMsgHeaders.put(REMOTE_MESSAGE_AUTHORIZATION,
+                    "key=AAAABZTXZtE:APA91bEEgHDX03ifaVg2BVvo5et-1WY6Bh0x37qM7ZgG6Q5QmN5xQYrUixb-pYBuHDBFPwWyVlqN6nGD6A6bInX4k7w06US5uK7bqMUaEx9G5xGrrp46Ivh-QUOd249bV6hoE6lluDmQ");
         }
         remoteMsgHeaders.put(REMOTE_MESSAGE_CONTENT_TYPE, "application/json");
         return remoteMsgHeaders;

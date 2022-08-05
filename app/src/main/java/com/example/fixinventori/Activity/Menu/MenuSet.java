@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fixinventori.API.APIRequestMenu;
@@ -68,24 +69,23 @@ public class MenuSet extends AppCompatActivity {
 
         showData.enqueue(new Callback<ResponseModel>() {
             @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                int code = response.body().getCode();
-                String pesan = response.body().getPesan();
+            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+                if(response.body()!=null){
+                    int code = response.body().getCode();
+                    String pesan = response.body().getPesan();
 
-                listMenu = response.body().getData();
-                if (listMenu != null){
-                    adapter = new AdapterMenuSet(MenuSet.this, listMenu);
-                    lvMenu.setAdapter(adapter);
-                    Toast.makeText(MenuSet.this,
-                            "success: " +"(" +code+ ")" +" "+ pesan, Toast.LENGTH_SHORT).show();
+                    listMenu = response.body().getData();
+                    if (listMenu != null){
+                        adapter = new AdapterMenuSet(MenuSet.this, listMenu);
+                        lvMenu.setAdapter(adapter);
+                    }
                 }
 
             }
 
             @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
                 Toast.makeText(MenuSet.this, "error:" +t.getMessage(), Toast.LENGTH_SHORT).show();
-                System.out.println(t.getMessage());
             }
         });
     }

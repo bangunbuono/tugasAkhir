@@ -11,7 +11,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/chat.xml" value="0.1345" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_add_menu.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_add_stock.xml" value="0.225" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_chat.xml" value="0.14210526315789473" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_chat.xml" value="0.21" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_invent_forecast.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_invent_report.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_invent_restock.xml" value="0.225" />
@@ -23,7 +23,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_login.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_main.xml" value="0.2109375" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_manager.xml" value="0.14210526315789473" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_manager_chat.xml" value="0.14210526315789473" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_manager_chat.xml" value="0.18701298701298702" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_manager_login.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_manager_main.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_manager_register.xml" value="0.225" />

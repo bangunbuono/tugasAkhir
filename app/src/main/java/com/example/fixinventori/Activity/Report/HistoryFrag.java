@@ -149,16 +149,17 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
         month.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                monthList = response.body().getBulan();
-                adapter = new AdapterMonth(getActivity(), monthList, HistoryFrag.this);
-                if(monthList!= null){
-                    new Handler().postDelayed(()->{
-                        rvMonth.setAdapter(adapter);
-//                        new Handler().postDelayed(()->
-                    },200);
-                    dateRecordInitiate();
-                    //                    layoutManager = new GridLayoutManager(getActivity(),1,RecyclerView.HORIZONTAL,false);
+                if (response.body() != null) {
+                    monthList = response.body().getBulan();
+                    adapter = new AdapterMonth(getActivity(), monthList, HistoryFrag.this);
+                    if(monthList!= null){
+                        new Handler().postDelayed(()->{
+                            rvMonth.setAdapter(adapter);
+    //                        new Handler().postDelayed(()->
+                        },200);
+                        dateRecordInitiate();
+                        //                    layoutManager = new GridLayoutManager(getActivity(),1,RecyclerView.HORIZONTAL,false);
+                    }
                 }
             }
 
@@ -177,15 +178,16 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
         recordData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                dateRecord = response.body().getDate();
-                adapterDate = new AdapterDate(getActivity(), dateRecord);
-                if(dateRecord!=null){
-                    dateListLayoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
-                    rvDateList.setLayoutManager(dateListLayoutManager);
-                    rvDateList.setAdapter(adapterDate);
-                }
+                if(response.body() != null){
+                    dateRecord = response.body().getDate();
+                    adapterDate = new AdapterDate(getActivity(), dateRecord);
+                    if(dateRecord!=null){
+                        dateListLayoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
+                        rvDateList.setLayoutManager(dateListLayoutManager);
+                        rvDateList.setAdapter(adapterDate);
+                    }
 
+                }
             }
 
             @Override

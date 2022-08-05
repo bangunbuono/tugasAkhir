@@ -72,7 +72,8 @@ public class InventorySet extends AppCompatActivity{
 
         showData.enqueue(new Callback<ResponseModel>() {
             @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+                if(response.body()!= null)
                 stocksModelList = response.body().getStocksModels();
                 if(stocksModelList != null){
                     adapterStocks = new AdapterStocks(InventorySet.this, stocksModelList);
@@ -81,7 +82,7 @@ public class InventorySet extends AppCompatActivity{
             }
 
             @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
                 Toast.makeText(InventorySet.this, "Gagal memuat stock: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

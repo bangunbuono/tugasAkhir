@@ -1,4 +1,4 @@
-package com.example.fixinventori.Chat;
+package com.example.fixinventori.Chat.Activity;
 
 import android.os.Bundle;
 
@@ -13,12 +13,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class BaseActivity extends AppCompatActivity {
 
     DocumentReference documentReference;
+    UserSession session;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UserSession session = new UserSession(this);
+        session = new UserSession(this);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         if(session.getString(Constants.KEY_USER_ID)!=null)
         documentReference = database.collection(Constants.KEY_COLLECTION_USERS)
@@ -35,8 +36,23 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        documentReference.update(Constants.KEY_AVAILABILITY, 0);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        documentReference.update(Constants.KEY_AVAILABILITY, 0);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         documentReference.update(Constants.KEY_AVAILABILITY, 1);
+        if(session.getString(Constants.KEY_USER_ID)!=null)
+            System.out.println("base adapter" + session.getString(Constants.KEY_USER_ID) );
+        else  System.out.println("base adapter" + session.getString(Constants.KEY_MANAGER_ID));
     }
 }

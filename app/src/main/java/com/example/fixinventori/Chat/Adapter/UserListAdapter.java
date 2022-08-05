@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fixinventori.Chat.ChatActivity;
+import com.example.fixinventori.Chat.Activity.ChatActivity;
 import com.example.fixinventori.Chat.Model.ManagerModel;
 import com.example.fixinventori.Chat.utils.Constants;
 import com.example.fixinventori.R;

@@ -6,19 +6,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
     tools:context=".BottomNavBar.chattFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
+    
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rvRecentConversation"
-        android:padding="@dimen/_20sdp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:visibility="gone"
-        android:clipToPadding="false"
-        android:orientation="vertical"
-        android:overScrollMode="never"
-        tools:listitem="@layout/user_conversation_row"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rvRecentConversation"
+            android:padding="@dimen/_20sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:visibility="gone"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            tools:listitem="@layout/user_conversation_row"
+            />
+
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progressRegist"
+        android:layout_centerInParent="true"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
         />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabNewChat"
