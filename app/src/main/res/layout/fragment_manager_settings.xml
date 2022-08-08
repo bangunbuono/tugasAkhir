@@ -81,6 +81,23 @@
                     android:background="@color/black"/>
 
                 <TextView
+                    android:id="@+id/tvUserManager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pengaturan user"
+                    android:clickable="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_16ssp"
+                    android:padding="@dimen/_10sdp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_outline_fiber_smart_record_24"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/black"/>
+
+                <TextView
                     android:id="@+id/tvInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

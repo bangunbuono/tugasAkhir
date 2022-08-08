@@ -23,6 +23,7 @@ import com.example.fixinventori.model.StocksModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,7 +53,7 @@ public class InventorySet extends AppCompatActivity{
                     }
                 });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         lvStocks = findViewById(R.id.lvStocks);
         tvAddStock = findViewById(R.id.tvAddStock);

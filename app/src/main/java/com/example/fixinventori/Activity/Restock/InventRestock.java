@@ -31,6 +31,7 @@ import com.example.fixinventori.model.RestockModel;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,7 +67,7 @@ public class InventRestock extends AppCompatActivity {
         userSession = new UserSession(getApplicationContext());
         user = userSession.getUserDetail().get("username");
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         spinRestock = findViewById(R.id.spinRestock);
         tvRestockSatuan = findViewById(R.id.tvRestockSatuan);
         btnCollectRestock = findViewById(R.id.btnCollect);
@@ -171,7 +172,7 @@ public class InventRestock extends AppCompatActivity {
         if(listRestock!=null){
             if(listRestock.size()!=0){
                 layoutRestock.setVisibility(View.VISIBLE);
-                tvTotal.setText("Total " + listRestock.size() + " item");
+                tvTotal.setText(String.format("Total %s item", listRestock.size()));
             }else {
                 layoutRestock.setVisibility(View.GONE);
             }
@@ -185,14 +186,15 @@ public class InventRestock extends AppCompatActivity {
         getData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                restockList = response.body().getStocks();
-                adapterRestock = new AdapterSpinnerRestock(InventRestock.this, restockList);
-                spinRestock.setAdapter(adapterRestock);
+                if (response.body() != null) {
+                    restockList = response.body().getStocks();
+                    adapterRestock = new AdapterSpinnerRestock(InventRestock.this, restockList);
+                    spinRestock.setAdapter(adapterRestock);
+                }
             }
-
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                Toast.makeText(InventRestock.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 t.fillInStackTrace();
             }
         });
@@ -230,7 +232,7 @@ public class InventRestock extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                Toast.makeText(InventRestock.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -249,7 +251,7 @@ public class InventRestock extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                Toast.makeText(InventRestock.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

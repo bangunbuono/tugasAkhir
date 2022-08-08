@@ -78,7 +78,7 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
         Spinner spinnerBahan = convertView.findViewById(R.id.spinnerBahanDeskripsi);
 
         tvMenuOrder.setText(UsageAutoApplication.orderList.get(position).getMenu());
-        tvQtyOrder.setText(UsageAutoApplication.orderList.get(position).getQty() + "");
+        tvQtyOrder.setText(String.valueOf(UsageAutoApplication.orderList.get(position).getQty()));
 
         APIRequestKomposisi dataKomposisi = ServerConnection.connection().create(APIRequestKomposisi.class);
         Call<ResponseModel> komposisi = dataKomposisi.getKomposisi(
@@ -88,17 +88,18 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 listKomposisi = new ArrayList<>();
-                assert response.body() != null;
-                listKomposisi = response.body().getKomposisiModelList();
-                String bahanTotal = "komposisi utama: ";
-                if (listKomposisi != null) {
-                    for (int i = 0; i < listKomposisi.size(); i++) {
-                        String bahan = listKomposisi.get(i).getBahan() + " " +
-                                listKomposisi.get(i).getJumlah() + " " +
-                                listKomposisi.get(i).getSatuan();
-                        bahanTotal = bahanTotal + "\n" + bahan;
+                if (response.body() != null) {
+                    listKomposisi = response.body().getKomposisiModelList();
+                    String bahanTotal = "komposisi utama: ";
+                    if (listKomposisi != null) {
+                        for (int i = 0; i < listKomposisi.size(); i++) {
+                            String bahan = listKomposisi.get(i).getBahan() + " " +
+                                    listKomposisi.get(i).getJumlah() + " " +
+                                    listKomposisi.get(i).getSatuan();
+                            bahanTotal = bahanTotal + "\n" + bahan;
+                        }
+                        tvDeskripsiOrder.setText(bahanTotal);
                     }
-                    tvDeskripsiOrder.setText(bahanTotal);
                 }
             }
 
@@ -116,63 +117,63 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
         getData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                List<KomposisiModel> namaBahan, listBahan;
-                listBahan = new ArrayList<>();
-                listBahan.add(0, new KomposisiModel(-1, "Pilih bahan", "", 0));
-                namaBahan = response.body().getKomposisiOpsiList();
-                if(namaBahan != null){
-                    opsiList.set(position, new KomposisiModel(-1, null,null, 0));
-                    bahanArray.set(position, "ada");
-                    for (int i = 0; i < namaBahan.size(); i++) {
-                        listBahan.add(new KomposisiModel(namaBahan.get(i).getId(), namaBahan.get(i).getBahan(),
-                                namaBahan.get(i).getSatuan(), namaBahan.get(i).getJumlah()));
+                if(response.body() != null) {
+                    List<KomposisiModel> namaBahan, listBahan;
+                    listBahan = new ArrayList<>();
+                    listBahan.add(0, new KomposisiModel(-1, "Pilih bahan", "", 0));
+                    namaBahan = response.body().getKomposisiOpsiList();
+                    if (namaBahan != null) {
+                        opsiList.set(position, new KomposisiModel(-1, null, null, 0));
+                        bahanArray.set(position, "ada");
+                        for (int i = 0; i < namaBahan.size(); i++) {
+                            listBahan.add(new KomposisiModel(namaBahan.get(i).getId(), namaBahan.get(i).getBahan(),
+                                    namaBahan.get(i).getSatuan(), namaBahan.get(i).getJumlah()));
+                        }
+                    } else {
+                        opsiList.set(position, new KomposisiModel(-2, null, null, 0));
+                        bahanArray.set(position, "ga ada");
                     }
-                }else{
-                    opsiList.set(position, new KomposisiModel(-2, null, null, 0));
-                    bahanArray.set(position, "ga ada");
-                }
 
 
-                if (listBahan.size()>1) {
-                    adapterSpinnerBahan = new AdapterSpinnerDetailOrderOpsi(context, listBahan);
-                    spinnerBahan.setAdapter(adapterSpinnerBahan);
+                    if (listBahan.size() > 1) {
+                        adapterSpinnerBahan = new AdapterSpinnerDetailOrderOpsi(context, listBahan);
+                        spinnerBahan.setAdapter(adapterSpinnerBahan);
 
-                    spinnerBahan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            if(!listBahan.get(i).getBahan().equals("Pilih bahan")){
-                                String bahan = listBahan.get(i).getBahan();
-                                String satuan = listBahan.get(i).getSatuan();
-                                int jumlah = listBahan.get(i).getJumlah();
+                        spinnerBahan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                if (!listBahan.get(i).getBahan().equals("Pilih bahan")) {
+                                    String bahan = listBahan.get(i).getBahan();
+                                    String satuan = listBahan.get(i).getSatuan();
+                                    int jumlah = listBahan.get(i).getJumlah();
 
-                                opsiList.set(position, new KomposisiModel(position, bahan, satuan,jumlah));
-                                bahanArray.set(position, bahan);
+                                    opsiList.set(position, new KomposisiModel(position, bahan, satuan, jumlah));
+                                    bahanArray.set(position, bahan);
 
-                            }else if(listBahan.get(i).getBahan().equals("Pilih bahan")){
-                                opsiList.set(position, new KomposisiModel(position, "Pilih bahan", null, 0));
-                                bahanArray.set(position, "ada");
-                                Toast.makeText(context, "Pilih bahan dulu", Toast.LENGTH_SHORT).show();
+                                } else if (listBahan.get(i).getBahan().equals("Pilih bahan")) {
+                                    opsiList.set(position, new KomposisiModel(position, "Pilih bahan", null, 0));
+                                    bahanArray.set(position, "ada");
+                                    Toast.makeText(context, "Pilih bahan dulu", Toast.LENGTH_SHORT).show();
 
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-                        }
-                    });
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {
+                            }
+                        });
 
+                    } else if (listBahan.size() == 1) {
+                        spinnerBahan.setVisibility(View.GONE);
+                        spinnerBahan.setActivated(false);
+                        spinnerBahan.setEnabled(false);
+                    }
                 }
-                else if (listBahan.size()==1){
-                    spinnerBahan.setVisibility(View.GONE);
-                    spinnerBahan.setActivated(false);
-                    spinnerBahan.setEnabled(false);
-                }
-
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
                 t.fillInStackTrace();
             }
         });
@@ -232,6 +233,7 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                Toast.makeText(context, "gagal confirm main order: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -248,7 +250,7 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                Toast.makeText(context, "gagal confirm option order: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -266,7 +268,7 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-
+                Toast.makeText(context, "Gagal record "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -280,38 +282,39 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 listKomposisi = new ArrayList<>();
-                assert response.body() != null;
-                listKomposisi = response.body().getKomposisiModelList();
+                if(response.body() != null) {
+                    listKomposisi = response.body().getKomposisiModelList();
 
-                //sout untuk test doang
-                String bahanTotal = "komposisi: ";
-                if(listKomposisi != null){
-                    for (int i = 0; i<listKomposisi.size(); i++){
-                        APIReport reportData = ServerConnection.connection().create(APIReport.class);
+                    //sout untuk test doang
+                    String bahanTotal = "komposisi: ";
+                    if (listKomposisi != null) {
+                        for (int i = 0; i < listKomposisi.size(); i++) {
+                            APIReport reportData = ServerConnection.connection().create(APIReport.class);
 
-                        Call<ResponseModel> reportUsage = reportData.recordUsage(
-                                UsageKomposisiDetail.orderSeries,listKomposisi.get(i).getBahan(),
-                                listKomposisi.get(i).getJumlah(), listKomposisi.get(i).getSatuan(),
-                                "auto(utama)", user, UsageKomposisiDetail.formatedTime);
-                        reportUsage.enqueue(new Callback<ResponseModel>() {
-                            @Override
-                            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+                            Call<ResponseModel> reportUsage = reportData.recordUsage(
+                                    UsageKomposisiDetail.orderSeries, listKomposisi.get(i).getBahan(),
+                                    listKomposisi.get(i).getJumlah(), listKomposisi.get(i).getSatuan(),
+                                    "auto(utama)", user, UsageKomposisiDetail.formatedTime);
+                            reportUsage.enqueue(new Callback<ResponseModel>() {
+                                @Override
+                                public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
+                                @Override
+                                public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
 
-                            }
-                        });
+                                }
+                            });
 
-                        String bahan = listKomposisi.get(i).getBahan() + " "+
-                                listKomposisi.get(i).getJumlah() + " " +
-                                listKomposisi.get(i).getSatuan();
+                            String bahan = listKomposisi.get(i).getBahan() + " " +
+                                    listKomposisi.get(i).getJumlah() + " " +
+                                    listKomposisi.get(i).getSatuan();
 
-                        bahanTotal = bahanTotal +"\n"+ bahan;
+                            bahanTotal = bahanTotal + "\n" + bahan;
+                        }
+                        System.out.println(bahanTotal);
                     }
-                    System.out.println(bahanTotal);
                 }
             }
 
@@ -337,7 +340,7 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                Toast.makeText(context, "gagal "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

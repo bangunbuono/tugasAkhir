@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,7 +26,6 @@ import com.example.fixinventori.model.StatModel;
 import com.example.fixinventori.model.StocksModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -34,7 +34,6 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class StatFrag extends Fragment {
     ArrayList<Entry> lineEntries;
     ArrayList<String> xValue;
     RadioGroup radioGroup, radioGroupFilter;
-    RadioButton radioButton, radioButtonFilter;
+    RadioButton radioButton;
     Spinner spinnerStatFilter, spinnerStatFilter2;
     BarChart barChartStat;
     LineChart lineChartSat;
@@ -261,7 +260,7 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -290,7 +289,7 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -316,7 +315,7 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -380,6 +379,7 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println(t.getMessage());
             }
         });
@@ -440,6 +440,7 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println(t.getMessage());
             }
         });
@@ -494,6 +495,7 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println(t.getMessage());
             }
         });
@@ -556,6 +558,7 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println(t.getMessage());
             }
         });
@@ -610,6 +613,7 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println(t.getMessage());
             }
         });

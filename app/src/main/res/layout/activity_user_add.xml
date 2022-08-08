@@ -7,7 +7,7 @@
     android:animateLayoutChanges="true"
     android:clipToPadding="false"
     android:gravity="center"
-    tools:context=".Activity.Setting.UserManagerConnect">
+    tools:context=".Activity.Setting.AddUserConnect">
 
     <EditText
         android:id="@+id/etInputUsername"

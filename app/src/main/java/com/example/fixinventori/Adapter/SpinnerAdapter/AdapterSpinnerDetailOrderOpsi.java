@@ -49,8 +49,8 @@ public class AdapterSpinnerDetailOrderOpsi extends ArrayAdapter<KomposisiModel> 
                 {
                     TextView tvSpinner = convertView.findViewById(R.id.tvRestockSpinner);
                     TextView tvRestockId = convertView.findViewById(R.id.tvRestockIdSpinner);
-                    tvSpinner.setText(komposiList.getBahan() + " " +komposiList.getJumlah()+" "+komposiList.getSatuan());
-                    tvRestockId.setText(komposiList.getId()+"");
+                    tvSpinner.setText(String.format("%s %s %s",komposiList.getBahan(), komposiList.getJumlah(), komposiList.getSatuan()));
+                    tvRestockId.setText(String.valueOf(komposiList.getId()));
                 }
             }
 
@@ -74,8 +74,8 @@ public class AdapterSpinnerDetailOrderOpsi extends ArrayAdapter<KomposisiModel> 
                 {
                     TextView tvSpinner = convertView.findViewById(R.id.tvRestockSpinner);
                     TextView tvRestockId = convertView.findViewById(R.id.tvRestockIdSpinner);
-                    tvSpinner.setText(komposisiModel.getBahan() + " " +komposisiModel.getJumlah()+" "+komposisiModel.getSatuan());
-                    tvRestockId.setText(komposisiModel.getId()+"");
+                    tvSpinner.setText(String.format("%s %s %s",komposisiModel.getBahan(), komposisiModel.getJumlah(), komposisiModel.getSatuan()));
+                    tvRestockId.setText(String.valueOf(komposisiModel.getId()));
                 }
             }
 

@@ -1,5 +1,6 @@
 package com.example.fixinventori.BottomNavBar;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -94,13 +95,20 @@ public class SettingFragment extends Fragment {
     }
 
     private void generate() {
-        APIAccounts token = ServerConnection.connection().create(APIAccounts.class);
-        Call<ResponseModel> tokenGenemrate = token.generateToken(user, this.token);
+        APIAccounts getToken = ServerConnection.connection().create(APIAccounts.class);
+        Call<ResponseModel> tokenGenemrate = getToken.generateToken(user, this.token);
 
         tokenGenemrate.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                dialog.setTitle("Token");
+                dialog.setMessage("Gunakan ini untuk menghubungkan akun ini dengan akun manager"
+                        + "\n"
+                        + "token: " + token);
+                dialog.setPositiveButton("selesai",
+                        (dialog1, which) -> dialog1.dismiss());
+                dialog.show();
             }
 
             @Override

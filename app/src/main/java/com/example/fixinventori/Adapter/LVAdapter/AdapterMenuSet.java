@@ -58,7 +58,7 @@ public class AdapterMenuSet extends ArrayAdapter<MenuModel> {
         tvIdMenu = convertView.findViewById(R.id.tvIdMenu);
 
         tvMenu.setText(listMenu.get(position).getMenu());
-        tvIdMenu.setText(listMenu.get(position).getId()+"");
+        tvIdMenu.setText(String.valueOf(listMenu.get(position).getId()));
 
 
         convertView.setOnClickListener(view -> {
@@ -114,20 +114,21 @@ public class AdapterMenuSet extends ArrayAdapter<MenuModel> {
         detailData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                menu = response.body().getData();
+                if (response.body() != null) {
+                    menu = response.body().getData();
 
-                int menuId = menu.get(0).getId();
-                String menuName = menu.get(0).getMenu();
-                int menuPrice = menu.get(0).getHarga();
-                String menuDesc = menu.get(0).getDeskripsi();
+                    int menuId = menu.get(0).getId();
+                    String menuName = menu.get(0).getMenu();
+                    int menuPrice = menu.get(0).getHarga();
+                    String menuDesc = menu.get(0).getDeskripsi();
 
-                Intent intent = new Intent(context, MenuSetDetail.class);
-                intent.putExtra("menuId", menuId);
-                intent.putExtra("menuName", menuName);
-                intent.putExtra("menuPrice", menuPrice);
-                intent.putExtra("menuDesc", menuDesc);
-                context.startActivity(intent);
+                    Intent intent = new Intent(context, MenuSetDetail.class);
+                    intent.putExtra("menuId", menuId);
+                    intent.putExtra("menuName", menuName);
+                    intent.putExtra("menuPrice", menuPrice);
+                    intent.putExtra("menuDesc", menuDesc);
+                    context.startActivity(intent);
+                }
             }
 
             @Override

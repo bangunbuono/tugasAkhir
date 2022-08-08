@@ -119,15 +119,17 @@ public class UsageAutoFrag extends Fragment {
         showData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                int code = response.body().getCode();
-                String pesan = response.body().getPesan();
+                if (response.body() != null) {
+                    int code = response.body().getCode();
+                    String pesan = response.body().getPesan();
 
-                menuModels = response.body().getData();
-                if(menuModels!= null){
-                    adapterUsageAuto = new AdapterUsageAuto(getActivity(), menuModels);
-                    lvUsageAuto.setAdapter(adapterUsageAuto);
-                    Toast.makeText(getActivity(),
-                            "success: " +"(" +code+ ")" +" "+ pesan, Toast.LENGTH_SHORT).show();
+                    menuModels = response.body().getData();
+                    if (menuModels != null) {
+                        adapterUsageAuto = new AdapterUsageAuto(getActivity(), menuModels);
+                        lvUsageAuto.setAdapter(adapterUsageAuto);
+                        Toast.makeText(getActivity(),
+                                "success: " + "(" + code + ")" + " " + pesan, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

@@ -54,9 +54,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        tvDaftar.setOnClickListener(view -> {
-            startActivity(new Intent(this, RegisterActivity.class));
-        });
+        tvDaftar.setOnClickListener(view ->
+                startActivity(new Intent(this, RegisterActivity.class)));
 
         tvLoginManager.setOnClickListener(view -> {
             startActivity(new Intent(this, ManagerLoginActivity.class));
@@ -71,24 +70,25 @@ public class LoginActivity extends AppCompatActivity {
         loginUser.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                String pesan = response.body().getPesan();
-                status = response.body().getStatus();
-                if(status.equals("true") ){
-                    userSession = new UserSession(getApplicationContext());
-                    userSession.createSession(user);
-                    firebaseToken();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-                else {
-                    Toast.makeText(LoginActivity.this, pesan, Toast.LENGTH_SHORT).show();
+                if (response.body() != null) {
+                    String pesan = response.body().getPesan();
+                    status = response.body().getStatus();
+                    if (status.equals("true")) {
+                        userSession = new UserSession(getApplicationContext());
+                        userSession.createSession(user);
+                        firebaseToken();
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, pesan, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(LoginActivity.this, "Gagal " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Gagal masuk " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         userSession.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
                     }else {
-                        Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "token error", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

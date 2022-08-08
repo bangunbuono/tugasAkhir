@@ -15,7 +15,6 @@ import com.example.fixinventori.model.UsageMenuModel;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UsageKomposisiDetail extends AppCompatActivity {
@@ -44,7 +43,6 @@ public class UsageKomposisiDetail extends AppCompatActivity {
         btnCancel = findViewById(R.id.btnCancelOrder);
         btnConfirm = findViewById(R.id.btnConfirmOrder);
 
-        orderList = new ArrayList<>();
         orderList = UsageAutoApplication.orderList;
 
         adapterOrderDetail = new AdapterOrderDetail(UsageKomposisiDetail.this, orderList);

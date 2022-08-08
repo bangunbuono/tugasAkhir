@@ -78,7 +78,7 @@ public class ManagerRegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable throwable) {
-
+                Toast.makeText(ManagerRegisterActivity.this, "Gagal daftar: "+ throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -93,9 +93,7 @@ public class ManagerRegisterActivity extends AppCompatActivity {
                     startActivity(new Intent(ManagerRegisterActivity.this, ManagerLoginActivity.class));
                     finish();
                 })
-                .addOnFailureListener(e ->{
-                    deleteManager();
-                });
+                .addOnFailureListener(e -> deleteManager());
 
     }
     private void deleteManager(){

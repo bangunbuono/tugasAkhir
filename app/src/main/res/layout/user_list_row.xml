@@ -29,9 +29,11 @@
                 android:id="@+id/tvUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_7sdp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:textSize="@dimen/_13ssp"
+                android:text="username"
                 android:ellipsize="end"
                 android:maxLines="1"/>
 

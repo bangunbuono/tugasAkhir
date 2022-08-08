@@ -80,10 +80,10 @@ public class AdapterKomposisi extends ArrayAdapter<KomposisiModel> {
         dialog = new Dialog(context);
 
         if(komposisiModels.get(position).getId() != -1){
-            tvIdBahan.setText(komposisiModels.get(position).getId()+"");
+            tvIdBahan.setText(String.valueOf(komposisiModels.get(position).getId()));
         }
         tvBahan.setText(komposisiModels.get(position).getBahan());
-        tvJumlah.setText(komposisiModels.get(position).getJumlah()+"");
+        tvJumlah.setText(String.valueOf(komposisiModels.get(position).getJumlah()));
         tvSatuan.setText(komposisiModels.get(position).getSatuan());
 
         cvKomposisi.setOnClickListener(view -> {
@@ -102,7 +102,7 @@ public class AdapterKomposisi extends ArrayAdapter<KomposisiModel> {
             btnDismiss = dialog.findViewById(R.id.btnDismiss);
 
             tvBahan.setText(refBahan);
-            etJumlah.setText(komposisiModels.get(position).getJumlah()+"");
+            etJumlah.setText(String.valueOf(komposisiModels.get(position).getJumlah()));
 
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -139,9 +139,7 @@ public class AdapterKomposisi extends ArrayAdapter<KomposisiModel> {
                 dialog.dismiss();
             });
 
-            btnDismiss.setOnClickListener(view1 -> {
-                dialog.dismiss();
-            });
+            btnDismiss.setOnClickListener(view1 -> dialog.dismiss());
 
 
             if(!((Activity)context).isFinishing()){
@@ -161,15 +159,17 @@ public class AdapterKomposisi extends ArrayAdapter<KomposisiModel> {
         deleteKomposisi.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                String pesan = response.body().getPesan();
-                Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show();
-                notifyDataSetChanged();
-                dialog.dismiss();
+                if (response.body() != null) {
+                    String pesan = response.body().getPesan();
+                    Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+                    dialog.dismiss();
+                }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "gagal hapus: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -182,7 +182,7 @@ public class AdapterKomposisi extends ArrayAdapter<KomposisiModel> {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 listBahan = new ArrayList<>();
-                assert response.body() != null;
+                if(response.body() != null)
                 listBahan = response.body().getStocks();
                 if(listBahan != null){
                     adapterSpinnerBahan = new AdapterSpinnerKomposisi(context, listBahan);
@@ -200,7 +200,7 @@ public class AdapterKomposisi extends ArrayAdapter<KomposisiModel> {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

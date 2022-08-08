@@ -5,21 +5,31 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.fixinventori.API.APIAccounts;
+import com.example.fixinventori.API.ServerConnection;
 import com.example.fixinventori.Activity.User.ManagerLoginActivity;
 import com.example.fixinventori.Activity.User.UserSession;
 import com.example.fixinventori.BottomNavBar.ManagerChatFragment;
 import com.example.fixinventori.BottomNavBar.ManagerHomeFragment;
 import com.example.fixinventori.BottomNavBar.ManagerSettingsFragment;
 import com.example.fixinventori.Chat.utils.Constants;
+import com.example.fixinventori.model.ResponseModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ManagerMainActivity extends AppCompatActivity {
     UserSession userSession;
@@ -48,6 +58,8 @@ public class ManagerMainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction().
                 replace(R.id.flManagerMainLayout, new ManagerHomeFragment());
         transaction.commit();
+
+        getConnecteduser();
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             fragment = null;
@@ -88,5 +100,25 @@ public class ManagerMainActivity extends AppCompatActivity {
                         Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(
                         this, e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    private void getConnecteduser(){
+        APIAccounts data = ServerConnection.connection().create(APIAccounts.class);
+        Call<ResponseModel> getData = data.getUser(manager);
+
+        getData.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+                UsageAutoApplication.listConnectedUser = new ArrayList<>();
+                if (response.body() != null) {
+                    UsageAutoApplication.listConnectedUser = response.body().getRecordManager();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 }

@@ -11,6 +11,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.fixinventori.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 public class InventReport extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
@@ -23,7 +25,7 @@ public class InventReport extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invent_report);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         bottomNavigationView = findViewById(R.id.navReport);
         radioGroup = findViewById(R.id.radioGroupTime);

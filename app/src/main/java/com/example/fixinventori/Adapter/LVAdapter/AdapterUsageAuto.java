@@ -42,14 +42,14 @@ public class AdapterUsageAuto extends ArrayAdapter<MenuModel> {
         TextView tvPrice = convertView.findViewById(R.id.tvProductPrice);
 
         tvProduct.setText(list.get(position).getMenu());
-        tvQty.setText(list.get(position).getQty()+"");
-        tvPrice.setText(String.format("Rp. %d", list.get(position).getHarga()));
+        tvQty.setText(String.valueOf(list.get(position).getQty()));
+        tvPrice.setText(String.format("Rp. %s", list.get(position).getHarga()));
         int qty = list.get(position).getQty();
 
         btnMin.setOnClickListener(view -> {
             if(qty != 0){
                 list.get(position).setQty(qty-1);
-                tvQty.setText(list.get(position).getQty()+"");
+                tvQty.setText(String.valueOf(list.get(position).getQty()));
             }
             notifyDataSetChanged();
             chectItem();
@@ -57,7 +57,7 @@ public class AdapterUsageAuto extends ArrayAdapter<MenuModel> {
 
         btnPlus.setOnClickListener(view -> {
             list.get(position).setQty(qty+1);
-            tvQty.setText(list.get(position).getQty()+"");
+            tvQty.setText(String.valueOf(list.get(position).getQty()));
             notifyDataSetChanged();
             chectItem();
         });
@@ -75,7 +75,7 @@ public class AdapterUsageAuto extends ArrayAdapter<MenuModel> {
 
             if (item!=0){
                 UsageAutoFrag.layoutItem.setVisibility(View.VISIBLE);
-                UsageAutoFrag.tvItem.setText(item + " item" + " = Rp. " + price );
+                UsageAutoFrag.tvItem.setText(String.format("%s item = Rp.%s", item, price));
             }else {
                 UsageAutoFrag.layoutItem.setVisibility(View.GONE);
             }

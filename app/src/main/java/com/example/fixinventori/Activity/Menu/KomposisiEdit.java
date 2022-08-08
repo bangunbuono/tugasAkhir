@@ -61,7 +61,7 @@ public class KomposisiEdit extends AppCompatActivity {
 
         tvEditBahan.setText(dataBahan);
         tvEditSatuan.setText(dataSatuan);
-        tvEditJumlah.setText(dataJumlah+"");
+        tvEditJumlah.setText(String.valueOf(dataJumlah));
 
         listBahan();
 
@@ -93,18 +93,19 @@ public class KomposisiEdit extends AppCompatActivity {
         getData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                namaBahan = new ArrayList<>();
-                listBahan = new ArrayList<>();
-                listBahan.add(0, new RestockModel(-1, "Pilih bahan", "satuan"));
-                namaBahan = response.body().getStocks();
-                for (int i = 0; i < namaBahan.size(); i++){
-                    listBahan.add(new RestockModel(namaBahan.get(i).getId(),
-                            namaBahan.get(i).getBahan_baku(),namaBahan.get(i).getSatuan()));
-                }
-                if(listBahan != null){
-                    adapterSpinnerBahan = new AdapterSpinnerKomposisi(KomposisiEdit.this,listBahan);
-                    spinnerBahanx.setAdapter(adapterSpinnerBahan);
+                if(response.body() != null){
+                    namaBahan = new ArrayList<>();
+                    listBahan = new ArrayList<>();
+                    listBahan.add(0, new RestockModel(-1, "Pilih bahan", "satuan"));
+                    namaBahan = response.body().getStocks();
+                    for (int i = 0; i < namaBahan.size(); i++){
+                        listBahan.add(new RestockModel(namaBahan.get(i).getId(),
+                                namaBahan.get(i).getBahan_baku(),namaBahan.get(i).getSatuan()));
+                    }
+                    if(listBahan != null){
+                        adapterSpinnerBahan = new AdapterSpinnerKomposisi(KomposisiEdit.this,listBahan);
+                        spinnerBahanx.setAdapter(adapterSpinnerBahan);
+                    }
                 }
             }
 

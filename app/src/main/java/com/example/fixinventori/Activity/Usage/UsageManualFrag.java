@@ -33,6 +33,7 @@ import com.example.fixinventori.model.RestockModel;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -142,7 +143,7 @@ public class UsageManualFrag extends Fragment {
             date = dtf.format(time);
             orderSeries = "B."+date;
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
             builder.setMessage("Konfirmasi pesanan?");
             builder.setPositiveButton("iya", (dialogInterface, i) -> {
                 if(manualUsageList!= null){
@@ -171,7 +172,7 @@ public class UsageManualFrag extends Fragment {
         if(manualUsageList!=null){
             if(manualUsageList.size()!=0){
                 layoutItem.setVisibility(View.VISIBLE);
-                totalItem.setText("Total " + manualUsageList.size() + " item");
+                totalItem.setText(String.format("Total %s item", manualUsageList.size()));
             }
             else {
                 layoutItem.setVisibility(View.GONE);
@@ -213,7 +214,7 @@ public class UsageManualFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "gagal "+t.getMessage(),
+                Toast.makeText(getActivity(), "stock update gagal "+t.getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -232,7 +233,7 @@ public class UsageManualFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-
+                Toast.makeText(getActivity(), "report gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -249,7 +250,7 @@ public class UsageManualFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                Toast.makeText(getActivity(), "record gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

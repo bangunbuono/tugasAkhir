@@ -331,19 +331,20 @@ public class KomposisiSet extends AppCompatActivity {
         addKomposisi.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
-                int code = response.body().getCode();
-                String pesan = response.body().getPesan();
-                if(code == 2){
-                    Toast.makeText(KomposisiSet.this, pesan, Toast.LENGTH_SHORT).show();
-                }else if(code == 0){
-                    Toast.makeText(KomposisiSet.this, pesan, Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(KomposisiSet.this, pesan, Toast.LENGTH_SHORT).show();
-                    etJumlahx2.setText(null);
-                    spinnerBahanx2.setSelection(0);
-                    getKomposisiOpsi();
+                if(response.body()!=null){
+                    int code = response.body().getCode();
+                    String pesan = response.body().getPesan();
+                    if(code == 2){
+                        Toast.makeText(KomposisiSet.this, pesan, Toast.LENGTH_SHORT).show();
+                    }else if(code == 0){
+                        Toast.makeText(KomposisiSet.this, pesan, Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(KomposisiSet.this, pesan, Toast.LENGTH_SHORT).show();
+                        etJumlahx2.setText(null);
+                        spinnerBahanx2.setSelection(0);
+                        getKomposisiOpsi();
+                    }
                 }
-
             }
 
             @Override

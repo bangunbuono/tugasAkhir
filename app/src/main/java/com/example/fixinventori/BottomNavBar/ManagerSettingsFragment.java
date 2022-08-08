@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fixinventori.Activity.Setting.UserManagerConnect;
+import com.example.fixinventori.Activity.Setting.AddUserConnect;
+import com.example.fixinventori.Activity.Setting.UserManagerActivity;
 import com.example.fixinventori.Activity.User.ManagerLoginActivity;
 import com.example.fixinventori.Activity.User.UserSession;
 import com.example.fixinventori.Chat.utils.Constants;
 import com.example.fixinventori.R;
+import com.example.fixinventori.UsageAutoApplication;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -47,11 +49,19 @@ public class ManagerSettingsFragment extends Fragment {
         TextView tvConnect = view.findViewById(R.id.tvUserConnect);
         TextView tvBantuan = view.findViewById(R.id.tvBantuan);
         TextView tvManagerName = view.findViewById(R.id.tvUserName);
+        TextView tvUserManager = view.findViewById(R.id.tvUserManager);
 
         tvManagerName.setText(manager);
 
+        if(UsageAutoApplication.listConnectedUser.size()>0){
+            tvConnect.setVisibility(View.GONE);
+        }else tvUserManager.setVisibility(View.GONE);
+
         tvConnect.setOnClickListener(view1 ->
-                startActivity(new Intent(getActivity(), UserManagerConnect.class)));
+                startActivity(new Intent(getActivity(), AddUserConnect.class)));
+
+        tvUserManager.setOnClickListener(view1 ->
+                startActivity(new Intent(getActivity(), UserManagerActivity.class)));
 
         tvBantuan.setOnClickListener(view1 -> System.out.println("bantuan"));
 

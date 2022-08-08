@@ -50,7 +50,7 @@ public class AdapterSpinnerRestock extends ArrayAdapter<RestockModel> {
                     TextView tvSpinner = convertView.findViewById(R.id.tvRestockSpinner);
                     TextView tvRestockId = convertView.findViewById(R.id.tvRestockIdSpinner);
                     tvSpinner.setText(restock.getBahan_baku());
-                    tvRestockId.setText(restock.getId()+"");
+                    tvRestockId.setText(String.valueOf(restock.getId()));
                 }
             }
 
@@ -75,7 +75,7 @@ public class AdapterSpinnerRestock extends ArrayAdapter<RestockModel> {
                     TextView tvSpinner = convertView.findViewById(R.id.tvRestockSpinner);
                     TextView tvRestockId = convertView.findViewById(R.id.tvRestockIdSpinner);
                     tvSpinner.setText(restock.getBahan_baku());
-                    tvRestockId.setText(restock.getId()+"");
+                    tvRestockId.setText(String.valueOf(restock.getId()));
                 }
             }
 

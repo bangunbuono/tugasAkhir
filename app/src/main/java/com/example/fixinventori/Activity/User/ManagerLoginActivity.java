@@ -87,7 +87,7 @@ public class ManagerLoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable throwable) {
-
+                Toast.makeText(ManagerLoginActivity.this, "Gagal masuk:" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -103,7 +103,7 @@ public class ManagerLoginActivity extends AppCompatActivity {
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         session.putString(Constants.KEY_MANAGER_ID, documentSnapshot.getId());
                     }else {
-                        Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "token error", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

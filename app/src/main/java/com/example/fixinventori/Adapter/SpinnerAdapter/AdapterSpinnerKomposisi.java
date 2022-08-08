@@ -50,7 +50,7 @@ public class AdapterSpinnerKomposisi extends ArrayAdapter<RestockModel> {
                     TextView tvSpinner = convertView.findViewById(R.id.tvRestockSpinner);
                     TextView tvRestockId = convertView.findViewById(R.id.tvRestockIdSpinner);
                     tvSpinner.setText(restock.getBahan_baku());
-                    tvRestockId.setText(restock.getId()+"");
+                    tvRestockId.setText(String.valueOf(restock.getId()));
                 }
             }
 
@@ -76,7 +76,7 @@ public class AdapterSpinnerKomposisi extends ArrayAdapter<RestockModel> {
                     TextView tvSpinner = convertView.findViewById(R.id.tvRestockSpinner);
                     TextView tvRestockId = convertView.findViewById(R.id.tvRestockIdSpinner);
                     tvSpinner.setText(stock.getBahan_baku());
-                    tvRestockId.setText(stock.getId()+"");
+                    tvRestockId.setText(String.valueOf(stock.getId()));
                 }
             }
 

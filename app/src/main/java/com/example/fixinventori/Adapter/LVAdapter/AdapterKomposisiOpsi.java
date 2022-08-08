@@ -81,10 +81,10 @@ public class AdapterKomposisiOpsi extends ArrayAdapter<KomposisiModel> {
         dialog = new Dialog(context);
 
         if(komposisiOpsiList.get(position).getId() != -1){
-            tvIdBahan.setText(komposisiOpsiList.get(position).getId()+"");
+            tvIdBahan.setText(String.valueOf(komposisiOpsiList.get(position).getId()));
         }
         tvBahan.setText(komposisiOpsiList.get(position).getBahan());
-        tvJumlah.setText(komposisiOpsiList.get(position).getJumlah()+"");
+        tvJumlah.setText(String.valueOf(komposisiOpsiList.get(position).getJumlah()));
         tvSatuan.setText(komposisiOpsiList.get(position).getSatuan());
 
         cvKomposisi.setOnClickListener(view -> {
@@ -103,7 +103,7 @@ public class AdapterKomposisiOpsi extends ArrayAdapter<KomposisiModel> {
             btnDismiss = dialog.findViewById(R.id.btnDismiss);
 
             tvBahan.setText(refBahan);
-            etJumlah.setText(komposisiOpsiList.get(position).getJumlah()+"");
+            etJumlah.setText(String.valueOf(komposisiOpsiList.get(position).getJumlah()));
 
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                @Override
@@ -155,15 +155,17 @@ public class AdapterKomposisiOpsi extends ArrayAdapter<KomposisiModel> {
         update.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
-                String pesan = response.body().getPesan();
-                Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show();
-                notifyDataSetChanged();
-                updateChange = true;
+                if (response.body() != null) {
+                    String pesan = response.body().getPesan();
+                    Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+                    updateChange = true;
+                }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                Toast.makeText(context, "update gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -175,15 +177,16 @@ public class AdapterKomposisiOpsi extends ArrayAdapter<KomposisiModel> {
         deleteKomposisi.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                String pesan = response.body().getPesan();
-                Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show();
-                notifyDataSetChanged();
-                updateChange = true;
+                if (response.body() != null) {
+                    String pesan = response.body().getPesan();
+                    Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+                    updateChange = true;
+                }
             }
-
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "gagal hapus: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -196,6 +199,7 @@ public class AdapterKomposisiOpsi extends ArrayAdapter<KomposisiModel> {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 listBahan = new ArrayList<>();
+                if(response.body()!=null)
                 listBahan = response.body().getStocks();
                 if(listBahan != null){
                     adapterSpinnerBahan = new AdapterSpinnerKomposisi(context, listBahan);
@@ -215,7 +219,7 @@ public class AdapterKomposisiOpsi extends ArrayAdapter<KomposisiModel> {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

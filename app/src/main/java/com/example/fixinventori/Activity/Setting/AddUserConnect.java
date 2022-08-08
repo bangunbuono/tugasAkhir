@@ -18,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserManagerConnect extends AppCompatActivity {
+public class AddUserConnect extends AppCompatActivity {
     EditText etInputUsername, etInputUserToken;
     Button btnConnect;
     String usename, managerName;
@@ -28,7 +28,7 @@ public class UserManagerConnect extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_manager_connect);
+        setContentView(R.layout.activity_user_add);
 
         session = new UserSession(this);
         managerName = session.getString("manager");
@@ -52,14 +52,14 @@ public class UserManagerConnect extends AppCompatActivity {
         connectUser.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
-                Toast.makeText(UserManagerConnect.this, "berhasil", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddUserConnect.this, "berhasil", Toast.LENGTH_SHORT).show();
                 finish();
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
                 System.out.println(t.getMessage());
-                Toast.makeText(UserManagerConnect.this, "gagal "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddUserConnect.this, "gagal "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

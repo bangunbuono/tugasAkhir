@@ -77,8 +77,8 @@ public class ReportDetail extends AppCompatActivity {
         recordData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                recordDetail = response.body().getRecordDetail();
+                if(response.body() != null)
+                    recordDetail = response.body().getRecordDetail();
                 if(recordDetail!=null){
                     adapterRecordDetail = new AdapterRecordDetail(ReportDetail.this, recordDetail);
                     lvRecordDetail.setAdapter(adapterRecordDetail);

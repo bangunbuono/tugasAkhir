@@ -59,9 +59,9 @@ public class AdapterStocks extends ArrayAdapter<StocksModel> {
         tvStockSatuan = convertView.findViewById(R.id.tvStockSatuan);
 
         if(stocksModelList.size() != 0){
-            tvIdStock.setText(stocksModelList.get(position).getId()+"");
+            tvIdStock.setText(String.valueOf(stocksModelList.get(position).getId()));
             tvStockName.setText(stocksModelList.get(position).getBahan_baku());
-            tvStockJumlah.setText(stocksModelList.get(position).getJumlah()+"");
+            tvStockJumlah.setText(String.valueOf(stocksModelList.get(position).getJumlah()));
             tvStockSatuan.setText(stocksModelList.get(position).getSatuan());
         }
 

@@ -123,9 +123,9 @@ public class MenuSetDetail extends AppCompatActivity {
             }
         });
 
-        etDetailID.setText(id+"");
+        etDetailID.setText(String.valueOf(id));
         etDetailMenu.setText(menu);
-        etDetailPrice.setText(harga+"");
+        etDetailPrice.setText(String.valueOf(harga));
         etDetailDesc.setText(deskripsi);
 
         btnDetailSave.setOnClickListener(view -> {
@@ -190,17 +190,19 @@ public class MenuSetDetail extends AppCompatActivity {
         addKomposisiOpsi.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                int code = response.body().getCode();
-                String pesan = response.body().getPesan();
-                if(code == 2){
-                    Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
-                }else if(code == 0){
-                    Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
-                    etJumlahy2.setText(null);
-                    spinerBahany2.setSelection(0);
-                    getKomposisiOpsi();
+                if(response.body()!=null){
+                    int code = response.body().getCode();
+                    String pesan = response.body().getPesan();
+                    if(code == 2){
+                        Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
+                    }else if(code == 0){
+                        Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
+                        etJumlahy2.setText(null);
+                        spinerBahany2.setSelection(0);
+                        getKomposisiOpsi();
+                    }
                 }
             }
 
@@ -218,10 +220,12 @@ public class MenuSetDetail extends AppCompatActivity {
         update.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                String pesan = response.body().getPesan();
-                finish();
-                Toast.makeText(MenuSetDetail.this, pesan,
+                if(response.body()!=null){
+                    String pesan = response.body().getPesan();
+                    finish();
+                    Toast.makeText(MenuSetDetail.this, pesan,
                         Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -239,13 +243,13 @@ public class MenuSetDetail extends AppCompatActivity {
         komposisi.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                komposisiModels = response.body().getKomposisiModelList();
-                if(komposisiModels != null) {
-                    adapterKomposisi = new AdapterKomposisi(MenuSetDetail.this,komposisiModels);
-                    lvKomposisiy.setAdapter(adapterKomposisi);
+                if(response.body() != null) {
+                    komposisiModels = response.body().getKomposisiModelList();
+                    if (komposisiModels != null) {
+                        adapterKomposisi = new AdapterKomposisi(MenuSetDetail.this, komposisiModels);
+                        lvKomposisiy.setAdapter(adapterKomposisi);
+                    }
                 }
-
             }
 
             @Override
@@ -264,14 +268,14 @@ public class MenuSetDetail extends AppCompatActivity {
         komposisi.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                komposisiOpsiList = new ArrayList<>();
-                komposisiOpsiList = response.body().getKomposisiOpsiList();
-                if(komposisiOpsiList != null) {
-                    adapterKomposisiOpsi = new AdapterKomposisiOpsi(MenuSetDetail.this,komposisiOpsiList);
-                    lvKomposisiy2.setAdapter(adapterKomposisiOpsi);
+                if(response.body() != null) {
+                    komposisiOpsiList = new ArrayList<>();
+                    komposisiOpsiList = response.body().getKomposisiOpsiList();
+                    if (komposisiOpsiList != null) {
+                        adapterKomposisiOpsi = new AdapterKomposisiOpsi(MenuSetDetail.this, komposisiOpsiList);
+                        lvKomposisiy2.setAdapter(adapterKomposisiOpsi);
+                    }
                 }
-
             }
 
             @Override
@@ -290,17 +294,19 @@ public class MenuSetDetail extends AppCompatActivity {
         tambahKompsisi.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                int code = response.body().getCode();
-                String pesan = response.body().getPesan();
-                if(code == 2){
-                    Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
-                }else if(code == 0){
-                    Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
-                    etJumlahy.setText(null);
-                    spinerBahany.setSelection(0);
-                    getKomposisi();
+                if(response.body()!=null) {
+                    int code = response.body().getCode();
+                    String pesan = response.body().getPesan();
+                    if (code == 2) {
+                        Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
+                    } else if (code == 0) {
+                        Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
+                        etJumlahy.setText(null);
+                        spinerBahany.setSelection(0);
+                        getKomposisi();
+                    }
                 }
             }
 
@@ -317,12 +323,12 @@ public class MenuSetDetail extends AppCompatActivity {
                 komposisiId, bahan, jumlah, satuan);
         ubahKomposisi.enqueue(new Callback<ResponseModel>() {
             @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+            public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
                 Toast.makeText(MenuSetDetail.this, "Berhasil merubah", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
                 Toast.makeText(MenuSetDetail.this, "Gagal merubah: "+t.getMessage(),
                         Toast.LENGTH_SHORT).show();
                 System.out.println(t.getMessage());
@@ -337,19 +343,20 @@ public class MenuSetDetail extends AppCompatActivity {
         getData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                namaBahan = new ArrayList<>();
-                listBahan = new ArrayList<>();
-                listBahan.add(0, new RestockModel(-1, "Pilih bahan", "satuan"));
-                namaBahan = response.body().getStocks();
-                for (int i = 0; i < namaBahan.size(); i++){
-                    listBahan.add(new RestockModel(namaBahan.get(i).getId(),
-                            namaBahan.get(i).getBahan_baku(),namaBahan.get(i).getSatuan()));
-                }
-                if(listBahan != null){
-                    adapterSpinnerBahan = new AdapterSpinnerKomposisi(MenuSetDetail.this,listBahan);
-                    spinerBahany.setAdapter(adapterSpinnerBahan);
-                    spinerBahany2.setAdapter(adapterSpinnerBahan);
+                if(response.body() != null) {
+                    namaBahan = new ArrayList<>();
+                    listBahan = new ArrayList<>();
+                    listBahan.add(0, new RestockModel(-1, "Pilih bahan", "satuan"));
+                    namaBahan = response.body().getStocks();
+                    for (int i = 0; i < namaBahan.size(); i++) {
+                        listBahan.add(new RestockModel(namaBahan.get(i).getId(),
+                                namaBahan.get(i).getBahan_baku(), namaBahan.get(i).getSatuan()));
+                    }
+                    if (listBahan != null) {
+                        adapterSpinnerBahan = new AdapterSpinnerKomposisi(MenuSetDetail.this, listBahan);
+                        spinerBahany.setAdapter(adapterSpinnerBahan);
+                        spinerBahany2.setAdapter(adapterSpinnerBahan);
+                    }
                 }
             }
 

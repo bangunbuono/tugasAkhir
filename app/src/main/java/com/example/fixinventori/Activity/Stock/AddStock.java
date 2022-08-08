@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fixinventori.API.APIRequestStock;
@@ -51,7 +52,7 @@ public class AddStock extends AppCompatActivity {
                 Toast.makeText(AddStock.this, "Harus diisi", Toast.LENGTH_SHORT).show();
             }
             else {
-                tvStockUser.getText().toString().trim();
+                tvStockUser.getText().toString();
                 bahan_baku = etNameStock.getText().toString().trim();
                 jumlah = Integer.parseInt(etJumlah.getText().toString().trim());
                 waktu = Integer.parseInt(etStockWaktuTgu.getText().toString().trim());
@@ -68,21 +69,23 @@ public class AddStock extends AppCompatActivity {
 
         addData.enqueue(new Callback<ResponseModel>() {
             @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                int code = response.body().getCode();
-                String pesan = response.body().getPesan();
-                if(code == 2){
-                    Toast.makeText(AddStock.this, "Gagal: "+pesan, Toast.LENGTH_SHORT).show();
-                }else if(code == 0){
-                    Toast.makeText(AddStock.this, "Gagal input data", Toast.LENGTH_SHORT).show();
-                }else {
-                    setResult(RESULT_OK);
-                    finish();
+            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+                if (response.body() != null) {
+                    int code = response.body().getCode();
+                    String pesan = response.body().getPesan();
+                    if (code == 2) {
+                        Toast.makeText(AddStock.this, "Gagal: " + pesan, Toast.LENGTH_SHORT).show();
+                    } else if (code == 0) {
+                        Toast.makeText(AddStock.this, "Gagal input data", Toast.LENGTH_SHORT).show();
+                    } else {
+                        setResult(RESULT_OK);
+                        finish();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
                 Toast.makeText(AddStock.this, "gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

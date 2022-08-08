@@ -204,15 +204,15 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
         recordData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                dateRecord = response.body().getDate();
-                adapterDate = new AdapterDate(getActivity(), dateRecord);
-                if(dateRecord!=null){
-                    rvDateList.setAdapter(adapterDate);
-                    dateListLayoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
-                    rvDateList.setLayoutManager(dateListLayoutManager);
+                if(response.body() != null) {
+                    dateRecord = response.body().getDate();
+                    adapterDate = new AdapterDate(getActivity(), dateRecord);
+                    if (dateRecord != null) {
+                        rvDateList.setAdapter(adapterDate);
+                        dateListLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+                        rvDateList.setLayoutManager(dateListLayoutManager);
+                    }
                 }
-
             }
 
             @Override

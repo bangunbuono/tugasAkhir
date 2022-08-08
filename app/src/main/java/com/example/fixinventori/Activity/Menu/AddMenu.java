@@ -36,8 +36,7 @@ public class AddMenu extends AppCompatActivity {
         user = userSession.getUserDetail().get("username");
 
         ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setTitle("Tambah menu");
+        if(actionBar != null) actionBar.setTitle("Tambah menu");
 
         etMenuDesc = findViewById(R.id.etMenuDesc);
         etMenuName = findViewById(R.id.etMenuName);
@@ -68,32 +67,36 @@ public class AddMenu extends AppCompatActivity {
         addData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                int code = response.body().getCode();
-                String pesan = response.body().getPesan();
+                if(response.body() != null){
+                    int code = response.body().getCode();
+                    String pesan = response.body().getPesan();
 
-                if(code == 2){
-                    Toast.makeText(AddMenu.this, "Gagal: " + pesan,
-                            Toast.LENGTH_SHORT).show();
-                }else if(code == 0){
-                    Toast.makeText(AddMenu.this, "Gagal "+ pesan,
-                            Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(AddMenu.this, "berhasil menyimpan menu",
-                        Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AddMenu.this);
-                    builder.setTitle(menu);
-                    builder.setMessage("Atur komposisi?");
-                    builder.setNegativeButton("Nanti saja", (dialogInterface, i) -> finish());
-                    builder.setPositiveButton("Atur Komposisi", (dialogInterface, i) -> {
-                        Intent intent = new Intent(AddMenu.this, KomposisiSet.class);
-                        intent.putExtra("menu", menu);
-                        startActivity(intent);
-                        finish();
-                    });
-                    builder.show();
+                    if(code == 2){
+                        Toast.makeText(AddMenu.this, "Gagal: " + pesan,
+                                Toast.LENGTH_SHORT).show();
+                    }else if(code == 0){
+                        Toast.makeText(AddMenu.this, "Gagal "+ pesan,
+                                Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(AddMenu.this, "berhasil menyimpan menu",
+                                Toast.LENGTH_SHORT).show();
+                        setResult(RESULT_OK);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AddMenu.this);
+                        builder.setTitle(menu);
+                        builder.setMessage("Atur komposisi?");
+                        builder.setNegativeButton("Nanti saja", (dialogInterface, i) -> finish());
+                        builder.setPositiveButton("Atur Komposisi", (dialogInterface, i) -> {
+                            Intent intent = new Intent(AddMenu.this, KomposisiSet.class);
+                            intent.putExtra("menu", menu);
+                            startActivity(intent);
+                            finish();
+                        });
+                        builder.show();
+                    }
                 }
+
+
+
             }
 
             @Override

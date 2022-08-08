@@ -80,10 +80,10 @@ public class AdapterRestock extends ArrayAdapter<KomposisiModel> {
         dialog = new Dialog(context);
 
         if(komposisiModels.get(position).getId() != -1){
-            tvIdBahan.setText(komposisiModels.get(position).getId()+"");
+            tvIdBahan.setText(String.valueOf(komposisiModels.get(position).getId()));
         }
         tvBahan.setText(komposisiModels.get(position).getBahan());
-        tvJumlah.setText(komposisiModels.get(position).getJumlah()+"");
+        tvJumlah.setText(String.valueOf(komposisiModels.get(position).getJumlah()));
         tvSatuan.setText(komposisiModels.get(position).getSatuan());
 
         cvKomposisi.setOnClickListener(view -> {
@@ -103,7 +103,7 @@ public class AdapterRestock extends ArrayAdapter<KomposisiModel> {
             btnDismiss = dialog.findViewById(R.id.btnDismiss);
 
             tvBahan.setText(refBahan);
-            etJumlah.setText(komposisiModels.get(position).getJumlah()+"");
+            etJumlah.setText(String.valueOf(komposisiModels.get(position).getJumlah()));
 
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -141,7 +141,7 @@ public class AdapterRestock extends ArrayAdapter<KomposisiModel> {
                 notifyDataSetChanged();
                 if(komposisiModels.size()!=0){
                    InventRestock.layoutRestock.setVisibility(View.VISIBLE);
-                   InventRestock.tvTotal.setText("Total "+komposisiModels.size()+" item");
+                   InventRestock.tvTotal.setText(String.format("Total %s item",komposisiModels.size()));
                 }else {
                     InventRestock.layoutRestock.setVisibility(View.GONE);
                 }
@@ -165,12 +165,14 @@ public class AdapterRestock extends ArrayAdapter<KomposisiModel> {
         deleteKomposisi.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                String pesan = response.body().getPesan();
-                Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show();
-                notifyDataSetChanged();
-                dialog.dismiss();
+                if(response.body() != null) {
+                    String pesan = response.body().getPesan();
+                    Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+                    dialog.dismiss();
+                }
             }
+
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
@@ -188,19 +190,20 @@ public class AdapterRestock extends ArrayAdapter<KomposisiModel> {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 listBahan = new ArrayList<>();
-                assert response.body() != null;
-                listBahan = response.body().getStocks();
-                if(listBahan != null){
-                    adapterSpinnerBahan = new AdapterSpinnerKomposisi(context, listBahan);
-                    spinner.setAdapter(adapterSpinnerBahan);
-                    for (int i = 0; i<listBahan.size(); i++){
-                        String data = listBahan.get(i).getBahan_baku();
-                        if (data.equals(refBahan)){
-                            index = i;
-                            break;
+                if(response.body() != null) {
+                    listBahan = response.body().getStocks();
+                    if (listBahan != null) {
+                        adapterSpinnerBahan = new AdapterSpinnerKomposisi(context, listBahan);
+                        spinner.setAdapter(adapterSpinnerBahan);
+                        for (int i = 0; i < listBahan.size(); i++) {
+                            String data = listBahan.get(i).getBahan_baku();
+                            if (data.equals(refBahan)) {
+                                index = i;
+                                break;
+                            }
                         }
+                        spinner.setSelection(index);
                     }
-                    spinner.setSelection(index);
                 }
             }
 

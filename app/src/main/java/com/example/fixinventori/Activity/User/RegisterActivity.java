@@ -83,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                Toast.makeText(RegisterActivity.this, "Gagal daftar: "+t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println(t.getMessage());
             }
         });
@@ -98,7 +99,10 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Berhasil daftar", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, LoginActivity.class));
                 })
-                .addOnFailureListener(e -> deleteAccount());
+                .addOnFailureListener(e -> {
+                    deleteAccount();
+                    Toast.makeText(this, "token error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void deleteAccount() {
