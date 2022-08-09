@@ -2,13 +2,9 @@ package com.example.fixinventori.API;
 
 import com.example.fixinventori.model.ResponseModel;
 
-import java.time.LocalDateTime;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface APIReport {
@@ -22,6 +18,7 @@ public interface APIReport {
             @Field("satuan") String satuan,
             @Field("keterangan") String keterangan,
             @Field("user") String user,
+            @Field("pengunjung") int pengunjung,
             @Field("tanggal_keluar") String waktu
     );
 
@@ -73,6 +70,13 @@ public interface APIReport {
             @Field("user") String user,
             @Field("kode") String code,
             @Field("keterangan") String keterangan
+    );
+
+    @FormUrlEncoded
+    @POST("getrecordmenu.php")
+    Call<ResponseModel> recordMenu(
+            @Field("user") String user,
+            @Field("kode") String code
     );
 
     @FormUrlEncoded
@@ -133,5 +137,14 @@ public interface APIReport {
             @Field("keterangan") String keterangan
     );
 
+    @FormUrlEncoded
+    @POST("recordmenu.php")
+    Call<ResponseModel> recordMenu(
+            @Field("kode") String kode,
+            @Field("menu") String menu,
+            @Field("jumlah") int jumlah,
+            @Field("harga") int harga,
+            @Field("user") String user
+    );
 
 }

@@ -143,7 +143,7 @@ public class UsageManualFrag extends Fragment {
             date = dtf.format(time);
             orderSeries = "B."+date;
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Konfirmasi pesanan?");
             builder.setPositiveButton("iya", (dialogInterface, i) -> {
                 if(manualUsageList!= null){
@@ -223,7 +223,7 @@ public class UsageManualFrag extends Fragment {
     private void reportManualUsage(){
         APIReport report = ServerConnection.connection().create(APIReport.class);
         Call<ResponseModel> reportData = report.recordUsage(
-                orderSeries, bahanx, jumlahx, satuanx,"manual", user,formatedTime );
+                orderSeries, bahanx, jumlahx, satuanx,"manual", user,1,formatedTime );
 
         reportData.enqueue(new Callback<ResponseModel>() {
             @Override

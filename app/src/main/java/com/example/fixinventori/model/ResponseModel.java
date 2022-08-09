@@ -21,6 +21,12 @@ public class ResponseModel {
     private List<StatModel> statSatuan;
     private List<ManagerModel> recordManager;
 
+    public List<UsageMenuModel> getRecordMenu() {
+        return recordMenu;
+    }
+
+    private List<UsageMenuModel> recordMenu;
+
     public List<ManagerModel> getRecordManager() {
         return recordManager;
     }

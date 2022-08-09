@@ -19,6 +19,7 @@ import com.example.fixinventori.API.APIReport;
 import com.example.fixinventori.API.APIRequestKomposisi;
 import com.example.fixinventori.API.APIUsageAuto;
 import com.example.fixinventori.API.ServerConnection;
+import com.example.fixinventori.Activity.Usage.UsageAutoFrag;
 import com.example.fixinventori.Activity.Usage.UsageKomposisiDetail;
 import com.example.fixinventori.Activity.User.UserSession;
 import com.example.fixinventori.Adapter.SpinnerAdapter.AdapterSpinnerDetailOrderOpsi;
@@ -44,7 +45,7 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
     ArrayList<String> bahanArray;
     AdapterSpinnerDetailOrderOpsi adapterSpinnerBahan;
     String user, menu, opsi, opsiSatuan;
-    int qty, opsiJumlah;
+    int qty, opsiJumlah, harga;
     UserSession userSession;
     UsageAutoApplication usageAutoApplication;
 
@@ -185,8 +186,10 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
                 for(i=0; i<orderList.size(); i++){
                     menu = orderList.get(i).getMenu();
                     qty = orderList.get(i).getQty();
+                    harga = orderList.get(i).getHarga();
                     confirmMainOrder();
                     getKomposisi();
+                    recordMenu();
                     Toast.makeText(context, "berhasil memesan", Toast.LENGTH_SHORT).show();
                     ((Activity)context).finish();
                 }
@@ -199,6 +202,7 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
                     for(i = 0; i<orderList.size(); i++){
                         menu = orderList.get(i).getMenu();
                         qty = orderList.get(i).getQty();
+                        harga = orderList.get(i).getHarga();
                         confirmMainOrder();
                         if(opsiList.get(i).getId()!=-2){
                             opsi = opsiList.get(i).getBahan();
@@ -210,6 +214,7 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
                                     opsiList.get(i).getJumlah() + " " + opsiList.get(i).getSatuan());
                         }
                         getKomposisi();
+                        recordMenu();
                     }
                     Toast.makeText(context, "berhasil memesan", Toast.LENGTH_SHORT).show();
                     ((Activity)context).finish();
@@ -259,7 +264,7 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
         APIReport reportData = ServerConnection.connection().create(APIReport.class);
         Call<ResponseModel> reportUsage = reportData.recordUsage(
                 UsageKomposisiDetail.orderSeries, opsi, opsiJumlah, opsiSatuan,
-                "auto(opsi)", user, UsageKomposisiDetail.formatedTime);
+                "auto(opsi)",user, UsageAutoFrag.jumlahPengunjung, UsageKomposisiDetail.formatedTime);
         reportUsage.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
@@ -294,7 +299,7 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
                             Call<ResponseModel> reportUsage = reportData.recordUsage(
                                     UsageKomposisiDetail.orderSeries, listKomposisi.get(i).getBahan(),
                                     listKomposisi.get(i).getJumlah(), listKomposisi.get(i).getSatuan(),
-                                    "auto(utama)", user, UsageKomposisiDetail.formatedTime);
+                                    "auto(utama)", user,UsageAutoFrag.jumlahPengunjung, UsageKomposisiDetail.formatedTime);
                             reportUsage.enqueue(new Callback<ResponseModel>() {
                                 @Override
                                 public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
@@ -341,6 +346,23 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
                 Toast.makeText(context, "gagal "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void recordMenu(){
+        APIReport data = ServerConnection.connection().create(APIReport.class);
+        Call<ResponseModel> reportData = data.recordMenu(UsageKomposisiDetail.orderSeries,menu,qty,harga,user);
+
+        reportData.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
+                Toast.makeText(context, "gagal record menu: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

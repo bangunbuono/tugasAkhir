@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,11 +37,13 @@ public class UsageAutoFrag extends Fragment {
 
     ListView lvUsageAuto;
     Button btnOrder;
+    EditText etJumlahPengunjung;
     AdapterUsageAuto adapterUsageAuto;
     List<MenuModel> menuModels;
     String konfirmasi, pesanan, user;
-    int jumlah;
+    int jumlah, harga;
     UserSession userSession;
+    public static int jumlahPengunjung;
     public static LinearLayout layoutItem;
     public static TextView tvItem;
 
@@ -69,45 +72,57 @@ public class UsageAutoFrag extends Fragment {
         btnOrder = view.findViewById(R.id.btnOrder1);
         layoutItem = view.findViewById(R.id.layoutItemAuto);
         tvItem = view.findViewById(R.id.tvTotalStockAuto);
+        etJumlahPengunjung = view.findViewById(R.id.etJumlahPengunjung);
+
+        if(!etJumlahPengunjung.getText().toString().isEmpty()){
+            jumlahPengunjung=Integer.parseInt(etJumlahPengunjung.getText().toString().trim());
+        }
 
         getList();
 
         btnOrder.setOnClickListener(view1 -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("konfirmasi pesanan");
-            konfirmasi = "item: ";
-            for (int i = 0; i < menuModels.size(); i++) {
-                if(menuModels.get(i).getQty() != 0) {
-                    pesanan = menuModels.get(i).getMenu();
-                    jumlah = menuModels.get(i).getQty();
-                    konfirmasi = konfirmasi + "\n" + pesanan + ": " + jumlah+"\n";
-                }
-            }
+            if(etJumlahPengunjung.getText().toString().isEmpty()){
+                Toast.makeText(getActivity(), "Isi jumlah pengunjung dahulu", Toast.LENGTH_SHORT).show();
 
-            builder.setMessage(konfirmasi);
-
-            builder.setPositiveButton("Ok", (dialogInterface, i) -> {
-                UsageAutoApplication.orderList = new ArrayList<>();
-                for (i = 0; i < menuModels.size(); i++) {
-                    if(menuModels.get(i).getQty() != 0){
-                        jumlah = menuModels.get(i).getQty();
+            }else {
+                jumlahPengunjung = Integer.parseInt(etJumlahPengunjung.getText().toString().trim());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("konfirmasi pesanan");
+                konfirmasi = "item: ";
+                for (int i = 0; i < menuModels.size(); i++) {
+                    if (menuModels.get(i).getQty() != 0) {
                         pesanan = menuModels.get(i).getMenu();
-                        for(int repetisi = 0; repetisi<jumlah;repetisi++){
-                            UsageAutoApplication.orderList.add(new UsageMenuModel(pesanan, 1));
-                        }
-                        menuModels.get(i).setQty(0);
+                        jumlah = menuModels.get(i).getQty();
+                        konfirmasi = konfirmasi + "\n" + pesanan + ": " + jumlah + "\n";
                     }
-                    //konfirmOrder();
                 }
-                startActivity(new Intent(getActivity(), UsageKomposisiDetail.class));
-                getActivity().finish();
+
+                builder.setMessage(konfirmasi);
+
+                builder.setPositiveButton("Ok", (dialogInterface, i) -> {
+                    UsageAutoApplication.orderList = new ArrayList<>();
+                    for (i = 0; i < menuModels.size(); i++) {
+                        if (menuModels.get(i).getQty() != 0) {
+                            jumlah = menuModels.get(i).getQty();
+                            pesanan = menuModels.get(i).getMenu();
+                            harga = menuModels.get(i).getHarga();
+                            for (int repetisi = 0; repetisi < jumlah; repetisi++) {
+                                UsageAutoApplication.orderList.add(new UsageMenuModel(pesanan, 1, harga));
+                            }
+                            menuModels.get(i).setQty(0);
+                        }
+                        //konfirmOrder();
+                    }
+                    startActivity(new Intent(getActivity(), UsageKomposisiDetail.class));
+                    getActivity().finish();
 //                adapterUsageAuto.notifyDataSetChanged();
 
-            });
-            builder.setNegativeButton(
-                    "Cancel", (dialogInterface, i) -> {
-                    });
-            builder.show();
+                });
+                builder.setNegativeButton(
+                        "Cancel", (dialogInterface, i) -> {
+                        });
+                builder.show();
+            }
         });
         return view;
     }

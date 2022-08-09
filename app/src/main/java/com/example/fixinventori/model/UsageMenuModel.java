@@ -4,6 +4,16 @@ public class UsageMenuModel {
     private String menu,deskripsi;
     private int qty;
 
+    public int getHarga() {
+        return harga;
+    }
+
+    public void setHarga(int harga) {
+        this.harga = harga;
+    }
+
+    private int harga;
+
     public String getDeskripsi() {
         return deskripsi;
     }
@@ -12,9 +22,10 @@ public class UsageMenuModel {
         this.deskripsi = deskripsi;
     }
 
-    public UsageMenuModel(String menu, int qty) {
+    public UsageMenuModel(String menu, int qty, int harga) {
         this.menu = menu;
         this.qty = qty;
+        this.harga = harga;
     }
 
     public String getMenu() {
