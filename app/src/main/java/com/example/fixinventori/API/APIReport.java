@@ -30,7 +30,8 @@ public interface APIReport {
             @Field("jumlah") int jumlah,
             @Field("satuan") String satuan,
             @Field("user") String user,
-            @Field("tanggal_masuk") String waktu
+            @Field("tanggal_masuk") String waktu,
+            @Field("harga") int harga
             );
 
     @FormUrlEncoded

@@ -9,10 +9,16 @@ public class RecordModel {
     private String tanggal;
     private String bahan;
     private String satuan;
-    private int jumlah, pengunjung;
+    private int jumlah;
+    private int pengunjung;
+    private int harga;
 
     public int getPengunjung() {
         return pengunjung;
+    }
+
+    public int getHarga() {
+        return harga;
     }
 
     public void setBahan(String bahan) {

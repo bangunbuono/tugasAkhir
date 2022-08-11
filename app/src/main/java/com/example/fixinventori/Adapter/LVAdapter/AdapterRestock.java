@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
-import com.example.fixinventori.API.APIRequestKomposisi;
 import com.example.fixinventori.API.APIRestock;
 import com.example.fixinventori.API.ServerConnection;
 import com.example.fixinventori.Activity.Restock.InventRestock;
@@ -43,20 +42,19 @@ public class AdapterRestock extends ArrayAdapter<KomposisiModel> {
     List<KomposisiModel> komposisiModels;
     ArrayList<RestockModel> listBahan;
     AdapterSpinnerKomposisi adapterSpinnerBahan;
-    TextView tvBahan, tvSatuan, tvIdBahan, tvJumlah, tvSatuanx ;
+    TextView tvBahan, tvSatuan, tvIdBahan, tvJumlah, tvSatuanx, tvHarga ;
     LinearLayout layoutKomposisi;
     String user, bahan, satuan, refBahan;
     UserSession userSession;
     Dialog dialog;
-    int index, jumlah, id;
+    int index, jumlah, id, harga, newId;
     Spinner spinner;
-    EditText etJumlah;
+    EditText etJumlah, etHarga;
     Button btnEdit, btndelete,btnDismiss;
     CardView cvKomposisi;
 
     public AdapterRestock(Context context, List<KomposisiModel> objects) {
-        super(context, R.layout.komposisi_row,objects);
-
+        super(context, R.layout.restock_row, objects);
         this.context = context;
         komposisiModels = objects;
     }
@@ -68,7 +66,7 @@ public class AdapterRestock extends ArrayAdapter<KomposisiModel> {
         user = userSession.getUserDetail().get("username");
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.komposisi_row, parent, false);
+        convertView = inflater.inflate(R.layout.restock_row, parent, false);
 
         tvIdBahan = convertView.findViewById(R.id.tvIdBahan);
         tvBahan = convertView.findViewById(R.id.tvBahan);
@@ -76,21 +74,24 @@ public class AdapterRestock extends ArrayAdapter<KomposisiModel> {
         tvSatuan = convertView.findViewById(R.id.tvSatuan);
         layoutKomposisi = convertView.findViewById(R.id.layoutKomposisi);
         cvKomposisi = convertView.findViewById(R.id.cardKomposisi);
+        tvHarga = convertView.findViewById(R.id.tvHarga);
 
         dialog = new Dialog(context);
 
         if(komposisiModels.get(position).getId() != -1){
             tvIdBahan.setText(String.valueOf(komposisiModels.get(position).getId()));
         }
+
         tvBahan.setText(komposisiModels.get(position).getBahan());
         tvJumlah.setText(String.valueOf(komposisiModels.get(position).getJumlah()));
         tvSatuan.setText(komposisiModels.get(position).getSatuan());
+        tvHarga.setText(String.format("Rp %s",komposisiModels.get(position).getHarga()));
 
         cvKomposisi.setOnClickListener(view -> {
 
             id = komposisiModels.get(position).getId();
             refBahan = komposisiModels.get(position).getBahan();
-            dialog.setContentView(R.layout.komposisi_dialog);
+            dialog.setContentView(R.layout.restock_dialog);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             listBahan();
 
@@ -98,16 +99,19 @@ public class AdapterRestock extends ArrayAdapter<KomposisiModel> {
             btnEdit = dialog.findViewById(R.id.btnEditKomposisi);
             spinner = dialog.findViewById(R.id.spinnerBahanUtama);
             etJumlah = dialog.findViewById(R.id.etJumlahUtama);
+            etHarga = dialog.findViewById(R.id.etPrice);
             tvSatuanx = dialog.findViewById(R.id.tvSatuanUtama);
             btndelete = dialog.findViewById(R.id.btnDeleteKomposisi);
             btnDismiss = dialog.findViewById(R.id.btnDismiss);
 
             tvBahan.setText(refBahan);
             etJumlah.setText(String.valueOf(komposisiModels.get(position).getJumlah()));
+            etHarga.setText(String.valueOf(komposisiModels.get(position).getHarga()));
 
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    newId = listBahan.get(i).getId();
                     bahan = listBahan.get(i).getBahan_baku();
                     satuan = listBahan.get(i).getSatuan();
                     tvSatuanx.setText(satuan);
@@ -120,18 +124,24 @@ public class AdapterRestock extends ArrayAdapter<KomposisiModel> {
             });
 
             btnEdit.setOnClickListener(view1 -> {
-                if(etJumlah.getText().toString().isEmpty()){
+                if(etJumlah.getText().toString().isEmpty() || etHarga.getText().toString().isEmpty()){
                     etJumlah.setError("Harus diisi");
                 }else {
                     jumlah = Integer.parseInt(etJumlah.getText().toString().trim());
+                    harga = Integer.parseInt(etHarga.getText().toString().trim());
                 }
+                InventRestock.listId.set(position, newId);
+                komposisiModels.get(position).setId(newId);
                 komposisiModels.get(position).setBahan(bahan);
                 komposisiModels.get(position).setJumlah(jumlah);
                 komposisiModels.get(position).setSatuan(satuan);
+                komposisiModels.get(position).setHarga(harga);
                 notifyDataSetChanged();
+                InventRestock.checkItem();
+
                 //updateKomposisi();
 
-                dialog.dismiss();
+                new Handler().postDelayed(() -> dialog.dismiss(),200);
             });
 
             btndelete.setOnClickListener(view1 -> {
@@ -156,29 +166,6 @@ public class AdapterRestock extends ArrayAdapter<KomposisiModel> {
         });
 
         return convertView;
-    }
-
-    private void deleteKomposisi() {
-        APIRequestKomposisi komposisiData = ServerConnection.connection().create(APIRequestKomposisi.class);
-        Call<ResponseModel> deleteKomposisi = komposisiData.deleteKomposisi(id, user);
-
-        deleteKomposisi.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                if(response.body() != null) {
-                    String pesan = response.body().getPesan();
-                    Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show();
-                    notifyDataSetChanged();
-                    dialog.dismiss();
-                }
-            }
-
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void listBahan() {

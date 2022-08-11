@@ -16,6 +16,7 @@ import com.example.fixinventori.API.APIReport;
 import com.example.fixinventori.API.ServerConnection;
 import com.example.fixinventori.Activity.User.UserSession;
 import com.example.fixinventori.Adapter.LVAdapter.AdapterRecordDetail;
+import com.example.fixinventori.Adapter.LVAdapter.AdapterRecordInDetail;
 import com.example.fixinventori.Adapter.LVAdapter.AdapterRecordMenu;
 import com.example.fixinventori.R;
 import com.example.fixinventori.model.RecordModel;
@@ -38,7 +39,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReportDetail extends AppCompatActivity {
-    TextView tvReportDetail, tvRecordDate, tvJumlahPengunjung, tvDataPemesaanan;
+    TextView tvReportDetail, tvRecordDate, tvJumlahPengunjung, tvDataPemesaanan, tvTotalPrice, tvTotalPrice2,
+            tvTitleHarga;
     String code, keterangan, user;
     List<RecordModel> recordDetail;
     List<UsageMenuModel> listMenu;
@@ -48,8 +50,10 @@ public class ReportDetail extends AppCompatActivity {
     UserSession userSession;
     AdapterRecordDetail adapterRecordDetail;
     AdapterRecordMenu adapterRecordMenu;
+    AdapterRecordInDetail adapterRecordInDetail;
     BarChart barChart;
     LinearLayout llRecordMenu;
+    int totalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +72,10 @@ public class ReportDetail extends AppCompatActivity {
         tvJumlahPengunjung = findViewById(R.id.tvJumlahPengunjung);
         lvRecordMenu = findViewById(R.id.lvRecordMenu);
         llRecordMenu = findViewById(R.id.llMenuRecord);
+        tvTotalPrice = findViewById(R.id.tvTotalPrice);
+        tvTotalPrice2 = findViewById(R.id.tvTotalPrice2);
         tvDataPemesaanan = findViewById(R.id.tvDataPemesanan);
+        tvTitleHarga = findViewById(R.id.tvTitleHarga);
 
         Intent intent = getIntent();
         code = intent.getStringExtra("kode");
@@ -93,11 +100,24 @@ public class ReportDetail extends AppCompatActivity {
                 if(recordDetail!=null){
                     if(code.contains("B")){
                         getMenuRecord();
-                        if(recordDetail.get(0).getPengunjung()==0) tvJumlahPengunjung.setText("Ojek online");
+                        if(recordDetail.get(0).getPengunjung()==0) tvJumlahPengunjung.setText(R.string.ojek_online);
                         else tvJumlahPengunjung.setText(String.format("Jumlah pengunjung: %s", recordDetail.get(0).getPengunjung()));
-                    }else tvJumlahPengunjung.setVisibility(View.GONE);
-                    adapterRecordDetail = new AdapterRecordDetail(ReportDetail.this, recordDetail);
-                    lvRecordDetail.setAdapter(adapterRecordDetail);
+                        adapterRecordDetail = new AdapterRecordDetail(ReportDetail.this, recordDetail);
+                        lvRecordDetail.setAdapter(adapterRecordDetail);
+                    }else {
+                        tvJumlahPengunjung.setVisibility(View.GONE);
+                        totalPrice = 0;
+                        for (RecordModel model: recordDetail) {
+                            totalPrice += model.getHarga();
+                        }
+                        tvTitleHarga.setVisibility(View.VISIBLE);
+                        tvTotalPrice2.setVisibility(View.VISIBLE);
+                        tvTotalPrice2.setText(String.format("Total = Rp %s", totalPrice));
+
+                        adapterRecordInDetail = new AdapterRecordInDetail(ReportDetail.this, recordDetail);
+                        lvRecordDetail.setAdapter(adapterRecordInDetail);
+                    }
+
                     tvRecordDate.setText(String.format(("Waktu %s: %s"), keterangan, recordDetail.get(0).getTanggal()));
 
                     for (int i = 0, recordDetailSize = recordDetail.size(); i < recordDetailSize; i++) {
@@ -157,6 +177,11 @@ public class ReportDetail extends AppCompatActivity {
                         lvRecordMenu.setAdapter(adapterRecordMenu);
                         llRecordMenu.setVisibility(View.VISIBLE);
                         tvDataPemesaanan.setVisibility(View.VISIBLE);
+                        totalPrice = 0;
+                        for (UsageMenuModel model: listMenu) {
+                            totalPrice += model.getHarga();
+                        }
+                        tvTotalPrice.setText(String.format("Total = Rp %s", totalPrice));
                     }
                 }
             }

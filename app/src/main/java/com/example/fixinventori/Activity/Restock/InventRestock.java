@@ -41,19 +41,20 @@ public class InventRestock extends AppCompatActivity {
 
     Spinner spinRestock;
     ArrayList<RestockModel> restockList = new ArrayList<>();
-    public ArrayList<KomposisiModel> listRestock;
+    public static ArrayList<KomposisiModel> listRestock;
     public static ArrayList<Integer> listId;
     ListView lvRestock;
     AdapterRestock adapterStock;
     TextView tvRestockSatuan;
     @SuppressLint("StaticFieldLeak")
     public static TextView tvTotal;
-    EditText etRestockJumlah;
+    EditText etRestockJumlah, etRestockPrice;
     AdapterSpinnerRestock adapterRestock;
     Button btnCollectRestock, btnAddRestocklist;
     String user, bahan, satuan, bahanI, satuanI, formatedTime;
     UserSession userSession;
-    int id, jumlah, jumlahI, idI;
+    int id, jumlah, jumlahI, idI, harga, hargaItem;
+    public static int hargaI;
     @SuppressLint("StaticFieldLeak")
     public static LinearLayout layoutRestock;
     LocalDateTime time;
@@ -76,6 +77,7 @@ public class InventRestock extends AppCompatActivity {
         lvRestock = findViewById(R.id.lvRestock);
         tvTotal = findViewById(R.id.tvTotalRestock);
         layoutRestock = findViewById(R.id.layoutRestock);
+        etRestockPrice = findViewById(R.id.etRestockPrice);
 
         restockList = new ArrayList<>();
         listRestock = new ArrayList<>();
@@ -103,16 +105,18 @@ public class InventRestock extends AppCompatActivity {
 
         btnAddRestocklist.setOnClickListener(view -> {
             checkList();
-            if(etRestockJumlah.getText().toString().isEmpty()){
-                Toast.makeText(this, "Isi jumlah dulu", Toast.LENGTH_SHORT).show();
+            if(etRestockJumlah.getText().toString().isEmpty() || etRestockPrice.getText().toString().isEmpty()){
+                Toast.makeText(this, "Isi semua field dahulu", Toast.LENGTH_SHORT).show();
             }else {
                 jumlah = Integer.parseInt(etRestockJumlah.getText().toString().trim());
+                harga = Integer.parseInt((etRestockPrice.getText().toString().trim()));
                 if (!listId.contains(id)) {
-                    listRestock.add(new KomposisiModel(id, bahan, satuan, jumlah));
+                    listRestock.add(new KomposisiModel(id, bahan, satuan, jumlah, harga));
                     listId.add(id);
                     adapterStock.notifyDataSetChanged();
                     checkItem();
                     etRestockJumlah.setText(null);
+                    etRestockPrice.setText(null);
                     spinRestock.setSelection(0);
                 } else {
                     Toast.makeText(this, "Bahan sudah ada di daftar", Toast.LENGTH_SHORT).show();
@@ -129,7 +133,6 @@ public class InventRestock extends AppCompatActivity {
             formatedTime = timeFormatter.format(time);
             date = dtf.format(time);
             orderSeries = "C."+date;
-            System.out.println(time);
 
             if(listRestock!=null && listRestock.size()!=0){
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -147,6 +150,7 @@ public class InventRestock extends AppCompatActivity {
                         jumlahI = Integer.parseInt(tvJumlah.getText().toString().trim());
                         bahanI = tvBahan.getText().toString().trim();
                         satuanI = tvSatuan.getText().toString().trim();
+                        hargaItem = listRestock.get(i).getHarga();
                         recordRestock();
                         restockAdd();
                     }
@@ -168,11 +172,15 @@ public class InventRestock extends AppCompatActivity {
         }
     }
 
-    public void checkItem(){
+    public static void checkItem(){
         if(listRestock!=null){
             if(listRestock.size()!=0){
+                hargaI = 0;
+                for(KomposisiModel model: listRestock){
+                    hargaI += model.getHarga();
+                }
                 layoutRestock.setVisibility(View.VISIBLE);
-                tvTotal.setText(String.format("Total %s item", listRestock.size()));
+                tvTotal.setText(String.format("Total %s item = Rp %s", listRestock.size(), hargaI));
             }else {
                 layoutRestock.setVisibility(View.GONE);
             }
@@ -214,7 +222,7 @@ public class InventRestock extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(InventRestock.this, "gaga menambahkan stok "+t.getMessage(),
+                Toast.makeText(InventRestock.this, "gagal menambahkan stok "+t.getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -222,7 +230,7 @@ public class InventRestock extends AppCompatActivity {
 
     private void recordRestock(){
         APIReport record = ServerConnection.connection().create(APIReport.class);
-        Call<ResponseModel> recordData = record.recordRestock(orderSeries,bahanI,jumlahI,satuanI,user,formatedTime);
+        Call<ResponseModel> recordData = record.recordRestock(orderSeries,bahanI,jumlahI,satuanI,user,formatedTime,hargaItem);
 
         recordData.enqueue(new Callback<ResponseModel>() {
             @Override
@@ -232,7 +240,7 @@ public class InventRestock extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(InventRestock.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(InventRestock.this, "gagal record restock"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -251,9 +259,10 @@ public class InventRestock extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(InventRestock.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(InventRestock.this, "gagal record"+ t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
     }
+
 }

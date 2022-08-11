@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:overScrollMode="always"
+    android:isScrollContainer="true"
     android:animateLayoutChanges="true"
     tools:context="com.example.fixinventori.Activity.Report.ReportDetail">
 
@@ -14,6 +16,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:layout_margin="5dp"
+        android:layout_alignParentTop="true"
         android:textSize="20sp"/>
 
     <TextView
@@ -22,6 +25,7 @@
         android:layout_margin="@dimen/_5sdp"
         android:textSize="17sp"
         android:textStyle="bold"
+        android:layout_below="@id/tvReportDetail"
         android:layout_height="wrap_content"/>
 
     <TextView
@@ -29,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp"
         android:textStyle="bold"
+        android:layout_below="@id/tvRecordDateDetail"
         android:id="@+id/tvJumlahPengunjung"/>
 
     <TextView
@@ -37,6 +42,7 @@
         android:layout_height="wrap_content"
         android:text="Data Pemesanan"
         android:textStyle="bold"
+        android:layout_below="@id/tvJumlahPengunjung"
         android:layout_margin="@dimen/_5sdp"
         android:visibility="gone"
         android:textSize="@dimen/_16ssp"/>
@@ -45,6 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
+        android:layout_below="@id/tvDataPemesanan"
         android:id="@+id/llMenuRecord"
         android:visibility="gone"
         android:orientation="horizontal">
@@ -54,7 +61,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:text="Menu"
-
             android:textSize="17sp"/>
 
         <TextView
@@ -76,12 +82,27 @@
     <ListView
         android:id="@+id/lvRecordMenu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/llMenuRecord"
+        android:isScrollContainer="false"/>
 
     <TextView
+        android:layout_below="@id/lvRecordMenu"
+        android:id="@+id/tvTotalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textAlignment="viewEnd"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/tvDataBahan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Data Jumlah bahan"
+        android:layout_below="@id/tvTotalPrice"
         android:textStyle="bold"
         android:layout_margin="@dimen/_5sdp"
         android:textSize="@dimen/_16ssp"/>
@@ -90,28 +111,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
+        android:layout_below="@id/tvDataBahan"
+        android:id="@+id/llDataBahan"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:text="Bahan"
-
             android:textSize="17sp"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:text="Jumlah"
             android:textSize="17sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:text="Satuan"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/tvTitleHarga"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:visibility="gone"
+            android:text="harga"
+            android:textAlignment="center"
             android:textSize="17sp"/>
 
     </LinearLayout>
@@ -119,12 +151,26 @@
     <ListView
         android:id="@+id/lvRecordDetail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/llDataBahan"
+        android:isScrollContainer="true"/>
+
+    <TextView
+        android:id="@+id/tvTotalPrice2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lvRecordDetail"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/_5sdp"
+        android:text="Total Rp 200000" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:layout_marginTop="20dp"
+        android:layout_below="@id/lvRecordDetail"
         android:id="@+id/barChart"
         android:layout_width="match_parent"
         android:layout_height="200dp"/>
 
-</LinearLayout>
+</RelativeLayout>
