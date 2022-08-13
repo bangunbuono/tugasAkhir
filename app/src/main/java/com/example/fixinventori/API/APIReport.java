@@ -145,7 +145,30 @@ public interface APIReport {
             @Field("menu") String menu,
             @Field("jumlah") int jumlah,
             @Field("harga") int harga,
-            @Field("user") String user
+            @Field("user") String user,
+            @Field("tanggal_keluar") String waktu
     );
+
+    @FormUrlEncoded
+    @POST("statmenu.php")
+    Call<ResponseModel> statMenu(
+            @Field("user") String user,
+            @Field("menu") String menu,
+            @Field("week") int week,
+            @Field("month") int month,
+            @Field("year") int year,
+            @Field("keterangan") String keterangan
+    );
+
+    @FormUrlEncoded
+    @POST("statpengunjung.php")
+    Call<ResponseModel> statPengunjung(
+            @Field("user") String user,
+            @Field("week") int week,
+            @Field("month") int month,
+            @Field("year") int year,
+            @Field("keterangan") String keterangan
+    );
+
 
 }

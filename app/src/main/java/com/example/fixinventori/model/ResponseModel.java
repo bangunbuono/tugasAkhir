@@ -19,6 +19,30 @@ public class ResponseModel {
     private List<RecordModel> date;
     private List<StatModel> statmodel;
     private List<StatModel> statSatuan;
+
+    public List<StatModel> getStatPengunjung() {
+        return statPengunjung;
+    }
+
+    private List<StatModel> statPengunjung;
+
+    public List<StatModel> getStatMenu() {
+        return statMenu;
+    }
+
+    public void setStatMenu(List<StatModel> statMenu) {
+        this.statMenu = statMenu;
+    }
+
+    public void setRecordManager(List<ManagerModel> recordManager) {
+        this.recordManager = recordManager;
+    }
+
+    public void setRecordMenu(List<UsageMenuModel> recordMenu) {
+        this.recordMenu = recordMenu;
+    }
+
+    private List<StatModel> statMenu;
     private List<ManagerModel> recordManager;
 
     public List<UsageMenuModel> getRecordMenu() {

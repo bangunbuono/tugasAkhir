@@ -5,13 +5,39 @@ import com.google.gson.annotations.SerializedName;
 public class StatModel {
     private String satuan;
     private String bahan;
+    private String menu;
     @SerializedName("tanggal_keluar")
     private String date;
     private int jumlah;
     @SerializedName("tanggal_masuk") private String dateIn;
+    private String pengunjung, tanggal;
+
+    public String getPengunjung() {
+        return pengunjung;
+    }
+
+    public void setPengunjung(String pengunjung) {
+        this.pengunjung = pengunjung;
+    }
+
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
 
     public String getDateIn() {
         return dateIn;
+    }
+
+    public String getMenu() {
+        return menu;
+    }
+
+    public void setMenu(String menu) {
+        this.menu = menu;
     }
 
     public void setDateIn(String dateIn) {

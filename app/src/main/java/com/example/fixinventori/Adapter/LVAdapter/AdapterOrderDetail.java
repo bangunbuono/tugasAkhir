@@ -352,7 +352,8 @@ public class AdapterOrderDetail extends ArrayAdapter<UsageMenuModel> {
 
     private void recordMenu(){
         APIReport data = ServerConnection.connection().create(APIReport.class);
-        Call<ResponseModel> reportData = data.recordMenu(UsageKomposisiDetail.orderSeries,menu,qty,harga,user);
+        Call<ResponseModel> reportData = data.recordMenu(
+                UsageKomposisiDetail.orderSeries,menu,qty,harga,user, UsageKomposisiDetail.formatedTime);
 
         reportData.enqueue(new Callback<ResponseModel>() {
             @Override
