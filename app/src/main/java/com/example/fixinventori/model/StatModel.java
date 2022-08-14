@@ -9,15 +9,22 @@ public class StatModel {
     @SerializedName("tanggal_keluar")
     private String date;
     private int jumlah;
-    @SerializedName("tanggal_masuk") private String dateIn;
-    private String pengunjung, tanggal;
+    private int pengunjung;
 
-    public String getPengunjung() {
+    private int harga;
+
+    @SerializedName("tanggal_masuk") private String dateIn;
+    private String tanggal;
+    public int getPengunjung() {
         return pengunjung;
     }
 
-    public void setPengunjung(String pengunjung) {
+    public void setPengunjung(int pengunjung) {
         this.pengunjung = pengunjung;
+    }
+
+    public int getHarga() {
+        return harga;
     }
 
     public String getTanggal() {

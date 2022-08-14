@@ -170,5 +170,25 @@ public interface APIReport {
             @Field("keterangan") String keterangan
     );
 
+    @FormUrlEncoded
+    @POST("statCashOut.php")
+    Call<ResponseModel> statCashOut(
+            @Field("user") String user,
+            @Field("week") int week,
+            @Field("month") int month,
+            @Field("year") int year,
+            @Field("keterangan") String keterangan
+    );
+
+    @FormUrlEncoded
+    @POST("statCashIn.php")
+    Call<ResponseModel> statCashIn(
+            @Field("user") String user,
+            @Field("week") int week,
+            @Field("month") int month,
+            @Field("year") int year,
+            @Field("keterangan") String keterangan
+    );
+
 
 }

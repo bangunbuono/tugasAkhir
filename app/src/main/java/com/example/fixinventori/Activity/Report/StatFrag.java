@@ -54,6 +54,8 @@ public class StatFrag extends Fragment {
     List<StatModel> listBahan = new ArrayList<>();
     List<StatModel> listMenu = new ArrayList<>();
     List<StatModel> listPengunjung = new ArrayList<>();
+    List<StatModel> listCashOut = new ArrayList<>();
+    List<StatModel> listCashIn = new ArrayList<>();
     List<StocksModel> bahanList = new ArrayList<>();
     List<MenuModel> menuList = new ArrayList<>();
     ArrayList<String> satuanFilter = new ArrayList<>();
@@ -228,6 +230,18 @@ public class StatFrag extends Fragment {
                     barChartStat.setVisibility(View.GONE);
                     check();
                     pengunjungList();
+                }else  if(mode.equals("cash flow")){
+                    spinnerStatFilter2.setVisibility(View.GONE);
+                    spinnerStatFilter2.setActivated(false);
+                    if (barEntries!=null) barEntries.clear();
+                    if (xValue!=null) xValue.clear();
+                    if (lineEntries!=null) lineEntries.clear();
+                    barChartStat.setVisibility(View.GONE);
+                    lineChartSat.invalidate();
+                    lineChartSat.clear();
+                    check();
+                    getStatCashOut();
+                    getStatCashIn();
                 }
 
             }
@@ -293,6 +307,10 @@ public class StatFrag extends Fragment {
                 else if(mode.equals("mode 2") && filterBahan.equals("barang_masuk")) getDataBahanIn();
                 else if(mode.equals("menu")) getMenu();
                 else if(mode.equals("pengunjung")) pengunjungList();
+                else if(mode.equals("cash flow")) {
+                    getStatCashOut();
+                    getStatCashIn();
+                }
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -366,7 +384,7 @@ public class StatFrag extends Fragment {
                         satuanFilter.add(model.getSatuan());
                     }
                     filter2adapter = new ArrayAdapter<>(getActivity(),
-                            android.R.layout.simple_spinner_item, satuanFilter);
+                            R.layout.custom_simple_spinner_item, satuanFilter);
                     filter2adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerStatFilter2.setAdapter(filter2adapter);
                     spinnerStatFilter2.setSelection(0);
@@ -802,8 +820,65 @@ public class StatFrag extends Fragment {
             public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
                 if(response.body()!=null) {
                     listPengunjung = response.body().getStatPengunjung();
-                    listPengunjung.forEach(statModel ->
-                            System.out.println(statModel.getTanggal() + " " + statModel.getPengunjung()));
+                    if (listPengunjung != null) {
+                        listPengunjung.forEach(statModel ->
+                                System.out.println(statModel.getTanggal() + " " + statModel.getPengunjung()));
+                        lineEntries = new ArrayList<>();
+                        xValue = new ArrayList<>();
+                        int index = 0;
+                        for (StatModel model : listPengunjung) {
+                            lineEntries.add(new Entry(index, model.getPengunjung()));
+                            xValue.add(model.getTanggal());
+                            index++;
+                        }
+                        lineDataSet = new LineDataSet(lineEntries, "Pengunjung");
+                        lineDataSet.setColors(Color.BLACK);
+                        lineDataSet.setValueTextSize(15f);
+                        LineData lineData = new LineData(lineDataSet);
+                        lineData.setDrawValues(true);
+                        XAxis xAxis = lineChartSat.getXAxis();
+                        xAxis.setTextSize(2f);
+                        xAxis.setGranularityEnabled(true);
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        xAxis.setDrawGridLines(false);
+                        xAxis.setValueFormatter((value, axis) -> {
+                            try {
+                                int index1 = (int) value;
+                                return xValue.get((index1));
+                            } catch (Exception e) {
+                                return "";
+                            }
+                        });
+                        lineChartSat.setVisibility(View.VISIBLE);
+                        lineChartSat.getAxisLeft().setDrawGridLines(false);
+                        lineChartSat.getAxisRight().setDrawLabels(false);
+                        lineChartSat.animateY(1000);
+                        lineChartSat.setData(lineData);
+                    } else {
+                        lineChartSat.clear();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                Toast.makeText(getActivity(), "Gagal memuat chart pengunjung "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getStatCashOut(){
+        APIReport data = ServerConnection.connection().create(APIReport.class);
+        Call<ResponseModel> getData = data.statCashOut(user, week, month, year, keterangan);
+
+        getData.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+                if(response.body()!=null){
+                    listCashOut = response.body().getStatCashOut();
+                    if(listCashOut!=null)
+                    listCashOut.forEach(statModel ->
+                            System.out.println("Out: "+statModel.getHarga() +" "+statModel.getTanggal()));
                 }
             }
 
@@ -813,5 +888,28 @@ public class StatFrag extends Fragment {
             }
         });
     }
+
+    private void getStatCashIn(){
+        APIReport data = ServerConnection.connection().create(APIReport.class);
+        Call<ResponseModel> getData = data.statCashIn(user, week, month, year, keterangan);
+
+        getData.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+                if(response.body()!=null){
+                    listCashIn = response.body().getStatCashIn();
+                    if(listCashIn!=null)
+                    listCashIn.forEach(statModel ->
+                            System.out.println("In: "+ statModel.getHarga() +" "+statModel.getTanggal()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
 
 }

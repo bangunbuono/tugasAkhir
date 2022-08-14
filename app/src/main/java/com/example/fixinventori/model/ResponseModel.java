@@ -19,6 +19,16 @@ public class ResponseModel {
     private List<RecordModel> date;
     private List<StatModel> statmodel;
     private List<StatModel> statSatuan;
+    private List<StatModel> statCashOut;
+    private List<StatModel> statCashIn;
+
+    public List<StatModel> getStatCashOut() {
+        return statCashOut;
+    }
+
+    public List<StatModel> getStatCashIn() {
+        return statCashIn;
+    }
 
     public List<StatModel> getStatPengunjung() {
         return statPengunjung;
