@@ -21,6 +21,10 @@ public class ResponseModel {
     private List<StatModel> statSatuan;
     private List<StatModel> statCashOut;
     private List<StatModel> statCashIn;
+    private List<StatModel> statPengunjung;
+    private List<StatModel> statMenu;
+    private List<ManagerModel> recordManager;
+    private List<UsageMenuModel> recordMenu;
 
     public List<StatModel> getStatCashOut() {
         return statCashOut;
@@ -33,8 +37,6 @@ public class ResponseModel {
     public List<StatModel> getStatPengunjung() {
         return statPengunjung;
     }
-
-    private List<StatModel> statPengunjung;
 
     public List<StatModel> getStatMenu() {
         return statMenu;
@@ -52,14 +54,9 @@ public class ResponseModel {
         this.recordMenu = recordMenu;
     }
 
-    private List<StatModel> statMenu;
-    private List<ManagerModel> recordManager;
-
     public List<UsageMenuModel> getRecordMenu() {
         return recordMenu;
     }
-
-    private List<UsageMenuModel> recordMenu;
 
     public List<ManagerModel> getRecordManager() {
         return recordManager;
@@ -74,8 +71,6 @@ public class ResponseModel {
     }
 
     private List<StatModel> statBahan;
-
-
 
 
     public List<StatModel> getStatSatuan() {
