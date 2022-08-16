@@ -2,7 +2,7 @@ package com.example.fixinventori.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class StatModel {
+public class StatModel implements Comparable<StatModel>{
     private String satuan;
     private String bahan;
     private String menu;
@@ -81,5 +81,15 @@ public class StatModel {
 
     public void setSatuan(String satuan) {
         this.satuan = satuan;
+    }
+
+    @Override
+    public int compareTo(StatModel statModel) {
+        if (this.getHarga() > statModel.getHarga()) {
+            return 1;
+        } else if (this.getHarga() < statModel.getHarga()) {
+            return -1;
+        }
+        return 0;
     }
 }

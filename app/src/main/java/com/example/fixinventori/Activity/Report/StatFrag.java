@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.example.fixinventori.model.StatModel;
 import com.example.fixinventori.model.StocksModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -41,6 +43,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -64,9 +67,10 @@ public class StatFrag extends Fragment {
     ArrayList<String> menuFilter = new ArrayList<>();
     ArrayList<BarEntry> barEntries;
     ArrayList<Entry> lineEntries, lineEntries2;
-    ArrayList<String> xValue, date;
+    public static ArrayList<String> xValue;
     ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
     RadioGroup radioGroup, radioGroupFilter;
+    TextView tvStat;
     RadioButton radioButton, radioBahanMasuk, radioBahanKeluar;
     Spinner spinnerStatFilter, spinnerStatFilter2;
     BarChart barChartStat;
@@ -103,6 +107,7 @@ public class StatFrag extends Fragment {
         lineChartSat = view.findViewById(R.id.lineChartStat);
         radioBahanKeluar = view.findViewById(R.id.radioBahanKeluar);
         radioBahanMasuk = view.findViewById(R.id.radioBahanMasuk);
+        tvStat = view.findViewById(R.id.tvStat);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setMinimalDaysInFirstWeek(4);
@@ -113,7 +118,9 @@ public class StatFrag extends Fragment {
         year = calendar.get(Calendar.YEAR);
         keterangan = "weekly";
         filterBahan = "barang_keluar";
-        date = new ArrayList<>();
+
+        IMarker iMarker = new LineChartMarkerView(getActivity(), R.layout.tv_content_view);
+        lineChartSat.setMarker(iMarker);
 
         ArrayList<String> modeFilter = new ArrayList<>();
         modeFilter.add("mode 1");
@@ -622,9 +629,10 @@ public class StatFrag extends Fragment {
                     }
                     lineDataSet = new LineDataSet(lineEntries, listBahan.get(0).getBahan());
                     lineDataSet.setColors(Color.BLACK);
+                    lineDataSet.setDrawValues(false);
                     lineDataSet.setValueTextSize(15f);
                     LineData lineData = new LineData(lineDataSet);
-                    lineData.setDrawValues(true);
+
                     XAxis xAxis = lineChartSat.getXAxis();
                     xAxis.setTextSize(2f);
                     xAxis.setGranularityEnabled(true);
@@ -739,10 +747,11 @@ public class StatFrag extends Fragment {
                         index++;
                     }
                     lineDataSet = new LineDataSet(lineEntries, listBahan.get(0).getBahan());
+                    lineDataSet.setDrawValues(false);
                     lineDataSet.setColors(Color.BLACK);
                     lineDataSet.setValueTextSize(15f);
                     LineData lineData = new LineData(lineDataSet);
-                    lineData.setDrawValues(true);
+
                     XAxis xAxis = lineChartSat.getXAxis();
                     xAxis.setTextSize(2f);
                     xAxis.setGranularityEnabled(true);
@@ -796,9 +805,10 @@ public class StatFrag extends Fragment {
                     }
                     lineDataSet = new LineDataSet(lineEntries, listMenu.get(0).getMenu());
                     lineDataSet.setColors(Color.BLACK);
+                    lineDataSet.setDrawValues(false);
                     lineDataSet.setValueTextSize(15f);
                     LineData lineData = new LineData(lineDataSet);
-                    lineData.setDrawValues(true);
+
                     XAxis xAxis = lineChartSat.getXAxis();
                     xAxis.setTextSize(2f);
                     xAxis.setGranularityEnabled(true);
@@ -850,10 +860,10 @@ public class StatFrag extends Fragment {
                             index++;
                         }
                         lineDataSet = new LineDataSet(lineEntries, "Pengunjung");
+                        lineDataSet.setDrawValues(false);
                         lineDataSet.setColors(Color.BLACK);
                         lineDataSet.setValueTextSize(15f);
                         LineData lineData = new LineData(lineDataSet);
-                        lineData.setDrawValues(true);
                         XAxis xAxis = lineChartSat.getXAxis();
                         xAxis.setTextSize(2f);
                         xAxis.setGranularityEnabled(true);
@@ -907,8 +917,9 @@ public class StatFrag extends Fragment {
                             xValue.add(statModel.getTanggal());
                             index2++;
                         }
-                        lineEntries2.forEach(entry -> System.out.println("out "+entry.getY()));
+
                         lineDataSet2 = new LineDataSet(lineEntries2, "Out");
+                        lineDataSet2.setDrawValues(false);
                         lineDataSet2.setColors(Color.BLUE);
                         lineDataSet2.setCircleColor(Color.BLUE);
                         lineDataSet2.setLineWidth(5f);
@@ -944,6 +955,7 @@ public class StatFrag extends Fragment {
                         if(response.body()!=null){
                             listCashIn = response.body().getStatCashIn();
                             lineEntries = new ArrayList<>();
+
                             if(listCashIn!=null) {
                                 int index = 0;
                                 xValue = new ArrayList<>();
@@ -953,9 +965,9 @@ public class StatFrag extends Fragment {
                                     lineEntries.add(new Entry(index, statModel.getHarga()));
                                     index++;
                                 }
-                                lineEntries.forEach(entry -> System.out.println("in " + entry.getY()));
                                 lineDataSet = new LineDataSet(lineEntries, "In");
                                 lineDataSet.setColors(Color.RED);
+                                lineDataSet.setDrawValues(false);
                                 lineDataSet.setCircleColor(Color.RED);
                                 lineDataSet.setLineWidth(5f);
                                 lineDataSet.setDrawCircleHole(false);
@@ -963,6 +975,7 @@ public class StatFrag extends Fragment {
                                 lineDataSet.setDrawFilled(true);
                                 lineDataSet.setFillColor(Color.RED);
                                 lineDataSets.add(lineDataSet);
+
 
                                 if (lineEntries.size() > 0 && lineEntries2.size() > 0) {
                                     LineData lineData = new LineData(lineDataSets);
@@ -984,14 +997,30 @@ public class StatFrag extends Fragment {
                                     lineChartSat.animateX(1000);
                                 }else if(lineEntries2.size()>0){
                                     LineData lineData = new LineData(lineDataSet2);
-                                    lineChartSat.setData(lineData);
-                                    lineChartSat.invalidate();
                                     lineChartSat.setVisibility(View.VISIBLE);
                                     lineChartSat.getAxisLeft().setDrawGridLines(false);
                                     lineChartSat.getAxisRight().setDrawLabels(false);
                                     lineChartSat.getDescription().setTextSize(10f);
                                     lineChartSat.animateX(1000);
+                                    lineChartSat.setTouchEnabled(true);
+                                    lineChartSat.setData(lineData);
+                                    lineChartSat.invalidate();
                                 }
+                                StatModel maxCashIn = Collections.max(listCashIn);
+                                StatModel maxCashOut = Collections.max(listCashOut);
+                                StatModel minCashIn = Collections.min(listCashIn);
+                                StatModel minCashOut = Collections.min(listCashOut);
+
+                                tvStat.setText(String.format("Pemasukan terbesar Rp %s saat %s \n" +
+                                        "Pemasukan terkecil Rp %s saat %s \n" +
+                                        "Pengeluaran terbesar Rp %s saat %s \n" +
+                                        "Pengeluaran terkecil Rp %s saat %s",
+                                        maxCashIn.getHarga(), maxCashIn.getTanggal(),
+                                        minCashIn.getHarga(), minCashIn.getTanggal(),
+                                        maxCashOut.getHarga(), maxCashOut.getTanggal(),
+                                        minCashOut.getHarga(), minCashOut.getTanggal()));
+                                tvStat.setVisibility(View.VISIBLE);
+
                             }
                         }
                     }
