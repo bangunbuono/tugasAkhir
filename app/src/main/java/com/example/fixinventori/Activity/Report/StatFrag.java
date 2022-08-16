@@ -67,7 +67,7 @@ public class StatFrag extends Fragment {
     ArrayList<String> menuFilter = new ArrayList<>();
     ArrayList<BarEntry> barEntries;
     ArrayList<Entry> lineEntries, lineEntries2;
-    public static ArrayList<String> xValue;
+    ArrayList<String> xValue;
     ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
     RadioGroup radioGroup, radioGroupFilter;
     TextView tvStat;
@@ -80,7 +80,6 @@ public class StatFrag extends Fragment {
     ArrayAdapter<String> filter2adapter;
     BarDataSet barDataSet;
     LineDataSet lineDataSet, lineDataSet2;
-    LineData lineDatas;
 
     public StatFrag() {
         // Required empty public constructor
@@ -119,7 +118,7 @@ public class StatFrag extends Fragment {
         keterangan = "weekly";
         filterBahan = "barang_keluar";
 
-        IMarker iMarker = new LineChartMarkerView(getActivity(), R.layout.tv_content_view);
+        IMarker iMarker = new LineChartMarkerView(getActivity(), R.layout.tv_content_view, lineChartSat);
         lineChartSat.setMarker(iMarker);
 
         ArrayList<String> modeFilter = new ArrayList<>();
@@ -138,24 +137,14 @@ public class StatFrag extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 radioButton = radioGroup.findViewById(i);
-                if(barEntries!=null) barEntries.clear();
-                if(xValue!=null) xValue.clear();
-                if (lineEntries!=null) lineEntries.clear();
-                barChartStat.invalidate();
-                barChartStat.clear();
+                initStat();
                 mode = spinnerAdapter.getItem(i);
                 if(mode.equals("mode 1") && filterBahan.equals("barang_keluar")){
                     radioGroupFilter.setVisibility(View.VISIBLE);
                     radioGroupFilter.setActivated(true);
                     spinnerStatFilter2.setVisibility(View.VISIBLE);
                     spinnerStatFilter2.setActivated(true);
-                    if (barEntries!=null) barEntries.clear();
-                    if (xValue!=null) xValue.clear();
-                    if (lineEntries!=null) lineEntries.clear();
-                    barChartStat.invalidate();
-                    barChartStat.clear();
-                    lineChartSat.invalidate();
-                    lineChartSat.clear();
+                    initStat();
                     lineChartSat.setVisibility(View.GONE);
                     satuanList();
                     check();
@@ -168,13 +157,7 @@ public class StatFrag extends Fragment {
                     radioGroupFilter.setActivated(true);
                     spinnerStatFilter2.setVisibility(View.VISIBLE);
                     spinnerStatFilter2.setActivated(true);
-                    if (barEntries!=null) barEntries.clear();
-                    if (xValue!=null) xValue.clear();
-                    if (lineEntries!=null) lineEntries.clear();
-                    barChartStat.invalidate();
-                    barChartStat.clear();
-                    lineChartSat.invalidate();
-                    lineChartSat.clear();
+                    initStat();
                     barChartStat.setVisibility(View.GONE);
                     bahanList();
                     check();
@@ -187,13 +170,7 @@ public class StatFrag extends Fragment {
                     radioGroupFilter.setActivated(true);
                     spinnerStatFilter2.setVisibility(View.VISIBLE);
                     spinnerStatFilter2.setActivated(true);
-                    if (barEntries!=null) barEntries.clear();
-                    if (xValue!=null) xValue.clear();
-                    if (lineEntries!=null) lineEntries.clear();
-                    barChartStat.invalidate();
-                    barChartStat.clear();
-                    lineChartSat.invalidate();
-                    lineChartSat.clear();
+                    initStat();
                     lineChartSat.setVisibility(View.GONE);
                     satuanList();
                     check();
@@ -206,13 +183,7 @@ public class StatFrag extends Fragment {
                     radioGroupFilter.setActivated(true);
                     spinnerStatFilter2.setVisibility(View.VISIBLE);
                     spinnerStatFilter2.setActivated(true);
-                    if (barEntries!=null) barEntries.clear();
-                    if (xValue!=null) xValue.clear();
-                    if (lineEntries!=null) lineEntries.clear();
-                    barChartStat.invalidate();
-                    barChartStat.clear();
-                    lineChartSat.invalidate();
-                    lineChartSat.clear();
+                    initStat();
                     barChartStat.setVisibility(View.GONE);
                     bahanList();
                     check();
@@ -225,13 +196,7 @@ public class StatFrag extends Fragment {
                     radioGroupFilter.setActivated(false);
                     spinnerStatFilter2.setVisibility(View.VISIBLE);
                     spinnerStatFilter2.setActivated(true);
-                    if (barEntries!=null) barEntries.clear();
-                    if (xValue!=null) xValue.clear();
-                    if (lineEntries!=null) lineEntries.clear();
-                    barChartStat.setVisibility(View.GONE);
-                    barChartStat.invalidate();
-                    barChartStat.clear();
-                    lineChartSat.invalidate();
+                    initStat();
                     lineChartSat.clear();
                     menuList();
                 }
@@ -240,9 +205,7 @@ public class StatFrag extends Fragment {
                     radioGroupFilter.setActivated(false);
                     spinnerStatFilter2.setVisibility(View.GONE);
                     spinnerStatFilter2.setActivated(false);
-                    if (barEntries!=null) barEntries.clear();
-                    if (xValue!=null) xValue.clear();
-                    if (lineEntries!=null) lineEntries.clear();
+                    initStat();
                     barChartStat.setVisibility(View.GONE);
                     check();
                     pengunjungList();
@@ -252,10 +215,7 @@ public class StatFrag extends Fragment {
                     spinnerStatFilter2.setActivated(false);
                     radioGroupFilter.setActivated(false);
                     radioGroupFilter.setVisibility(View.GONE);
-                    if (barEntries!=null) barEntries.clear();
-                    if (xValue!=null) xValue.clear();
-                    if (lineEntries!=null) lineEntries.clear();
-                    if (lineEntries2!=null) lineEntries2.clear();
+                    initStat();
                     barChartStat.setVisibility(View.GONE);
                     check();
                     getStatCash();
@@ -272,14 +232,7 @@ public class StatFrag extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 radioButton = radioGroup.findViewById(i);
-                if (barEntries!=null) barEntries.clear();
-                if (xValue!=null) xValue.clear();
-                if (lineEntries!=null) lineEntries.clear();
-                if (lineEntries2!=null) lineEntries2.clear();
-                barChartStat.invalidate();
-                barChartStat.clear();
-                lineChartSat.invalidate();
-                lineChartSat.clear();
+                initStat();
                 new Handler().postDelayed(()->{
                     filterItem = filter2adapter.getItem(i);
                     check();
@@ -298,10 +251,7 @@ public class StatFrag extends Fragment {
         });
 
         radioGroupFilter.setOnCheckedChangeListener((radioGroup, i) -> {
-            if (barEntries!=null) barEntries.clear();
-            if (xValue!=null) xValue.clear();
-            if (lineEntries!=null) lineEntries.clear();
-            if (lineEntries2!=null) lineEntries2.clear();
+            clearArrayList();
             check();
             checkFilter();
             try {
@@ -316,10 +266,7 @@ public class StatFrag extends Fragment {
         }); //radio keluar/masuk
 
         radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
-            if (barEntries!=null) barEntries.clear();
-            if (xValue!=null) xValue.clear();
-            if (lineEntries!=null) lineEntries.clear();
-            if (lineEntries2!=null) lineEntries2.clear();
+            clearArrayList();
             check();
             checkFilter();
             try {
@@ -366,6 +313,21 @@ public class StatFrag extends Fragment {
         }
     } // check waktu(tahun, bulan, minggu)
 
+    private void initStat(){
+        clearArrayList();
+        barChartStat.invalidate();
+        barChartStat.clear();
+        lineChartSat.invalidate();
+        lineChartSat.clear();
+    } //clear dan invalidate data chart
+
+    private void clearArrayList(){
+        if (barEntries!=null) barEntries.clear();
+        if (xValue!=null) xValue.clear();
+        if (lineEntries!=null) lineEntries.clear();
+        if (lineEntries2!=null) lineEntries2.clear();
+    }
+
     private void satuanList(){
         APIReport satuan = ServerConnection.connection().create(APIReport.class);
         Call<ResponseModel> satuanData = satuan.satuanList(user);
@@ -392,35 +354,6 @@ public class StatFrag extends Fragment {
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
                 Toast.makeText(getActivity(),"i"+ t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void satuanListOutInitiate(){
-        APIReport satuan = ServerConnection.connection().create(APIReport.class);
-        Call<ResponseModel> satuanData = satuan.satuanList(user);
-
-        satuanData.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                filter = response.body() != null ? response.body().getStatmodel() : null;
-                if(filter!=null){
-                    for (StatModel model: filter) {
-                        satuanFilter.add(model.getSatuan());
-                    }
-                    filter2adapter = new ArrayAdapter<>(getActivity(),
-                            R.layout.custom_simple_spinner_item, satuanFilter);
-                    filter2adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerStatFilter2.setAdapter(filter2adapter);
-                    spinnerStatFilter2.setSelection(0);
-                    initiateFilter = spinnerStatFilter2.getItemAtPosition(0).toString();
-                    getDataSatuanOutInitiate();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(getActivity(), "b"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -482,67 +415,31 @@ public class StatFrag extends Fragment {
 
     }
 
-    private void getDataSatuanOut(){
-        APIReport data = ServerConnection.connection().create(APIReport.class);
-        Call<ResponseModel> call = data.statList(
-                user, filterItem, week, month, year, keterangan);
+    private void satuanListOutInitiate(){
+        APIReport satuan = ServerConnection.connection().create(APIReport.class);
+        Call<ResponseModel> satuanData = satuan.satuanList(user);
 
-        call.enqueue(new Callback<ResponseModel>() {
+        satuanData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                if (response.body() != null) {
-                    list = response.body().getStatSatuan();
-                    if(list!=null) {
-                        barEntries = new ArrayList<>();
-                        xValue = new ArrayList<>();
-                        int index = 0;
-                        for (StatModel model: list) {
-                            barEntries.add(new BarEntry(index++, model.getJumlah()));
-                        }
-                        for (StatModel a: list) {
-                            xValue.add(a.getBahan());
-                        }
-                        barDataSet = new BarDataSet(barEntries, list.get(0).getSatuan());
-                        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                        barDataSet.setValueTextSize(15f);
-                        BarData barData = new BarData(barDataSet);
-                        barData.setDrawValues(true);
-                        Legend legend = barChartStat.getLegend();
-                        legend.setTextSize(13f);
-                        barData.setBarWidth(0.5f);
-                        XAxis xAxis = barChartStat.getXAxis();
-                        xAxis.setTextSize(15f);
-                        xAxis.setGranularityEnabled(true);
-                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                        xAxis.setDrawGridLines(false);
-                        xAxis.setValueFormatter((value, axis) -> {
-                            try {
-                                int index1 = (int) value;
-                                return xValue.get((index1));
-                            }catch (Exception e){
-                                return "";
-                            }
-                        });
-
-                        barChartStat.setVisibility(View.VISIBLE);
-                        barChartStat.getAxisLeft().setDrawGridLines(false);
-                        barChartStat.getAxisRight().setDrawLabels(false);
-                        barChartStat.setData(barData);
-
-                        barChartStat.animateY(1000);
-                        barChartStat.getDescription().setText("bahan");
-                        barChartStat.getDescription().setTextColor(Color.RED);
-                    }else {
-                        barChartStat.clear();
+                filter = response.body() != null ? response.body().getStatmodel() : null;
+                if(filter!=null){
+                    for (StatModel model: filter) {
+                        satuanFilter.add(model.getSatuan());
                     }
+                    filter2adapter = new ArrayAdapter<>(getActivity(),
+                            R.layout.custom_simple_spinner_item, satuanFilter);
+                    filter2adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerStatFilter2.setAdapter(filter2adapter);
+                    spinnerStatFilter2.setSelection(0);
+                    initiateFilter = spinnerStatFilter2.getItemAtPosition(0).toString();
+                    getDataSatuanOutInitiate();
                 }
-
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-//                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                System.out.println("c"+t.getMessage());
+            public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
+                Toast.makeText(getActivity(), "b"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -566,35 +463,36 @@ public class StatFrag extends Fragment {
                         barEntries.add(new BarEntry(index++, model.getJumlah()));
                         xValue.add(model.getBahan());
                     }
-                    barDataSet = new BarDataSet(barEntries, list.get(0).getSatuan());
-                    barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                    barDataSet.setValueTextSize(15f);
-                    BarData barData = new BarData(barDataSet);
-                    barData.setDrawValues(true);
-                    Legend legend = barChartStat.getLegend();
-                    legend.setTextSize(13f);
-                    barData.setBarWidth(0.5f);
-                    XAxis xAxis = barChartStat.getXAxis();
-                    xAxis.setTextSize(15f);
-                    xAxis.setGranularityEnabled(true);
-                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    xAxis.setDrawGridLines(false);
-                    xAxis.setValueFormatter((value, axis) -> {
-                        try {
-                            int index1 = (int) value;
-                            return xValue.get((index1));
-                        }catch (Exception e){
-                            return "";
-                        }
-                    });
-
-                    barChartStat.getAxisLeft().setDrawGridLines(false);
-                    barChartStat.getAxisRight().setDrawLabels(false);
-                    barChartStat.setData(barData);
-
-                    barChartStat.animateY(1000);
-                    barChartStat.getDescription().setText("bahan");
-                    barChartStat.getDescription().setTextColor(Color.RED);
+                    renderBarChart(barEntries, xValue, list);
+//                    barDataSet = new BarDataSet(barEntries, list.get(0).getSatuan());
+//                    barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+//                    barDataSet.setValueTextSize(15f);
+//                    BarData barData = new BarData(barDataSet);
+//                    barData.setDrawValues(true);
+//                    Legend legend = barChartStat.getLegend();
+//                    legend.setTextSize(13f);
+//                    barData.setBarWidth(0.5f);
+//                    XAxis xAxis = barChartStat.getXAxis();
+//                    xAxis.setTextSize(15f);
+//                    xAxis.setGranularityEnabled(true);
+//                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+//                    xAxis.setDrawGridLines(false);
+//                    xAxis.setValueFormatter((value, axis) -> {
+//                        try {
+//                            int index1 = (int) value;
+//                            return xValue.get((index1));
+//                        }catch (Exception e){
+//                            return "";
+//                        }
+//                    });
+//
+//                    barChartStat.getAxisLeft().setDrawGridLines(false);
+//                    barChartStat.getAxisRight().setDrawLabels(false);
+//                    barChartStat.setData(barData);
+//
+//                    barChartStat.animateY(1000);
+//                    barChartStat.getDescription().setText("bahan");
+//                    barChartStat.getDescription().setTextColor(Color.RED);
 
 
                 }
@@ -604,6 +502,42 @@ public class StatFrag extends Fragment {
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println(t.getMessage());
+            }
+        });
+    }
+
+    private void getDataSatuanOut(){
+        APIReport data = ServerConnection.connection().create(APIReport.class);
+        Call<ResponseModel> call = data.statList(
+                user, filterItem, week, month, year, keterangan);
+
+        call.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+                if (response.body() != null) {
+                    list = response.body().getStatSatuan();
+                    if(list!=null) {
+                        barEntries = new ArrayList<>();
+                        xValue = new ArrayList<>();
+                        int index = 0;
+                        for (StatModel model: list) {
+                            barEntries.add(new BarEntry(index++, model.getJumlah()));
+                        }
+                        for (StatModel a: list) {
+                            xValue.add(a.getBahan());
+                        }
+                        renderBarChart(barEntries,xValue,list);
+                    }else {
+                        barChartStat.clear();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+//                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("c"+t.getMessage());
             }
         });
     }
@@ -627,30 +561,8 @@ public class StatFrag extends Fragment {
                         xValue.add(model.getDate());
                         index++;
                     }
-                    lineDataSet = new LineDataSet(lineEntries, listBahan.get(0).getBahan());
-                    lineDataSet.setColors(Color.BLACK);
-                    lineDataSet.setDrawValues(false);
-                    lineDataSet.setValueTextSize(15f);
-                    LineData lineData = new LineData(lineDataSet);
+                    renderLineChart(lineEntries, xValue, listBahan);
 
-                    XAxis xAxis = lineChartSat.getXAxis();
-                    xAxis.setTextSize(2f);
-                    xAxis.setGranularityEnabled(true);
-                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    xAxis.setDrawGridLines(false);
-                    xAxis.setValueFormatter((value, axis) -> {
-                        try {
-                            int index1 = (int) value;
-                            return xValue.get((index1));
-                        }catch (Exception e){
-                            return "";
-                        }
-                    });
-                    lineChartSat.setVisibility(View.VISIBLE);
-                    lineChartSat.getAxisLeft().setDrawGridLines(false);
-                    lineChartSat.getAxisRight().setDrawLabels(false);
-                    lineChartSat.animateX(1000);
-                    lineChartSat.setData(lineData);
                 }else {
                     lineChartSat.clear();
                 }
@@ -685,35 +597,8 @@ public class StatFrag extends Fragment {
                     for (StatModel a: list) {
                         xValue.add(a.getBahan());
                     }
-                    barDataSet = new BarDataSet(barEntries, list.get(0).getSatuan());
-                    barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                    barDataSet.setValueTextSize(15f);
-                    BarData barData = new BarData(barDataSet);
-                    barData.setDrawValues(true);
-                    Legend legend = barChartStat.getLegend();
-                    legend.setTextSize(13f);
-                    barData.setBarWidth(0.5f);
-                    XAxis xAxis = barChartStat.getXAxis();
-                    xAxis.setTextSize(15f);
-                    xAxis.setGranularityEnabled(true);
-                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    xAxis.setDrawGridLines(false);
-                    xAxis.setValueFormatter((value, axis) -> {
-                        try {
-                            int index1 = (int) value;
-                            return xValue.get((index1));
-                        }catch (Exception e){
-                            return "";
-                        }
-                    });
-                    barChartStat.setVisibility(View.VISIBLE);
-                    barChartStat.getAxisLeft().setDrawGridLines(false);
-                    barChartStat.getAxisRight().setDrawLabels(false);
-                    barChartStat.setData(barData);
-
-                    barChartStat.animateY(1000);
-                    barChartStat.getDescription().setText("bahan");
-                    barChartStat.getDescription().setTextColor(Color.RED);
+                    renderBarChart(barEntries,xValue,list);
+//
                 }else {
                     barChartStat.clear();
                 }
@@ -746,30 +631,8 @@ public class StatFrag extends Fragment {
                         xValue.add(model.getDateIn());
                         index++;
                     }
-                    lineDataSet = new LineDataSet(lineEntries, listBahan.get(0).getBahan());
-                    lineDataSet.setDrawValues(false);
-                    lineDataSet.setColors(Color.BLACK);
-                    lineDataSet.setValueTextSize(15f);
-                    LineData lineData = new LineData(lineDataSet);
+                    renderLineChart(lineEntries, xValue, listBahan);
 
-                    XAxis xAxis = lineChartSat.getXAxis();
-                    xAxis.setTextSize(2f);
-                    xAxis.setGranularityEnabled(true);
-                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    xAxis.setDrawGridLines(false);
-                    xAxis.setValueFormatter((value, axis) -> {
-                        try {
-                            int index1 = (int) value;
-                            return xValue.get((index1));
-                        }catch (Exception e){
-                            return "";
-                        }
-                    });
-                    lineChartSat.setVisibility(View.VISIBLE);
-                    lineChartSat.getAxisLeft().setDrawGridLines(false);
-                    lineChartSat.getAxisRight().setDrawLabels(false);
-                    lineChartSat.animateX(1000);
-                    lineChartSat.setData(lineData);
                 }else {
                     lineChartSat.clear();
                 }
@@ -792,9 +655,6 @@ public class StatFrag extends Fragment {
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 if(response.body()!=null) listMenu = response.body().getStatMenu();
                 if(listMenu!=null){
-                    listMenu.forEach(statModel -> System.out.println(
-                            statModel.getMenu() + " " + statModel.getJumlah() + " "+ statModel.getDate()
-                    ));
                     lineEntries = new ArrayList<>();
                     xValue = new ArrayList<>();
                     int index = 0;
@@ -803,30 +663,8 @@ public class StatFrag extends Fragment {
                         xValue.add(model.getDate());
                         index++;
                     }
-                    lineDataSet = new LineDataSet(lineEntries, listMenu.get(0).getMenu());
-                    lineDataSet.setColors(Color.BLACK);
-                    lineDataSet.setDrawValues(false);
-                    lineDataSet.setValueTextSize(15f);
-                    LineData lineData = new LineData(lineDataSet);
+                    renderLineChart(lineEntries, xValue, listMenu);
 
-                    XAxis xAxis = lineChartSat.getXAxis();
-                    xAxis.setTextSize(2f);
-                    xAxis.setGranularityEnabled(true);
-                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    xAxis.setDrawGridLines(false);
-                    xAxis.setValueFormatter((value, axis) -> {
-                        try {
-                            int index1 = (int) value;
-                            return xValue.get((index1));
-                        }catch (Exception e){
-                            return "";
-                        }
-                    });
-                    lineChartSat.setVisibility(View.VISIBLE);
-                    lineChartSat.getAxisLeft().setDrawGridLines(false);
-                    lineChartSat.getAxisRight().setDrawLabels(false);
-                    lineChartSat.animateX(1000);
-                    lineChartSat.setData(lineData);
                 }else {
                     lineChartSat.clear();
                 }
@@ -859,29 +697,8 @@ public class StatFrag extends Fragment {
                             xValue.add(model.getTanggal());
                             index++;
                         }
-                        lineDataSet = new LineDataSet(lineEntries, "Pengunjung");
-                        lineDataSet.setDrawValues(false);
-                        lineDataSet.setColors(Color.BLACK);
-                        lineDataSet.setValueTextSize(15f);
-                        LineData lineData = new LineData(lineDataSet);
-                        XAxis xAxis = lineChartSat.getXAxis();
-                        xAxis.setTextSize(2f);
-                        xAxis.setGranularityEnabled(true);
-                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                        xAxis.setDrawGridLines(false);
-                        xAxis.setValueFormatter((value, axis) -> {
-                            try {
-                                int index1 = (int) value;
-                                return xValue.get(index1);
-                            } catch (Exception e) {
-                                return "";
-                            }
-                        });
-                        lineChartSat.setVisibility(View.VISIBLE);
-                        lineChartSat.getAxisLeft().setDrawGridLines(false);
-                        lineChartSat.getAxisRight().setDrawLabels(false);
-                        lineChartSat.animateX(1000);
-                        lineChartSat.setData(lineData);
+                        renderLineChart(lineEntries, xValue, listPengunjung);
+//
                     } else {
                         lineChartSat.clear();
                     }
@@ -910,23 +727,20 @@ public class StatFrag extends Fragment {
                     int index2 = 0;
                     lineEntries2 = new ArrayList<>();
                     if(listCashOut!=null) {
-//                        listCashOut.forEach(statModel ->
-//                                System.out.println("Out: "+statModel.getHarga() +" "+statModel.getTanggal()));
                         for (StatModel statModel:listCashOut){
                             lineEntries2.add(new Entry(index2, statModel.getHarga()));
                             xValue.add(statModel.getTanggal());
                             index2++;
                         }
-
                         lineDataSet2 = new LineDataSet(lineEntries2, "Out");
                         lineDataSet2.setDrawValues(false);
-                        lineDataSet2.setColors(Color.BLUE);
-                        lineDataSet2.setCircleColor(Color.BLUE);
+                        lineDataSet2.setColors(Color.RED);
+                        lineDataSet2.setCircleColor(Color.RED);
                         lineDataSet2.setLineWidth(5f);
                         lineDataSet2.setDrawCircleHole(false);
                         lineDataSet2.setValueTextSize(15f);
                         lineDataSet2.setDrawFilled(true);
-                        lineDataSet2.setFillColor(Color.BLUE);
+                        lineDataSet2.setFillColor(Color.RED);
 
                         XAxis xAxis = lineChartSat.getXAxis();
                         xAxis.setTextSize(2f);
@@ -959,21 +773,19 @@ public class StatFrag extends Fragment {
                             if(listCashIn!=null) {
                                 int index = 0;
                                 xValue = new ArrayList<>();
-//                        listCashIn.forEach(statModel ->
-//                                System.out.println("In: "+ statModel.getHarga() +" "+statModel.getTanggal()));
                                 for (StatModel statModel : listCashIn) {
                                     lineEntries.add(new Entry(index, statModel.getHarga()));
                                     index++;
                                 }
                                 lineDataSet = new LineDataSet(lineEntries, "In");
-                                lineDataSet.setColors(Color.RED);
+                                lineDataSet.setColors(Color.BLUE);
                                 lineDataSet.setDrawValues(false);
-                                lineDataSet.setCircleColor(Color.RED);
+                                lineDataSet.setCircleColor(Color.BLUE);
                                 lineDataSet.setLineWidth(5f);
                                 lineDataSet.setDrawCircleHole(false);
                                 lineDataSet.setValueTextSize(15f);
                                 lineDataSet.setDrawFilled(true);
-                                lineDataSet.setFillColor(Color.RED);
+                                lineDataSet.setFillColor(Color.BLUE);
                                 lineDataSets.add(lineDataSet);
 
 
@@ -1039,72 +851,69 @@ public class StatFrag extends Fragment {
             }
         });
 
+    }
 
+    private void renderLineChart(ArrayList<Entry> entries, ArrayList<String> xValues, List<StatModel> list){
 
-//        if(lineEntries!=null && lineEntries2!=null) {
-////            if (lineEntries.size() > 0 && lineEntries2.size() > 0) {
-//                System.out.println("rendering chart");
-////                lineDataSet = new LineDataSet(lineEntries, "In");
-////                lineDataSet.setColors(Color.RED);
-////                lineDataSet.setCircleColor(Color.RED);
-////                lineDataSet.setLineWidth(5f);
-////                lineDataSet.setDrawCircleHole(false);
-////                lineDataSet.setValueTextSize(15f);
-////                lineDataSet.setDrawFilled(true);
-////                lineDataSet.setFillColor(Color.RED);
+        if(list.get(0).getBahan()!=null)lineDataSet = new LineDataSet(entries, list.get(0).getBahan());
+        else if(list.get(0).getMenu()!=null)lineDataSet = new LineDataSet(entries, list.get(0).getMenu());
+        else lineDataSet = new LineDataSet(entries, "pengunjung");
+        lineDataSet.setColors(Color.BLACK);
+        lineDataSet.setDrawValues(false);
+        lineDataSet.setValueTextSize(15f);
+        LineData lineData = new LineData(lineDataSet);
+
+        XAxis xAxis = lineChartSat.getXAxis();
+        xAxis.setTextSize(2f);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setValueFormatter((value, axis) -> {
+            try {
+                int index1 = (int) value;
+                return xValues.get((index1));
+            }catch (Exception e){
+                return "";
+            }
+        });
+        lineChartSat.setVisibility(View.VISIBLE);
+        lineChartSat.getAxisLeft().setDrawGridLines(false);
+        lineChartSat.getAxisRight().setDrawLabels(false);
+        lineChartSat.animateX(1000);
+        lineChartSat.setData(lineData);
 //
-////                lineDataSet2 = new LineDataSet(lineEntries2, "Out");
-////                lineDataSet2.setColors(Color.BLUE);
-////                lineDataSet2.setCircleColor(Color.BLUE);
-////                lineDataSet2.setLineWidth(5f);
-////                lineDataSet2.setDrawCircleHole(false);
-////                lineDataSet2.setValueTextSize(15f);
-////                lineDataSet2.setDrawFilled(true);
-////                lineDataSet2.setFillColor(Color.BLUE);
-//
-////                XAxis xAxis = lineChartSat.getXAxis();
-////                xAxis.setTextSize(2f);
-////                xAxis.setGranularityEnabled(true);
-////                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-////                xAxis.setDrawGridLines(false);
-////                xAxis.setValueFormatter((value, axis) -> {
-////                    try {
-////                        int index1 = (int) value;
-////                        return xValue.get(index1);
-////                    } catch (Exception e) {
-////                        System.out.println(e.getMessage());
-////                        return "";
-////                    }
-////                });
-//                lineDatas = new LineData(lineDataSets);
-//                lineChartSat.setData(lineDatas);
-//                lineChartSat.invalidate();
-//                lineChartSat.setVisibility(View.VISIBLE);
-//                lineChartSat.getAxisLeft().setDrawGridLines(false);
-//                lineChartSat.getAxisRight().setDrawLabels(false);
-//                lineChartSat.animateX(1000);
-//            }
-//            else if(lineEntries.size()>0){
-//                lineDatas = new LineData(lineDataSet);
-//                lineChartSat.setData(lineDatas);
-//                lineChartSat.invalidate();
-//                lineChartSat.setVisibility(View.VISIBLE);
-//                lineChartSat.getAxisLeft().setDrawGridLines(false);
-//                lineChartSat.getAxisRight().setDrawLabels(false);
-//                lineChartSat.animateX(1000);
-//
-//            }
-//            else if(lineEntries2.size()>0){
-//                lineDatas = new LineData(lineDataSet2);
-//                lineChartSat.setData(lineDatas);
-//                lineChartSat.invalidate();
-//                lineChartSat.setVisibility(View.VISIBLE);
-//                lineChartSat.getAxisLeft().setDrawGridLines(false);
-//                lineChartSat.getAxisRight().setDrawLabels(false);
-//                lineChartSat.animateX(1000);
-//
-//            }
-//        }
-//        else System.out.println("no entries data");
+    }
+
+    private void renderBarChart(ArrayList<BarEntry> entries, ArrayList<String> xValues, List<StatModel> list){
+        barDataSet = new BarDataSet(entries, list.get(0).getSatuan());
+        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        barDataSet.setValueTextSize(15f);
+        BarData barData = new BarData(barDataSet);
+        barData.setDrawValues(true);
+        Legend legend = barChartStat.getLegend();
+        legend.setTextSize(13f);
+        barData.setBarWidth(0.5f);
+        XAxis xAxis = barChartStat.getXAxis();
+        xAxis.setTextSize(15f);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setValueFormatter((value, axis) -> {
+            try {
+                int index1 = (int) value;
+                return xValues.get((index1));
+            }catch (Exception e){
+                return "";
+            }
+        });
+
+        barChartStat.setVisibility(View.VISIBLE);
+        barChartStat.getAxisLeft().setDrawGridLines(false);
+        barChartStat.getAxisRight().setDrawLabels(false);
+        barChartStat.setData(barData);
+
+        barChartStat.animateY(1000);
+        barChartStat.getDescription().setText("bahan");
+        barChartStat.getDescription().setTextColor(Color.RED);
     }
 }
