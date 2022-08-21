@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                             task.getResult().getDocuments().size() > 0 ){
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         userSession.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
+                        userSession.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
                     }else {
                         Toast.makeText(this, "token error", Toast.LENGTH_SHORT).show();
                     }

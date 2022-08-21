@@ -102,6 +102,7 @@ public class ManagerLoginActivity extends AppCompatActivity {
                             task.getResult().getDocuments().size() > 0 ){
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         session.putString(Constants.KEY_MANAGER_ID, documentSnapshot.getId());
+                        session.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
                     }else {
                         Toast.makeText(this, "token error", Toast.LENGTH_SHORT).show();
                     }

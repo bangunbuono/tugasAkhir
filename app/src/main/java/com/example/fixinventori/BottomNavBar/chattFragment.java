@@ -90,11 +90,11 @@ public class chattFragment extends Fragment  {
                     chatMessageModel.senderId = senderId;
                     chatMessageModel.receiverId = receiverId;
                     if(session.getString(Constants.KEY_USER_ID).equals(senderId)){
-//                        chatMessageModel.conversionImage = documentChange.getDocument().getString(Constants.KEY_RECEIVER_IMAGE);
+                        chatMessageModel.conversionImage = documentChange.getDocument().getString(Constants.KEY_RECEIVER_IMAGE);
                         chatMessageModel.conversionName = documentChange.getDocument().getString(Constants.KEY_RECEIVER_NAME);
                         chatMessageModel.conversionId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
                     }else {
-//                        chatMessageModel.conversionImage = documentChange.getDocument().getString(Constants.KEY_SENDER_IMAGE);
+                        chatMessageModel.conversionImage = documentChange.getDocument().getString(Constants.KEY_SENDER_IMAGE);
                         chatMessageModel.conversionName = documentChange.getDocument().getString(Constants.KEY_SENDER_NAME);
                         chatMessageModel.conversionId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
                     }

@@ -38,7 +38,7 @@
         android:layout_marginBottom="@dimen/_5sdp"
         android:clickable="true"
         android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
-        app:tint = "@color/white" />
+        app:tint="@color/white" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/rivInfo"

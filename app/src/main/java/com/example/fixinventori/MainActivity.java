@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.flMainActivity, new HomeFragment()).commit();
 
-
         navView.setOnItemSelectedListener(item -> {
             fragment = null;
             if(item.getItemId()==R.id.homeNav) fragmentManager.beginTransaction()
@@ -69,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         });
+
 
     }
 

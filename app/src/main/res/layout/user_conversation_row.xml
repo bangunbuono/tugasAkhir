@@ -15,7 +15,7 @@
         <com.makeramen.roundedimageview.RoundedImageView
             android:layout_width="@dimen/_35sdp"
             android:layout_height="@dimen/_35sdp"
-            android:id="@+id/rivUserProfile"
+            android:id="@+id/rivOtherProfile"
             android:background="@drawable/rounded_image"
             android:scaleType="centerCrop"
             app:riv_oval="true"/>

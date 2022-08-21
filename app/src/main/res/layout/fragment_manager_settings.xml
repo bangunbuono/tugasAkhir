@@ -29,9 +29,13 @@
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
+                    android:layout_margin="@dimen/_3sdp"
                     android:id="@+id/rivUserProfile"
                     android:clickable="true"
                     android:src="@drawable/ic_baseline_account_circle_24"
+                    android:background="@drawable/rounded_image"
+                    app:riv_oval="true"
+                    android:scaleType="centerCrop"
                     />
 
                 <TextView

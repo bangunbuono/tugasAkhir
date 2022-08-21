@@ -27,7 +27,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         receiverProfilImage = bitmap;
     }
 
-    public ChatAdapter(List<ChatMessageModel> chatMessageModels, String senderId) {
+    public ChatAdapter(List<ChatMessageModel> chatMessageModels, String senderId, Bitmap receiverProfilImage) {
         this.chatMessageModels = chatMessageModels;
         this.receiverProfilImage = receiverProfilImage;
         this.senderId = senderId;
@@ -92,6 +92,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             super(itemView);
             tvDateTime = itemView.findViewById(R.id.tvDateTime);
             tvOtherMessage = itemView.findViewById(R.id.tvOtherMessage);
+            rivProfileChat = itemView.findViewById(R.id.rivProfileChat);
         }
 
         void setBinding(ChatMessageModel messageModel, Bitmap receivedProfilImage){

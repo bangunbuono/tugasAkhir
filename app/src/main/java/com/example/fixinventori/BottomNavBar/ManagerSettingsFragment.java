@@ -1,10 +1,18 @@
 package com.example.fixinventori.BottomNavBar;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +29,18 @@ import com.example.fixinventori.UsageAutoApplication;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.HashMap;
 
 public class ManagerSettingsFragment extends Fragment {
     UserSession session;
-    String manager;
+    String manager, encodedImage;
+    Bitmap bitmap;
+    RoundedImageView rivUserProfile;
 
     public ManagerSettingsFragment() {
         // Required empty public constructor
@@ -50,8 +64,17 @@ public class ManagerSettingsFragment extends Fragment {
         TextView tvBantuan = view.findViewById(R.id.tvBantuan);
         TextView tvManagerName = view.findViewById(R.id.tvUserName);
         TextView tvUserManager = view.findViewById(R.id.tvUserManager);
+        rivUserProfile = view.findViewById(R.id.rivUserProfile);
 
         tvManagerName.setText(manager);
+
+        getUserProfile();
+
+        rivUserProfile.setOnClickListener(view1->{
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            pickImage.launch(intent);
+        });
 
         if(UsageAutoApplication.listConnectedUser.size()>0){
             tvConnect.setVisibility(View.GONE);
@@ -85,5 +108,65 @@ public class ManagerSettingsFragment extends Fragment {
 
         });
         return view;
+    }
+
+    private void getUserProfile() {
+        if(session.getString(Constants.KEY_IMAGE)!=null)
+            decodeImage(session.getString(Constants.KEY_IMAGE));
+        else rivUserProfile.setImageResource(R.drawable.ic_baseline_account_circle_24);
+
+    }
+
+    private void decodeImage(String encodedImage){
+        byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0, bytes.length);
+        rivUserProfile.setImageBitmap(bitmap);
+    }
+
+    private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if(result.getResultCode() == Activity.RESULT_OK){
+                    if(result.getData()!=null){
+                        Uri imageUri = result.getData().getData();
+                        try {
+                            InputStream inputStream = requireActivity()
+                                    .getContentResolver().openInputStream(imageUri);
+                            bitmap = BitmapFactory.decodeStream(inputStream);
+                            encodedImage = encodeImage(bitmap);
+                            uploadImageFirebase();
+                        }catch (FileNotFoundException e){
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            });
+
+    private String encodeImage(Bitmap bitmap){
+        int previewWidth = 150;
+        int previewHeight = bitmap.getHeight()*previewWidth/bitmap.getWidth();
+
+        Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+    private void uploadImageFirebase(){
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference document = database
+                .collection(Constants.KEY_COLLECTION_MANAGERS)
+                .document(session.getString(Constants.KEY_MANAGER_ID));
+
+        document.update(Constants.KEY_IMAGE, encodedImage)
+                .addOnSuccessListener(unused ->
+                {
+                    Toast.makeText(getActivity(),  "Berhasil ubah foto profil", Toast.LENGTH_SHORT).show();
+                    rivUserProfile.setImageBitmap(bitmap);
+                    session.putString(Constants.KEY_IMAGE, encodedImage);
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

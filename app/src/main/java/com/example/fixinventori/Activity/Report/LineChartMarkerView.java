@@ -13,13 +13,13 @@ import com.github.mikephil.charting.utils.MPPointF;
 
 public class LineChartMarkerView extends MarkerView {
 
-    TextView tvContent, tvContent2;
+    TextView tvContent3, tvContent2;
     LineChart lineChart;
     String xValue;
 
     public LineChartMarkerView(Context context, int layoutResource, LineChart lineChart) {
         super(context, layoutResource);
-        tvContent = findViewById(R.id.tvContent);
+        tvContent3 = findViewById(R.id.tvContent3);
         tvContent2 = findViewById(R.id.tvContent2);
         this.lineChart = lineChart;
     }
@@ -34,17 +34,17 @@ public class LineChartMarkerView extends MarkerView {
                 xValue = lineChart.getXAxis()
                         .getValueFormatter()
                         .getFormattedValue(e.getX(), lineChart.getXAxis());
+                System.out.println(xValue + " "+(int)e.getY());
 
             }
-
             @Override
             public void onNothingSelected() {
 
             }
         });
+        tvContent2.setText(String.format("%s",(int) e.getY()));
+        tvContent3.setText(String.format("%s", xValue));
 
-        tvContent.setText(String.format("%s",(int) e.getY()));
-        tvContent2.setText(xValue);
     }
 
     public MPPointF mpPointF;

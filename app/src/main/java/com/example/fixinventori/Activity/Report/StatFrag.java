@@ -41,6 +41,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -433,6 +434,7 @@ public class StatFrag extends Fragment {
                     spinnerStatFilter2.setAdapter(filter2adapter);
                     spinnerStatFilter2.setSelection(0);
                     initiateFilter = spinnerStatFilter2.getItemAtPosition(0).toString();
+                    filterItem = satuanFilter.get(0);
                     getDataSatuanOutInitiate();
                 }
             }
@@ -464,37 +466,6 @@ public class StatFrag extends Fragment {
                         xValue.add(model.getBahan());
                     }
                     renderBarChart(barEntries, xValue, list);
-//                    barDataSet = new BarDataSet(barEntries, list.get(0).getSatuan());
-//                    barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-//                    barDataSet.setValueTextSize(15f);
-//                    BarData barData = new BarData(barDataSet);
-//                    barData.setDrawValues(true);
-//                    Legend legend = barChartStat.getLegend();
-//                    legend.setTextSize(13f);
-//                    barData.setBarWidth(0.5f);
-//                    XAxis xAxis = barChartStat.getXAxis();
-//                    xAxis.setTextSize(15f);
-//                    xAxis.setGranularityEnabled(true);
-//                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-//                    xAxis.setDrawGridLines(false);
-//                    xAxis.setValueFormatter((value, axis) -> {
-//                        try {
-//                            int index1 = (int) value;
-//                            return xValue.get((index1));
-//                        }catch (Exception e){
-//                            return "";
-//                        }
-//                    });
-//
-//                    barChartStat.getAxisLeft().setDrawGridLines(false);
-//                    barChartStat.getAxisRight().setDrawLabels(false);
-//                    barChartStat.setData(barData);
-//
-//                    barChartStat.animateY(1000);
-//                    barChartStat.getDescription().setText("bahan");
-//                    barChartStat.getDescription().setTextColor(Color.RED);
-
-
                 }
             }
 
@@ -687,8 +658,6 @@ public class StatFrag extends Fragment {
                 if(response.body()!=null) {
                     listPengunjung = response.body().getStatPengunjung();
                     if (listPengunjung != null) {
-                        listPengunjung.forEach(statModel ->
-                                System.out.println(statModel.getTanggal() + " " + statModel.getPengunjung()));
                         lineEntries = new ArrayList<>();
                         xValue = new ArrayList<>();
                         int index = 0;
@@ -729,7 +698,7 @@ public class StatFrag extends Fragment {
                     if(listCashOut!=null) {
                         for (StatModel statModel:listCashOut){
                             lineEntries2.add(new Entry(index2, statModel.getHarga()));
-                            xValue.add(statModel.getTanggal());
+
                             index2++;
                         }
                         lineDataSet2 = new LineDataSet(lineEntries2, "Out");
@@ -769,12 +738,14 @@ public class StatFrag extends Fragment {
                         if(response.body()!=null){
                             listCashIn = response.body().getStatCashIn();
                             lineEntries = new ArrayList<>();
+                            xValue = new ArrayList<>();
 
                             if(listCashIn!=null) {
                                 int index = 0;
                                 xValue = new ArrayList<>();
                                 for (StatModel statModel : listCashIn) {
                                     lineEntries.add(new Entry(index, statModel.getHarga()));
+                                    xValue.add(statModel.getTanggal().substring(0,9));
                                     index++;
                                 }
                                 lineDataSet = new LineDataSet(lineEntries, "In");
@@ -787,7 +758,6 @@ public class StatFrag extends Fragment {
                                 lineDataSet.setDrawFilled(true);
                                 lineDataSet.setFillColor(Color.BLUE);
                                 lineDataSets.add(lineDataSet);
-
 
                                 if (lineEntries.size() > 0 && lineEntries2.size() > 0) {
                                     LineData lineData = new LineData(lineDataSets);
@@ -916,4 +886,6 @@ public class StatFrag extends Fragment {
         barChartStat.getDescription().setText("bahan");
         barChartStat.getDescription().setTextColor(Color.RED);
     }
+
+
 }

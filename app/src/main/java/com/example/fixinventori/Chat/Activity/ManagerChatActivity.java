@@ -1,6 +1,9 @@
 package com.example.fixinventori.Chat.Activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,7 +53,7 @@ public class ManagerChatActivity extends BaseActivity {
     EditText etInputChat;
     List<ChatMessageModel> listChat;
     RoundedImageView rivSend, rivBack;
-    String managerName, user, userToken;
+    String managerName, user, userToken, receiverEncodedImage;
     FirebaseFirestore database;
     String conversionId = null;
     boolean isReceiverAvalaible = false;
@@ -100,18 +103,18 @@ public class ManagerChatActivity extends BaseActivity {
         message.put(Constants.KEY_RECEIVER_ID, session.getString(Constants.KEY_USER_ID));
         message.put(Constants.KEY_MESSAGE, etInputChat.getText().toString().trim());
         message.put(Constants.KEY_TIMESTAMP, new Date());
-        database
-                .collection(Constants.KEY_COLLECTION_CHAT)
+        database.collection(Constants.KEY_COLLECTION_CHAT)
                 .add(message);
         if(conversionId!=null)
             updateConversion(etInputChat.getText().toString().trim());
         else {
             HashMap<String,Object> conversion = new HashMap<>();
-            conversion.put(Constants.KEY_SENDER_ID, session.getString(Constants.KEY_USER_ID));
-            conversion.put(Constants.KEY_SENDER_NAME, session.getString(Constants.KEY_NAME));
+            conversion.put(Constants.KEY_SENDER_ID, session.getString(Constants.KEY_MANAGER_ID));
+            conversion.put(Constants.KEY_SENDER_NAME, managerName);
             conversion.put(Constants.KEY_SENDER_IMAGE, session.getString(Constants.KEY_IMAGE));
-            conversion.put(Constants.KEY_RECEIVER_ID, session.getString(Constants.KEY_MANAGER_ID));
-            conversion.put(Constants.KEY_RECEIVER_NAME, session.getString(Constants.KEY_MANAGER));
+            conversion.put(Constants.KEY_RECEIVER_ID, session.getString(Constants.KEY_USER_ID));
+            conversion.put(Constants.KEY_RECEIVER_NAME, user);
+            conversion.put(Constants.KEY_RECEIVER_IMAGE, session.getString(Constants.KEY_RECEIVER_IMAGE));
             conversion.put(Constants.KEY_LAST_MESSAGE, etInputChat.getText().toString().trim());
             conversion.put(Constants.KEY_TIMESTAMP, new Date());
             addConversion(conversion);
@@ -154,8 +157,9 @@ public class ManagerChatActivity extends BaseActivity {
                     if (task.isComplete() && task.getResult()!=null){
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         String userId = documentSnapshot.getId();
+                        receiverEncodedImage = documentSnapshot.getString(Constants.KEY_IMAGE);
                         session.putString(Constants.KEY_USER_ID, userId);
-                        System.out.println(userId);
+                        session.putString(Constants.KEY_RECEIVER_IMAGE, receiverEncodedImage);
                         status = true;
                     }
                 });
@@ -194,7 +198,8 @@ public class ManagerChatActivity extends BaseActivity {
             }
             listChat.sort(Comparator.comparing(obj -> obj.dateObject));
             chatAdapter = new ChatAdapter(listChat,
-                    session.getString(Constants.KEY_MANAGER_ID));
+                    session.getString(Constants.KEY_MANAGER_ID),
+                    getBitmapFromEncodedString(session.getString(Constants.KEY_RECEIVER_IMAGE)));
             rvChat.setAdapter(chatAdapter);
             rvChat.setVisibility(View.VISIBLE);
 
@@ -275,6 +280,10 @@ public class ManagerChatActivity extends BaseActivity {
                         }
                         userToken = value.getString(Constants.KEY_FCM_TOKEN);
                         System.out.println("ini "+userToken);
+                        if(session.getString(Constants.KEY_RECEIVER_IMAGE)==null){
+                            chatAdapter.setReceiverProfilImage(
+                                    getBitmapFromEncodedString(value.getString(Constants.KEY_RECEIVER_IMAGE)));
+                        }
 //                        if(user.image == null){
 //                            user.image =  value.getString(Constants.KEY_IMAGE);
 //                            chatAdapter.setReceiverProfilImage(getBitmapFromEncodedString(user.image));
@@ -327,6 +336,13 @@ public class ManagerChatActivity extends BaseActivity {
                         Toast.makeText(ManagerChatActivity.this, "2"+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private Bitmap getBitmapFromEncodedString(String encoded){
+        if(encoded!=null) {
+            byte[] bytes = Base64.decode(encoded, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        }else return null;
     }
 
     @Override

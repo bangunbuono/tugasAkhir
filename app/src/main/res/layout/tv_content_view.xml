@@ -1,29 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="60dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         app:cardBackgroundColor="#eaeaea">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
+<!--            <TextView-->
+<!--                android:id="@+id/tvContent"-->
+<!--                android:maxLines="2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:layout_marginTop="3dp"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:layout_marginRight="5dp"-->
+<!--                android:text="jsjss"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textColor="@android:color/black"-->
+<!--                android:ellipsize="end"-->
+<!--                android:singleLine="true"-->
+<!--                android:textAppearance="?android:attr/textAppearanceSmall" />-->
+
             <TextView
-                android:id="@+id/tvContent"
+                android:id="@+id/tvContent2"
                 android:maxLines="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="3dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
+
                 android:text="jsjss"
                 android:textSize="16sp"
                 android:textColor="@android:color/black"
@@ -32,13 +51,12 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
-
-                android:id="@+id/tvContent2"
+                android:id="@+id/tvContent3"
                 android:maxLines="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="3dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:text="jsjss"
