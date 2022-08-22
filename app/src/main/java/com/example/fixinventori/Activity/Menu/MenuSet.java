@@ -21,6 +21,7 @@ import com.example.fixinventori.model.ResponseModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +44,7 @@ public class MenuSet extends AppCompatActivity {
         userSession = new UserSession(getApplicationContext());
         user = userSession.getUserDetail().get("username");
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -73,7 +74,6 @@ public class MenuSet extends AppCompatActivity {
                 if(response.body()!=null){
                     int code = response.body().getCode();
                     String pesan = response.body().getPesan();
-
                     listMenu = response.body().getData();
                     if (listMenu != null){
                         adapter = new AdapterMenuSet(MenuSet.this, listMenu);
@@ -85,7 +85,7 @@ public class MenuSet extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(MenuSet.this, "error:" +t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuSet.this, "error: " +t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

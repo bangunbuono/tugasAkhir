@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.fixinventori">
+    package="com.example.fixinventori" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,7 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FixInventori"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".SplashScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activity.Setting.UserManagerActivity"
             android:exported="false" />
@@ -28,98 +37,90 @@
             android:name=".Activity.Setting.AddUserConnect"
             android:exported="false" />
         <activity
-            android:name="com.example.fixinventori.Activity.User.ManagerRegisterActivity"
+            android:name=".Activity.User.ManagerRegisterActivity"
             android:exported="false" />
         <activity
             android:name=".ManagerMainActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.fixinventori.Activity.User.ManagerLoginActivity"
+            android:name=".Activity.User.ManagerLoginActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.fixinventori.Activity.Report.ReportDetail"
+            android:name=".Activity.Report.ReportDetail"
             android:exported="false"
-            android:parentActivityName="com.example.fixinventori.Activity.Report.InventReport" />
+            android:parentActivityName=".Activity.Report.InventReport" />
         <activity
-            android:name="com.example.fixinventori.Activity.Menu.KomposisiEdit"
+            android:name=".Activity.Menu.KomposisiEdit"
             android:exported="false" />
         <activity
-            android:name="com.example.fixinventori.Activity.User.RegisterActivity"
+            android:name=".Activity.User.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.fixinventori.Activity.User.LoginActivity"
+            android:name=".Activity.User.LoginActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.fixinventori.Activity.Usage.UsageKomposisiDetail"
+            android:name=".Activity.Usage.UsageKomposisiDetail"
             android:exported="false"
-            android:parentActivityName="com.example.fixinventori.Activity.Usage.InventUsage" />
+            android:parentActivityName=".Activity.Usage.InventUsage" />
         <activity
-            android:name="com.example.fixinventori.Activity.Stock.AddStock"
+            android:name=".Activity.Stock.AddStock"
             android:exported="false" />
         <activity
-            android:name="com.example.fixinventori.Activity.Stock.InventorySetDetail"
+            android:name=".Activity.Stock.InventorySetDetail"
             android:exported="false"
-            android:parentActivityName="com.example.fixinventori.Activity.Stock.InventorySet" />
+            android:parentActivityName=".Activity.Stock.InventorySet" />
         <activity
-            android:name="com.example.fixinventori.Activity.Menu.KomposisiSet"
+            android:name=".Activity.Menu.KomposisiSet"
             android:exported="false" />
         <activity
-            android:name="com.example.fixinventori.Activity.Menu.MenuSetDetail"
+            android:name=".Activity.Menu.MenuSetDetail"
             android:exported="false"
-            android:parentActivityName="com.example.fixinventori.Activity.Menu.MenuSet" />
+            android:parentActivityName=".Activity.Menu.MenuSet" />
         <activity
-            android:name="com.example.fixinventori.Activity.Menu.AddMenu"
+            android:name=".Activity.Menu.AddMenu"
             android:exported="false"
-            android:parentActivityName="com.example.fixinventori.Activity.Menu.MenuSet" />
+            android:parentActivityName=".Activity.Menu.MenuSet" />
         <activity
-            android:name="com.example.fixinventori.Activity.Report.InventReport"
+            android:name=".Activity.Report.InventReport"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.example.fixinventori.Activity.Forecast.InventForecast"
+            android:name=".Activity.Forecast.InventForecast"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.example.fixinventori.Activity.Restock.InventRestock"
+            android:name=".Activity.Restock.InventRestock"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.example.fixinventori.Activity.Usage.InventUsage"
+            android:name=".Activity.Usage.InventUsage"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.example.fixinventori.Activity.Menu.MenuSet"
+            android:name=".Activity.Menu.MenuSet"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.example.fixinventori.Activity.Stock.InventorySet"
+            android:name=".Activity.Stock.InventorySet"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".Chat.Activity.UserActivity"
             android:exported="false" />
-
         <activity
             android:name=".Chat.Activity.ManagerActivity"
             android:exported="false" />
-
         <activity
             android:name=".Chat.Activity.ManagerChatActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false" >
         </activity>
 
         <service
             android:name=".Chat.Activity.MessagingServices"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

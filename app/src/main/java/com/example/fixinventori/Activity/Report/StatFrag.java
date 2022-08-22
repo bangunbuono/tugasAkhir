@@ -745,7 +745,7 @@ public class StatFrag extends Fragment {
                                 xValue = new ArrayList<>();
                                 for (StatModel statModel : listCashIn) {
                                     lineEntries.add(new Entry(index, statModel.getHarga()));
-                                    xValue.add(statModel.getTanggal().substring(0,9));
+                                    xValue.add(statModel.getTanggal().substring(0,10));
                                     index++;
                                 }
                                 lineDataSet = new LineDataSet(lineEntries, "In");

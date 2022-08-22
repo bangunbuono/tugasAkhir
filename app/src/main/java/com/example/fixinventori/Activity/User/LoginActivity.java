@@ -2,8 +2,10 @@ package com.example.fixinventori.Activity.User;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,8 @@ import com.example.fixinventori.model.ResponseModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,17 +33,21 @@ public class LoginActivity extends AppCompatActivity {
     String user, password, status;
     Button btnLogin;
     UserSession userSession;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         tvDaftar = findViewById(R.id.tvDaftar);
         tvLoginManager = findViewById(R.id.tvManagerLogin);
+        progressBar = findViewById(R.id.progressRegist);
 
         btnLogin.setOnClickListener(view -> {
             if(etUsername.getText().toString().trim().isEmpty() ||
@@ -49,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             else {
                 user = etUsername.getText().toString().trim();
                 password = etPassword.getText().toString().trim();
-
+                loading(true);
                 login();
             }
         });
@@ -78,9 +86,11 @@ public class LoginActivity extends AppCompatActivity {
                         userSession.createSession(user);
                         firebaseToken();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        loading(false);
                         startActivity(intent);
                         finish();
                     } else {
+                        loading(false);
                         Toast.makeText(LoginActivity.this, pesan, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -88,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                loading(false);
                 Toast.makeText(LoginActivity.this, "Gagal masuk " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -108,6 +119,16 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(this, "token error", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void loading(Boolean isLoading){
+        if (isLoading) {
+            progressBar.setVisibility(View.VISIBLE);
+            btnLogin.setVisibility(View.GONE);
+        }else {
+            progressBar.setVisibility(View.GONE);
+            btnLogin.setVisibility(View.VISIBLE);
+        }
     }
 
 }

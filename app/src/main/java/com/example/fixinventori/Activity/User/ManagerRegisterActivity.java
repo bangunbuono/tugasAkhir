@@ -2,8 +2,10 @@ package com.example.fixinventori.Activity.User;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.example.fixinventori.model.ResponseModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,17 +31,21 @@ public class ManagerRegisterActivity extends AppCompatActivity {
     TextView tvMasukManager;
     Button btnRegisManager;
     String manager, password, confirmPassword;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_register);
 
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
         etRegisManager = findViewById(R.id.etRegisManager);
         etRegisManagerPassword = findViewById(R.id.etRegisManagerPassword);
         etConfirmManagerPassword = findViewById(R.id.etConfirmManagerPassword);
         tvMasukManager = findViewById(R.id.tvMasukManager);
         btnRegisManager = findViewById(R.id.btnRegisManager);
+        progressBar = findViewById(R.id.progressRegist);
 
         btnRegisManager.setOnClickListener(view -> {
             manager = etRegisManager.getText().toString().trim();
@@ -50,6 +57,7 @@ public class ManagerRegisterActivity extends AppCompatActivity {
             }else if(!password.equals(confirmPassword)){
                 Toast.makeText(this, "Password tidak sesuai", Toast.LENGTH_SHORT).show();
             }else {
+                loading(true);
                 register();
             }
         });
@@ -72,12 +80,16 @@ public class ManagerRegisterActivity extends AppCompatActivity {
                     int code = response.body().getCode();
                     if(code==1){
                         registerFirebase();
-                    }else Toast.makeText(ManagerRegisterActivity.this, pesan, Toast.LENGTH_SHORT).show();
+                    }else {
+                        loading(false);
+                        Toast.makeText(ManagerRegisterActivity.this, pesan, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable throwable) {
+                loading(false);
                 Toast.makeText(ManagerRegisterActivity.this, "Gagal daftar: "+ throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -90,6 +102,7 @@ public class ManagerRegisterActivity extends AppCompatActivity {
         db.collection(Constants.KEY_COLLECTION_MANAGERS)
                 .add(manager)
                 .addOnSuccessListener(documentReference -> {
+                    loading(false);
                     startActivity(new Intent(ManagerRegisterActivity.this, ManagerLoginActivity.class));
                     finish();
                 })
@@ -103,15 +116,27 @@ public class ManagerRegisterActivity extends AppCompatActivity {
         delete.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
+                loading(false);
                 Toast.makeText(ManagerRegisterActivity.this, "Gagal registrasi: \n " +
                         "coba dengan nama lain", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                loading(false);
                 Toast.makeText(ManagerRegisterActivity.this, "Gagal registrasi: \n " +
                         "coba dengan nama lain", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void loading(Boolean isLoading){
+        if (isLoading) {
+            progressBar.setVisibility(View.VISIBLE);
+            btnRegisManager.setVisibility(View.GONE);
+        }else {
+            progressBar.setVisibility(View.GONE);
+            btnRegisManager.setVisibility(View.VISIBLE);
+        }
     }
 }

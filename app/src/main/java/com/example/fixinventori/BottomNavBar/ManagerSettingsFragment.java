@@ -76,9 +76,11 @@ public class ManagerSettingsFragment extends Fragment {
             pickImage.launch(intent);
         });
 
-        if(UsageAutoApplication.listConnectedUser.size()>0){
+        if(UsageAutoApplication.listConnectedUser!=null){
+            if(UsageAutoApplication.listConnectedUser.size()>0)
             tvConnect.setVisibility(View.GONE);
-        }else tvUserManager.setVisibility(View.GONE);
+            else tvUserManager.setVisibility(View.GONE);
+        }
 
         tvConnect.setOnClickListener(view1 ->
                 startActivity(new Intent(getActivity(), AddUserConnect.class)));

@@ -2,8 +2,10 @@ package com.example.fixinventori.Activity.User;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.example.fixinventori.model.ResponseModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,17 +32,21 @@ public class RegisterActivity extends AppCompatActivity {
     Button btnRegis;
     TextView tvMasuk;
     String user, password, confirmPass;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
         etRegisUser = findViewById(R.id.etRegisUser);
         etRegisPassword = findViewById(R.id.etRegisPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         btnRegis = findViewById(R.id.btnRegis);
         tvMasuk = findViewById(R.id.tvMasuk);
+        progressBar = findViewById(R.id.progressRegist);
 
         btnRegis.setOnClickListener(view -> {
             user = etRegisUser.getText().toString().trim();
@@ -51,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
             }else if (!password.equals(confirmPass)){
                 Toast.makeText(this, "Password tidak sesuai", Toast.LENGTH_SHORT).show();
             }else {
+                loading(true);
                 register();
             }
         });
@@ -83,6 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                loading(false);
                 Toast.makeText(RegisterActivity.this, "Gagal daftar: "+t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println(t.getMessage());
             }
@@ -96,10 +105,12 @@ public class RegisterActivity extends AppCompatActivity {
         db.collection(Constants.KEY_COLLECTION_USERS)
                 .add(user)
                 .addOnSuccessListener(documentReference -> {
+                    loading(false);
                     Toast.makeText(RegisterActivity.this, "Berhasil daftar", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, LoginActivity.class));
                 })
                 .addOnFailureListener(e -> {
+                    loading(false);
                     deleteAccount();
                     Toast.makeText(this, "token error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
@@ -111,16 +122,28 @@ public class RegisterActivity extends AppCompatActivity {
         delete.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
+                loading(false);
                 Toast.makeText(RegisterActivity.this, "Gagal registrasi: \n " +
                         "coba dengan username lain", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                loading(false);
                 Toast.makeText(RegisterActivity.this, "Gagal registrasi: \n " +
                         "coba dengan username lain", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void loading(Boolean isLoading){
+        if (isLoading) {
+            progressBar.setVisibility(View.VISIBLE);
+            btnRegis.setVisibility(View.GONE);
+        }else {
+            progressBar.setVisibility(View.GONE);
+            btnRegis.setVisibility(View.VISIBLE);
+        }
     }
 
 }

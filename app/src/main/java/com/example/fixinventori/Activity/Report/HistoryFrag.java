@@ -27,8 +27,13 @@ import com.example.fixinventori.model.MonthModel;
 import com.example.fixinventori.model.RecordModel;
 import com.example.fixinventori.model.ResponseModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -182,6 +187,9 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
                     dateRecord = response.body().getDate();
                     adapterDate = new AdapterDate(getActivity(), dateRecord);
                     if(dateRecord!=null){
+                        dateRecord.sort((obj1,obj2)->
+                                Objects.requireNonNull(convertToDate(obj2.getTanggal()))
+                                        .compareTo(convertToDate(obj1.getTanggal())));
                         dateListLayoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
                         rvDateList.setLayoutManager(dateListLayoutManager);
                         rvDateList.setAdapter(adapterDate);
@@ -220,5 +228,14 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
 
             }
         });
+    }
+
+    private Date convertToDate(String date){
+        try {
+            return new SimpleDateFormat("dd MMMMM yy", Locale.getDefault()).parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

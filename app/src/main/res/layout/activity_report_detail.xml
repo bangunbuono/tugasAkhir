@@ -166,11 +166,4 @@
         android:layout_margin="@dimen/_5sdp"
         android:text="Total Rp 200000" />
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/lvRecordDetail"
-        android:id="@+id/barChart"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"/>
-
 </RelativeLayout>

@@ -1,7 +1,6 @@
 package com.example.fixinventori.Activity.Report;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -22,13 +21,6 @@ import com.example.fixinventori.R;
 import com.example.fixinventori.model.RecordModel;
 import com.example.fixinventori.model.ResponseModel;
 import com.example.fixinventori.model.UsageMenuModel;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,14 +36,12 @@ public class ReportDetail extends AppCompatActivity {
     String code, keterangan, user;
     List<RecordModel> recordDetail;
     List<UsageMenuModel> listMenu;
-    ArrayList<BarEntry> barEntries = new ArrayList<>();
-    ArrayList<String> xValue = new ArrayList<>();
     ListView lvRecordDetail, lvRecordMenu;
     UserSession userSession;
     AdapterRecordDetail adapterRecordDetail;
     AdapterRecordMenu adapterRecordMenu;
     AdapterRecordInDetail adapterRecordInDetail;
-    BarChart barChart;
+//    BarChart barChart;
     LinearLayout llRecordMenu;
     int totalPrice;
 
@@ -68,7 +58,7 @@ public class ReportDetail extends AppCompatActivity {
         tvReportDetail = findViewById(R.id.tvReportDetail);
         tvRecordDate = findViewById(R.id.tvRecordDateDetail);
         lvRecordDetail = findViewById(R.id.lvRecordDetail);
-        barChart = findViewById(R.id.barChart);
+//        barChart = findViewById(R.id.barChart);
         tvJumlahPengunjung = findViewById(R.id.tvJumlahPengunjung);
         lvRecordMenu = findViewById(R.id.lvRecordMenu);
         llRecordMenu = findViewById(R.id.llMenuRecord);
@@ -119,40 +109,6 @@ public class ReportDetail extends AppCompatActivity {
                     }
 
                     tvRecordDate.setText(String.format(("Waktu %s: %s"), keterangan, recordDetail.get(0).getTanggal()));
-
-                    for (int i = 0, recordDetailSize = recordDetail.size(); i < recordDetailSize; i++) {
-                        RecordModel model = recordDetail.get(i);
-                        barEntries.add(new BarEntry(i,model.getJumlah()));
-                        xValue.add(model.getBahan());
-                    }
-
-                    BarDataSet barDataSet = new BarDataSet(barEntries, "jumlah");
-                    barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                    barDataSet.setValueTextSize(15f);
-                    BarData barData = new BarData(barDataSet);
-                    Legend legend = barChart.getLegend();
-                    legend.setTextSize(13f);
-                    barData.setBarWidth(0.5f);
-                    XAxis xAxis = barChart.getXAxis();
-                    xAxis.setTextSize(15f);
-                    xAxis.setGranularityEnabled(true);
-                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    xAxis.setDrawGridLines(false);
-                    xAxis.setValueFormatter((value, axis) -> {
-                        try {
-                            int index = (int) value;
-                            return xValue.get((index));
-                        }catch (Exception e){
-                            return "";
-                        }
-                    });
-                    barChart.getAxisLeft().setDrawGridLines(false);
-                    barChart.getAxisRight().setDrawLabels(false);
-                    barChart.setData(barData);
-
-                    barChart.animateY(1000);
-                    barChart.getDescription().setText("report");
-                    barChart.getDescription().setTextColor(Color.RED);
                 }
             }
 

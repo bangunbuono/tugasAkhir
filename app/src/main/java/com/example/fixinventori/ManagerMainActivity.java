@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +44,8 @@ public class ManagerMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_main);
+
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         userSession = new UserSession(this);
         if(!userSession.isLoggedIn()) moveToLogin();

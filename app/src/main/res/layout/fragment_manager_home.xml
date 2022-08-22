@@ -1,22 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:overScrollMode="never"
     tools:context=".BottomNavBar.ManagerHomeFragment">
 
-    <TextView
-        android:id="@+id/tvManagerHome"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        <TextView
+            android:id="@+id/tvManagerHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_5sdp"/>
 
-</LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardStatBahan"
+            android:layout_below="@id/tvManagerHome"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/_8sdp"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/input_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_3sdp"
+                android:orientation="vertical">
+                
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="statistik bahan \n \n \n"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14ssp"/>
+                
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardStatMenu"
+            android:layout_below="@id/cardStatBahan"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/_8sdp"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/input_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_3sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="statistik menu \n \n \n"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14ssp"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardStatCash"
+            android:layout_below="@id/cardStatMenu"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/_8sdp"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/input_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_3sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="statistik cash \n \n \n"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14ssp"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardStatVisitor"
+            android:layout_below="@id/cardStatCash"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/_8sdp"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/input_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_3sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="statistik pengunjung \n \n \n"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14ssp"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</ScrollView>
 
 
 

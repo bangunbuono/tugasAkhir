@@ -2,8 +2,10 @@ package com.example.fixinventori.Activity.User;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,8 @@ import com.example.fixinventori.model.ResponseModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,17 +33,21 @@ public class ManagerLoginActivity extends AppCompatActivity {
     TextView tvManagerDaftar, tvUserLogin;
     String manager,password;
     UserSession session;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_login);
 
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
         etManagerName = findViewById(R.id.etManagerName);
         etManagerPassword = findViewById(R.id.etManagerPassword);
         btnLoginManager = findViewById(R.id.btnLoginManager);
         tvManagerDaftar = findViewById(R.id.tvManagerDaftar);
         tvUserLogin = findViewById(R.id.tvUserLogin);
+        progressBar = findViewById(R.id.progressRegist);
 
         tvUserLogin.setOnClickListener(view -> {
             startActivity(new Intent(this, LoginActivity.class));
@@ -57,6 +65,7 @@ public class ManagerLoginActivity extends AppCompatActivity {
             if(manager.isEmpty()||password.isEmpty()){
                 Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show();
             }else {
+                loading(true);
                 login();
             }
         });
@@ -76,10 +85,12 @@ public class ManagerLoginActivity extends AppCompatActivity {
                         session = new UserSession(ManagerLoginActivity.this);
                         session.createManagerSession(manager);
                         firebaseToken();
+                        loading(false);
                         startActivity(new Intent(ManagerLoginActivity.this, ManagerMainActivity.class));
                         finish();
                     }
                     else {
+                        loading(false);
                         Toast.makeText(ManagerLoginActivity.this, pesan, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -104,8 +115,19 @@ public class ManagerLoginActivity extends AppCompatActivity {
                         session.putString(Constants.KEY_MANAGER_ID, documentSnapshot.getId());
                         session.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
                     }else {
+                        loading(false);
                         Toast.makeText(this, "token error", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void loading(Boolean isLoading){
+        if (isLoading) {
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
+        }else {
+            progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 }
