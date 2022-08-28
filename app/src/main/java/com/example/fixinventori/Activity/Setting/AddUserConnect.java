@@ -1,18 +1,20 @@
 package com.example.fixinventori.Activity.Setting;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fixinventori.API.APIAccounts;
 import com.example.fixinventori.API.ServerConnection;
 import com.example.fixinventori.Activity.User.UserSession;
 import com.example.fixinventori.R;
 import com.example.fixinventori.model.ResponseModel;
+
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +31,8 @@ public class AddUserConnect extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_add);
+
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         session = new UserSession(this);
         managerName = session.getString("manager");

@@ -80,8 +80,10 @@ public interface APIAccounts {
             @Field("manager_name") String manager
     );
 
-
-
-
-
+    @FormUrlEncoded
+    @POST("userdelete.php")
+    Call<ResponseModel> userDelete(
+            @Field("username") String user,
+            @Field("manager_name") String username
+    );
 }

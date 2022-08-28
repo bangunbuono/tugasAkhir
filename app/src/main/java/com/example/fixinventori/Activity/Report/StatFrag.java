@@ -849,7 +849,9 @@ public class StatFrag extends Fragment {
         if(list.get(0).getSatuan()!=null) barDataSet = new BarDataSet(entries, list.get(0).getSatuan());
         else barDataSet = new BarDataSet(entries, "menu");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        barDataSet.setValueTextSize(20f);
+        if(!barDataSet.isDrawValuesEnabled()) barDataSet.setDrawValues(true);
+        barDataSet.setValueTextSize(2f);
+        barDataSet.setValueTextColor(Color.BLACK);
         BarData barData = new BarData(barDataSet);
         barData.setDrawValues(true);
         Legend legend = barChartStat.getLegend();
@@ -868,13 +870,12 @@ public class StatFrag extends Fragment {
                 return "";
             }
         });
-
         barChartStat.setVisibility(View.VISIBLE);
         barChartStat.getAxisRight().setDrawGridLines(false);
         barChartStat.getAxisLeft().setDrawLabels(false);
         barChartStat.setData(barData);
         barChartStat.setDrawValueAboveBar(true);
-
+        barChartStat.setFitBars(true);
         barChartStat.animateY(1000);
         barChartStat.getDescription().setEnabled(false);
     }

@@ -33,11 +33,13 @@ import retrofit2.Response;
 
 public class ManagerHomeFragment extends Fragment {
     UserSession session;
-    String manager;
+    String manager, selectedUser;
     Spinner spinnerUser;
     TextView tvManagerHome, tvInvSet, tvMenuSet, tvMoreReport;
     List<ManagerModel> userList;
+    ArrayList<String> user = new ArrayList<>();
     ArrayAdapter<String> adapter;
+    int index;
 
     public ManagerHomeFragment() {
         // Required empty public constructor
@@ -87,7 +89,6 @@ public class ManagerHomeFragment extends Fragment {
                 if(response.body()!=null) {
                     userList = response.body().getRecordManager();
                     if (userList!=null){
-                        ArrayList<String> user = new ArrayList<>();
                         userList.forEach(managerModel -> user.add(managerModel.username));
                         adapter = new ArrayAdapter<>(
                                 getActivity(),R.layout.tv_selected_user, user);
@@ -95,6 +96,7 @@ public class ManagerHomeFragment extends Fragment {
                         spinnerUser.setAdapter(adapter);
                         spinnerUser.setSelection(0);
                         spinnerItemSelection();
+                        setSpinnerSelection();
                     }
                 }
             }
@@ -111,6 +113,7 @@ public class ManagerHomeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String user = userList.get(position).getUsername();
                 session.putString("username", user);
+                selectedUser = user;
                 System.out.println(user);
             }
 
@@ -119,5 +122,18 @@ public class ManagerHomeFragment extends Fragment {
 
             }
         });
+    }
+
+    private void setSpinnerSelection(){
+        if(session.getString("username")!=null){
+            String userSelected = session.getString("username");
+            for (int i = 0; i < user.size(); i++) {
+                if(user.get(i).equals(userSelected)) {
+                    index = i;
+                    break;
+                }
+            }
+            spinnerUser.setSelection(index);
+        }
     }
 }

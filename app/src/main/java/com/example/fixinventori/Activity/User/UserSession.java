@@ -49,6 +49,12 @@ public class UserSession {
         editor.apply();
     }
 
+    public void deleteString(String key){
+        editor = sharedPreferences.edit();
+        editor.remove(key);
+        editor.apply();
+    }
+
     public String getString(String key){
         return sharedPreferences.getString(key,null);
     }

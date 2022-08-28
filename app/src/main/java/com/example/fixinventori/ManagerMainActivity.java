@@ -34,7 +34,7 @@ import retrofit2.Response;
 
 public class ManagerMainActivity extends AppCompatActivity {
     UserSession userSession;
-    String manager;
+    public static String manager;
     FrameLayout flManagerMainLayout;
     BottomNavigationView bottomNavigationView;
     FragmentManager fragmentManager;
@@ -108,7 +108,7 @@ public class ManagerMainActivity extends AppCompatActivity {
                         this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
-    private void getConnecteduser(){
+    public void getConnecteduser(){
         APIAccounts data = ServerConnection.connection().create(APIAccounts.class);
         Call<ResponseModel> getData = data.getUser(manager);
 
@@ -123,7 +123,7 @@ public class ManagerMainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                Toast.makeText(ManagerMainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
