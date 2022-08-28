@@ -10,10 +10,16 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable-v24/ic_baseline_arrow_back_ios_new_24.xml" value="0.1345" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable-v24/my_message_background.xml" value="0.1345" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable-v24/rounded_image.xml" value="0.1345" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/all_cash_flow_not_selected.xml" value="0.1365" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/all_cash_flow_selected.xml" value="0.1365" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/cash_flow_selector.xml" value="0.1365" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/chat.xml" value="0.1345" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/filter_background.xml" value="0.134" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/usageauto_selected.xml" value="0.1385" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/usageauto_selector.xml" value="0.1365" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/usagemanual_not_selected.xml" value="0.1365" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/usagemanual_selected.xml" value="0.1385" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/usagemanual_selector.xml" value="0.1365" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_add_menu.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_add_stock.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_chat.xml" value="0.21" />
@@ -48,7 +54,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_history.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_home.xml" value="0.21" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_manager_chat.xml" value="0.18" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_manager_home.xml" value="0.225" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_manager_home.xml" value="0.22" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_manager_settings.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_setting.xml" value="0.18" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_stat.xml" value="0.225" />
@@ -62,9 +68,11 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/restock_dialog.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/restock_row.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/tv_content_view.xml" value="0.25" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/tv_selected_user.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/user_conversation_row.xml" value="0.14071661237785016" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/user_list_row.xml" value="0.21" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/menu/bottomnav.xml" value="0.5413533834586466" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/menu/manager_home.xml" value="0.1" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/xml/root_preferences.xml" value="0.225" />
         <entry key="..\:/Users/hp/AppData/Local/Android/Sdk/platforms/android-32-2/data/res/layout/simple_spinner_item.xml" value="0.18947368421052632" />
       </map>

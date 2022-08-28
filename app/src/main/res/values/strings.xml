@@ -3,4 +3,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ojek_online">Ojek online</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="kas_masuk">Kas masuk</string>
+    <string name="kas_keluar">Kas keluar</string>
+    <string name="bahan_masuk">Bahan masuk</string>
+    <string name="bahan_keluar">Bahan keluar</string>
 </resources>

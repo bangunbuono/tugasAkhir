@@ -85,9 +85,6 @@ public class ManagerLoginActivity extends AppCompatActivity {
                         session = new UserSession(ManagerLoginActivity.this);
                         session.createManagerSession(manager);
                         firebaseToken();
-                        loading(false);
-                        startActivity(new Intent(ManagerLoginActivity.this, ManagerMainActivity.class));
-                        finish();
                     }
                     else {
                         loading(false);
@@ -114,6 +111,9 @@ public class ManagerLoginActivity extends AppCompatActivity {
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         session.putString(Constants.KEY_MANAGER_ID, documentSnapshot.getId());
                         session.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
+                        loading(false);
+                        startActivity(new Intent(ManagerLoginActivity.this, ManagerMainActivity.class));
+                        finish();
                     }else {
                         loading(false);
                         Toast.makeText(this, "token error", Toast.LENGTH_SHORT).show();
@@ -123,11 +123,11 @@ public class ManagerLoginActivity extends AppCompatActivity {
 
     private void loading(Boolean isLoading){
         if (isLoading) {
+            btnLoginManager.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.GONE);
         }else {
+            btnLoginManager.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -49,7 +49,10 @@ public class ManagerMainActivity extends AppCompatActivity {
 
         userSession = new UserSession(this);
         if(!userSession.isLoggedIn()) moveToLogin();
-        else manager=userSession.getManagerDetail().get("manager");
+        else {
+            manager = userSession.getManagerDetail().get("manager");
+            getToken();
+        }
         System.out.println(manager);
 
         flManagerMainLayout = findViewById(R.id.flManagerMainLayout);
@@ -66,12 +69,12 @@ public class ManagerMainActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             fragment = null;
-                if(item.getItemId()== R.id.managerHomeNav) fragmentManager.beginTransaction().
+            if(item.getItemId()== R.id.managerHomeNav) fragmentManager.beginTransaction().
                         replace(R.id.flManagerMainLayout, new ManagerHomeFragment()).commit();
-                if(item.getItemId()== R.id.managerChatNav) {
+            if(item.getItemId()== R.id.managerChatNav) {
                     fragmentManager.beginTransaction().
                             replace(R.id.flManagerMainLayout, new ManagerChatFragment()).commit();
-                    getToken();
+//                    getToken();
                 }
                 if(item.getItemId()== R.id.managerSettingNav) fragmentManager.beginTransaction().
                         replace(R.id.flManagerMainLayout, new ManagerSettingsFragment()).commit();

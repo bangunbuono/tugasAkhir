@@ -44,7 +44,7 @@
 
             <RadioButton
                 android:id="@+id/radioBahanKeluar"
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/usageauto_selector"
                 android:button="@drawable/null_usage_button"
@@ -54,8 +54,19 @@
                 android:checked="true"/>
 
             <RadioButton
+                android:id="@+id/radioAllCashFlow"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:button="@drawable/null_usage_button"
+                android:textColor="@drawable/usage_text_selector"
+                android:text="semua"
+                android:background="@drawable/cash_flow_selector"
+                android:gravity="center"
+                android:visibility="gone"/>
+
+            <RadioButton
                 android:id="@+id/radioBahanMasuk"
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/usagemanual_selector"
                 android:textColor="@drawable/usage_text_selector"
@@ -65,14 +76,14 @@
 
         </RadioGroup>
 
-        <com.github.mikephil.charting.charts.BarChart
+        <com.github.mikephil.charting.charts.HorizontalBarChart
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="@dimen/_350sdp"
             android:id="@+id/barChartStat" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="@dimen/_350sdp"
             android:id="@+id/lineChartStat"
             android:visibility="gone"/>
 

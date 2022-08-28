@@ -43,7 +43,7 @@ public class InventorySet extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_set);
 
-        userSession = new UserSession(getApplicationContext());
+        userSession = new UserSession(this);
         user = userSession.getUserDetail().get("username");
 
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(

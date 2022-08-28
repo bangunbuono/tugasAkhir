@@ -40,13 +40,13 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         userSession = new UserSession(getApplicationContext());
-        if(!userSession.isLoggedIn()){
-            moveToLogin();
-        }
-        if(userSession.getManagerDetail().get("manager")!=null) {
+        if(!userSession.isLoggedIn()) moveToLogin();
+
+        if(userSession.getManagerDetail().get("manager")!=null)
             startActivity(new Intent(this, ManagerMainActivity.class));
-        }else{
+        else if(userSession.getUserDetail().get("username")!=null){
             user = userSession.getUserDetail().get("username");
+            getToken();
         }
 
         frameLayout = findViewById(R.id.flMainActivity);
@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
             if(item.getItemId()==R.id.chatNav) {
                 fragmentManager.beginTransaction()
                         .replace(R.id.flMainActivity, new chattFragment()).commit();
-                getToken();
             }
             if(item.getItemId()==R.id.settingNav) fragmentManager.beginTransaction()
                     .replace(R.id.flMainActivity, new SettingFragment()).commit();

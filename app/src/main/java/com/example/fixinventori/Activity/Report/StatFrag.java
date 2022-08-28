@@ -18,16 +18,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.fixinventori.API.APIReport;
-import com.example.fixinventori.API.APIRequestMenu;
 import com.example.fixinventori.API.APIRequestStock;
 import com.example.fixinventori.API.ServerConnection;
 import com.example.fixinventori.Activity.User.UserSession;
 import com.example.fixinventori.R;
-import com.example.fixinventori.model.MenuModel;
 import com.example.fixinventori.model.ResponseModel;
 import com.example.fixinventori.model.StatModel;
 import com.example.fixinventori.model.StocksModel;
-import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.components.Legend;
@@ -40,7 +38,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
-
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,19 +59,17 @@ public class StatFrag extends Fragment {
     List<StatModel> listCashOut = new ArrayList<>();
     List<StatModel> listCashIn = new ArrayList<>();
     List<StocksModel> bahanList = new ArrayList<>();
-    List<MenuModel> menuList = new ArrayList<>();
     ArrayList<String> satuanFilter = new ArrayList<>();
     ArrayList<String> bahanFilter = new ArrayList<>();
-    ArrayList<String> menuFilter = new ArrayList<>();
     ArrayList<BarEntry> barEntries;
     ArrayList<Entry> lineEntries, lineEntries2;
     ArrayList<String> xValue;
     ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
     RadioGroup radioGroup, radioGroupFilter;
     TextView tvStat;
-    RadioButton radioButton, radioBahanMasuk, radioBahanKeluar;
+    RadioButton radioButton, radioBahanMasuk, radioBahanKeluar, radioAllCashFlow;
     Spinner spinnerStatFilter, spinnerStatFilter2;
-    BarChart barChartStat;
+    HorizontalBarChart barChartStat;
     LineChart lineChartSat;
     int week, month, year;
     String keterangan, filterItem, initiateFilter, filterBahan;
@@ -107,6 +102,7 @@ public class StatFrag extends Fragment {
         lineChartSat = view.findViewById(R.id.lineChartStat);
         radioBahanKeluar = view.findViewById(R.id.radioBahanKeluar);
         radioBahanMasuk = view.findViewById(R.id.radioBahanMasuk);
+        radioAllCashFlow = view.findViewById(R.id.radioAllCashFlow);
         tvStat = view.findViewById(R.id.tvStat);
 
         Calendar calendar = Calendar.getInstance();
@@ -140,7 +136,13 @@ public class StatFrag extends Fragment {
                 radioButton = radioGroup.findViewById(i);
                 initStat();
                 mode = spinnerAdapter.getItem(i);
-                if(mode.equals("mode 1") && filterBahan.equals("barang_keluar")){
+                if(mode.equals("cash flow")) {
+                    radioAllCashFlow.setVisibility(View.VISIBLE);
+                }else {
+                    radioAllCashFlow.setVisibility(View.GONE);
+                }
+//                if(mode.equals("mode 1") && filterBahan.equals("barang_keluar")){
+                if(mode.equals("mode 1")){
                     radioGroupFilter.setVisibility(View.VISIBLE);
                     radioGroupFilter.setActivated(true);
                     spinnerStatFilter2.setVisibility(View.VISIBLE);
@@ -150,10 +152,10 @@ public class StatFrag extends Fragment {
                     satuanList();
                     check();
                     checkFilter();
-                    getDataSatuanOut();
-
+//                    getDataSatuanOut();
                 }
-                else if(mode.equals("mode 2") && filterBahan.equals("barang_keluar")){
+//                else if(mode.equals("mode 2") && filterBahan.equals("barang_keluar")){
+                else if(mode.equals("mode 2")){
                     radioGroupFilter.setVisibility(View.VISIBLE);
                     radioGroupFilter.setActivated(true);
                     spinnerStatFilter2.setVisibility(View.VISIBLE);
@@ -163,43 +165,47 @@ public class StatFrag extends Fragment {
                     bahanList();
                     check();
                     checkFilter();
-                    getDataBahanOut();
-
+//                    getDataBahanOut();
                 }
-                else if(mode.equals("mode 1") && filterBahan.equals("barang_masuk")){
-                    radioGroupFilter.setVisibility(View.VISIBLE);
-                    radioGroupFilter.setActivated(true);
-                    spinnerStatFilter2.setVisibility(View.VISIBLE);
-                    spinnerStatFilter2.setActivated(true);
-                    initStat();
-                    lineChartSat.setVisibility(View.GONE);
-                    satuanList();
-                    check();
-                    checkFilter();
-                    getDataSatuanIn();
-
-                }
-                else if(mode.equals("mode 2") && filterBahan.equals("barang_masuk")){
-                    radioGroupFilter.setVisibility(View.VISIBLE);
-                    radioGroupFilter.setActivated(true);
-                    spinnerStatFilter2.setVisibility(View.VISIBLE);
-                    spinnerStatFilter2.setActivated(true);
-                    initStat();
-                    barChartStat.setVisibility(View.GONE);
-                    bahanList();
-                    check();
-                    checkFilter();
-                    getDataBahanIn();
-
-                }
+//                else if(mode.equals("mode 1") && filterBahan.equals("barang_masuk")){
+//                    radioGroupFilter.setVisibility(View.VISIBLE);
+//                    radioGroupFilter.setActivated(true);
+//                    spinnerStatFilter2.setVisibility(View.VISIBLE);
+//                    spinnerStatFilter2.setActivated(true);
+//                    radioBahanMasuk.setText(R.string.bahan_masuk);
+//                    radioBahanKeluar.setText(R.string.bahan_keluar);
+//                    initStat();
+//                    lineChartSat.setVisibility(View.GONE);
+//                    satuanList();
+//                    check();
+//                    checkFilter();
+//                    getDataSatuanIn();
+//                }
+//                else if(mode.equals("mode 2") && filterBahan.equals("barang_masuk")){
+//                    radioGroupFilter.setVisibility(View.VISIBLE);
+//                    radioGroupFilter.setActivated(true);
+//                    spinnerStatFilter2.setVisibility(View.VISIBLE);
+//                    spinnerStatFilter2.setActivated(true);
+//                    radioBahanMasuk.setText(R.string.bahan_masuk);
+//                    radioBahanKeluar.setText(R.string.bahan_keluar);
+//                    initStat();
+//                    barChartStat.setVisibility(View.GONE);
+//                    bahanList();
+//                    check();
+//                    checkFilter();
+//                    getDataBahanIn();
+//                }
                 else if(mode.equals("menu")){
                     radioGroupFilter.setVisibility(View.GONE);
                     radioGroupFilter.setActivated(false);
                     spinnerStatFilter2.setVisibility(View.VISIBLE);
                     spinnerStatFilter2.setActivated(true);
+                    lineChartSat.setVisibility(View.GONE);
+                    barChartStat.setVisibility(View.VISIBLE);
+                    spinnerStatFilter2.setActivated(false);
+                    spinnerStatFilter2.setVisibility(View.GONE);
                     initStat();
-                    lineChartSat.clear();
-                    menuList();
+                    getMenu();
                 }
                 else if(mode.equals("pengunjung")){
                     radioGroupFilter.setVisibility(View.GONE);
@@ -214,8 +220,10 @@ public class StatFrag extends Fragment {
                 else  if(mode.equals("cash flow")){
                     spinnerStatFilter2.setVisibility(View.GONE);
                     spinnerStatFilter2.setActivated(false);
-                    radioGroupFilter.setActivated(false);
-                    radioGroupFilter.setVisibility(View.GONE);
+                    radioGroupFilter.setVisibility(View.VISIBLE);
+                    radioGroupFilter.setActivated(true);
+                    radioBahanMasuk.setText(R.string.kas_masuk);
+                    radioBahanKeluar.setText(R.string.kas_keluar);
                     initStat();
                     barChartStat.setVisibility(View.GONE);
                     check();
@@ -241,7 +249,6 @@ public class StatFrag extends Fragment {
                     else if(mode.equals("mode 2") && filterBahan.equals("barang_keluar")) getDataBahanOut();
                     else if(mode.equals("mode 1") && filterBahan.equals("barang_masuk")) getDataSatuanIn();
                     else if(mode.equals("mode 2") && filterBahan.equals("barang_masuk")) getDataBahanIn();
-                    else if(mode.equals("menu")) getMenu();
                     },500);
 
             }
@@ -261,6 +268,8 @@ public class StatFrag extends Fragment {
                 else if(mode.equals("mode 1") && filterBahan.equals("barang_masuk")) getDataSatuanIn();
                 else if(mode.equals("mode 2") && filterBahan.equals("barang_masuk")) getDataBahanIn();
                 else if(mode.equals("menu")) getMenu();
+                else if(mode.equals("cash flow")) getStatCash();
+
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -278,10 +287,14 @@ public class StatFrag extends Fragment {
                 else if(mode.equals("menu")) getMenu();
                 else if(mode.equals("pengunjung")) pengunjungList();
                 else if(mode.equals("cash flow")) {
-                    if(lineDataSets!=null) lineDataSets.clear();
-                    lineChartSat.clear();
-                    lineChartSat.invalidate();
-                    new Handler().postDelayed(this::getStatCash,200);
+                    if(lineDataSets!=null) {
+                        lineDataSets.clear();
+                        lineDataSet.clear();
+                        lineDataSet2.clear();
+                        lineChartSat.clear();
+                        lineChartSat.invalidate();
+                        new Handler().postDelayed(this::getStatCash,200);
+                    }
                 }
 
             }catch (Exception e){
@@ -298,7 +311,8 @@ public class StatFrag extends Fragment {
             filterBahan = "barang_keluar";
         }else if(id == R.id.radioBahanMasuk) {
             filterBahan = "barang_masuk";
-        }
+        }else if(id == R.id.radioAllCashFlow)
+            filterBahan = "semua";
     } // check bahan keluar/masuk
 
     private void check() {
@@ -384,36 +398,6 @@ public class StatFrag extends Fragment {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void menuList(){
-        APIRequestMenu data = ServerConnection.connection().create(APIRequestMenu.class);
-        Call<ResponseModel> getData = data.showMenu(user);
-
-        getData.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
-                if(menuFilter!=null) menuFilter.clear();
-                if(response.body()!=null) {
-                    menuList = response.body().getData();
-                    if(menuList!=null){
-                        for (MenuModel model: menuList) {
-                            menuFilter.add(model.getMenu());
-                        }
-                        filter2adapter = new ArrayAdapter<>(getActivity(), R.layout.custom_simple_spinner_item, menuFilter);
-                        filter2adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinnerStatFilter2.setAdapter(filter2adapter);
-                        spinnerStatFilter2.setSelection(0);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-
-            }
-        });
-
     }
 
     private void satuanListOutInitiate(){
@@ -626,15 +610,18 @@ public class StatFrag extends Fragment {
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 if(response.body()!=null) listMenu = response.body().getStatMenu();
                 if(listMenu!=null){
-                    lineEntries = new ArrayList<>();
+//                    lineEntries = new ArrayList<>();
+                    barEntries = new ArrayList<>();
                     xValue = new ArrayList<>();
                     int index = 0;
                     for (StatModel model: listMenu) {
-                        lineEntries.add(new Entry(index, model.getJumlah()));
-                        xValue.add(model.getDate());
+                        barEntries.add(new BarEntry(index, model.getJumlah()));
+//                        lineEntries.add(new Entry(index, model.getJumlah()));
+                        xValue.add(model.getMenu());
                         index++;
                     }
-                    renderLineChart(lineEntries, xValue, listMenu);
+                    renderBarChart(barEntries,xValue,listMenu);
+//                    renderLineChart(lineEntries, xValue, listMenu);
 
                 }else {
                     lineChartSat.clear();
@@ -698,7 +685,6 @@ public class StatFrag extends Fragment {
                     if(listCashOut!=null) {
                         for (StatModel statModel:listCashOut){
                             lineEntries2.add(new Entry(index2, statModel.getHarga()));
-
                             index2++;
                         }
                         lineDataSet2 = new LineDataSet(lineEntries2, "Out");
@@ -759,34 +745,41 @@ public class StatFrag extends Fragment {
                                 lineDataSet.setFillColor(Color.BLUE);
                                 lineDataSets.add(lineDataSet);
 
-                                if (lineEntries.size() > 0 && lineEntries2.size() > 0) {
-                                    LineData lineData = new LineData(lineDataSets);
-                                    lineChartSat.setData(lineData);
-                                    lineChartSat.invalidate();
-                                    lineChartSat.setVisibility(View.VISIBLE);
-                                    lineChartSat.getAxisLeft().setDrawGridLines(false);
-                                    lineChartSat.getAxisRight().setDrawLabels(false);
-                                    lineChartSat.getDescription().setTextSize(10f);
-                                    lineChartSat.animateX(1000);
-                                }else if(lineEntries.size()>0){
-                                    LineData lineData = new LineData(lineDataSet);
-                                    lineChartSat.setData(lineData);
-                                    lineChartSat.invalidate();
-                                    lineChartSat.setVisibility(View.VISIBLE);
-                                    lineChartSat.getAxisLeft().setDrawGridLines(false);
-                                    lineChartSat.getAxisRight().setDrawLabels(false);
-                                    lineChartSat.getDescription().setTextSize(10f);
-                                    lineChartSat.animateX(1000);
-                                }else if(lineEntries2.size()>0){
-                                    LineData lineData = new LineData(lineDataSet2);
-                                    lineChartSat.setVisibility(View.VISIBLE);
-                                    lineChartSat.getAxisLeft().setDrawGridLines(false);
-                                    lineChartSat.getAxisRight().setDrawLabels(false);
-                                    lineChartSat.getDescription().setTextSize(10f);
-                                    lineChartSat.animateX(1000);
-                                    lineChartSat.setTouchEnabled(true);
-                                    lineChartSat.setData(lineData);
-                                    lineChartSat.invalidate();
+                                switch (filterBahan) {
+                                    case "semua": {
+                                        LineData lineData = new LineData(lineDataSets);
+                                        lineChartSat.setData(lineData);
+                                        lineChartSat.invalidate();
+                                        lineChartSat.setVisibility(View.VISIBLE);
+                                        lineChartSat.getAxisLeft().setDrawGridLines(false);
+                                        lineChartSat.getAxisRight().setDrawLabels(false);
+                                        lineChartSat.getDescription().setTextSize(10f);
+                                        lineChartSat.animateX(1000);
+                                        break;
+                                    }
+                                    case "barang_masuk": {
+                                        LineData lineData = new LineData(lineDataSet);
+                                        lineChartSat.setData(lineData);
+                                        lineChartSat.invalidate();
+                                        lineChartSat.setVisibility(View.VISIBLE);
+                                        lineChartSat.getAxisLeft().setDrawGridLines(false);
+                                        lineChartSat.getAxisRight().setDrawLabels(false);
+                                        lineChartSat.getDescription().setTextSize(10f);
+                                        lineChartSat.animateX(1000);
+                                        break;
+                                    }
+                                    case "barang_keluar": {
+                                        LineData lineData = new LineData(lineDataSet2);
+                                        lineChartSat.setVisibility(View.VISIBLE);
+                                        lineChartSat.getAxisLeft().setDrawGridLines(false);
+                                        lineChartSat.getAxisRight().setDrawLabels(false);
+                                        lineChartSat.getDescription().setTextSize(10f);
+                                        lineChartSat.animateX(1000);
+                                        lineChartSat.setTouchEnabled(true);
+                                        lineChartSat.setData(lineData);
+                                        lineChartSat.invalidate();
+                                        break;
+                                    }
                                 }
                                 StatModel maxCashIn = Collections.max(listCashIn);
                                 StatModel maxCashOut = Collections.max(listCashOut);
@@ -802,14 +795,13 @@ public class StatFrag extends Fragment {
                                         maxCashOut.getHarga(), maxCashOut.getTanggal(),
                                         minCashOut.getHarga(), minCashOut.getTanggal()));
                                 tvStat.setVisibility(View.VISIBLE);
-
                             }
                         }
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                        Toast.makeText(getActivity(), "Gagal memuat data: "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -817,14 +809,13 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                Toast.makeText(getActivity(), "Gagal memuat data: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
     private void renderLineChart(ArrayList<Entry> entries, ArrayList<String> xValues, List<StatModel> list){
-
         if(list.get(0).getBahan()!=null)lineDataSet = new LineDataSet(entries, list.get(0).getBahan());
         else if(list.get(0).getMenu()!=null)lineDataSet = new LineDataSet(entries, list.get(0).getMenu());
         else lineDataSet = new LineDataSet(entries, "pengunjung");
@@ -855,13 +846,14 @@ public class StatFrag extends Fragment {
     }
 
     private void renderBarChart(ArrayList<BarEntry> entries, ArrayList<String> xValues, List<StatModel> list){
-        barDataSet = new BarDataSet(entries, list.get(0).getSatuan());
+        if(list.get(0).getSatuan()!=null) barDataSet = new BarDataSet(entries, list.get(0).getSatuan());
+        else barDataSet = new BarDataSet(entries, "menu");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        barDataSet.setValueTextSize(15f);
+        barDataSet.setValueTextSize(20f);
         BarData barData = new BarData(barDataSet);
         barData.setDrawValues(true);
         Legend legend = barChartStat.getLegend();
-        legend.setTextSize(13f);
+        legend.setTextSize(15f);
         barData.setBarWidth(0.5f);
         XAxis xAxis = barChartStat.getXAxis();
         xAxis.setTextSize(15f);
@@ -878,14 +870,12 @@ public class StatFrag extends Fragment {
         });
 
         barChartStat.setVisibility(View.VISIBLE);
-        barChartStat.getAxisLeft().setDrawGridLines(false);
-        barChartStat.getAxisRight().setDrawLabels(false);
+        barChartStat.getAxisRight().setDrawGridLines(false);
+        barChartStat.getAxisLeft().setDrawLabels(false);
         barChartStat.setData(barData);
+        barChartStat.setDrawValueAboveBar(true);
 
         barChartStat.animateY(1000);
-        barChartStat.getDescription().setText("bahan");
-        barChartStat.getDescription().setTextColor(Color.RED);
+        barChartStat.getDescription().setEnabled(false);
     }
-
-
 }

@@ -85,10 +85,6 @@ public class LoginActivity extends AppCompatActivity {
                         userSession = new UserSession(getApplicationContext());
                         userSession.createSession(user);
                         firebaseToken();
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        loading(false);
-                        startActivity(intent);
-                        finish();
                     } else {
                         loading(false);
                         Toast.makeText(LoginActivity.this, pesan, Toast.LENGTH_SHORT).show();
@@ -115,6 +111,10 @@ public class LoginActivity extends AppCompatActivity {
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         userSession.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
                         userSession.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        loading(false);
+                        startActivity(intent);
+                        finish();
                     }else {
                         Toast.makeText(this, "token error", Toast.LENGTH_SHORT).show();
                     }
