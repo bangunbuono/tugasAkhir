@@ -135,19 +135,21 @@ public class MenuSetDetail extends AppCompatActivity {
             deskripsi = etDetailDesc.getText().toString().trim();
             updateData();
 
-            for(i = 0; i<komposisiModels.size();i++) {
-                View view1 = lvKomposisiy.getChildAt(i);
-                TextView etIdBahan = view1.findViewById(R.id.tvIdBahan);
-                TextView etBahan = view1.findViewById(R.id.tvBahan);
-                TextView etJumlah = view1.findViewById(R.id.tvJumlah);
-                TextView etSatuan = view1.findViewById(R.id.tvSatuan);
+            if(komposisiModels!=null) {
+                for (i = 0; i < komposisiModels.size(); i++) {
+                    View view1 = lvKomposisiy.getChildAt(i);
+                    TextView etIdBahan = view1.findViewById(R.id.tvIdBahan);
+                    TextView etBahan = view1.findViewById(R.id.tvBahan);
+                    TextView etJumlah = view1.findViewById(R.id.tvJumlah);
+                    TextView etSatuan = view1.findViewById(R.id.tvSatuan);
 
-                komposisiId = Integer.parseInt(etIdBahan.getText().toString().trim());
-                bahan = etBahan.getText().toString().trim();
-                jumlah = Integer.parseInt(etJumlah.getText().toString().trim());
-                satuan = etSatuan.getText().toString().trim();
+                    komposisiId = Integer.parseInt(etIdBahan.getText().toString().trim());
+                    bahan = etBahan.getText().toString().trim();
+                    jumlah = Integer.parseInt(etJumlah.getText().toString().trim());
+                    satuan = etSatuan.getText().toString().trim();
 
-                updateKomposisi();
+                    updateKomposisi();
+                }
             }
             if(!etJumlahy.getText().toString().trim().isEmpty()){
                 jumlah = Integer.parseInt(etJumlahy.getText().toString());

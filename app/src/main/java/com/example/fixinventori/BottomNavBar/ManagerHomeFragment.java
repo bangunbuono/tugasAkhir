@@ -1,7 +1,10 @@
 package com.example.fixinventori.BottomNavBar;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +24,14 @@ import com.example.fixinventori.Activity.Report.InventReport;
 import com.example.fixinventori.Activity.Stock.InventorySet;
 import com.example.fixinventori.Activity.User.UserSession;
 import com.example.fixinventori.Chat.Model.ManagerModel;
+import com.example.fixinventori.Chat.utils.Constants;
 import com.example.fixinventori.R;
 import com.example.fixinventori.model.ResponseModel;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +46,7 @@ public class ManagerHomeFragment extends Fragment {
     ArrayList<String> user = new ArrayList<>();
     ArrayAdapter<String> adapter;
     int index;
+    RoundedImageView rivHomeProfile;
 
     public ManagerHomeFragment() {
         // Required empty public constructor
@@ -65,12 +72,18 @@ public class ManagerHomeFragment extends Fragment {
         tvMenuSet = view.findViewById(R.id.tvMenuSet);
         spinnerUser = view.findViewById(R.id.spinnerUser);
         tvMoreReport = view.findViewById(R.id.tvMoreReport);
+        rivHomeProfile = view.findViewById(R.id.rivHomeProfile);
 
         getUsers();
 
         tvMoreReport.setOnClickListener(view1-> startActivity(new Intent(getActivity(), InventReport.class)));
 
-        tvManagerHome.setText(String.format("Dashboard %s",manager));
+        tvManagerHome.setText(String.format("%s%s",
+                manager.substring(0,1).toUpperCase(Locale.ROOT),
+                manager.substring(1).toLowerCase(Locale.ROOT)));
+
+        if(session.getString(Constants.KEY_IMAGE)!=null)
+            decodeImage(session.getString(Constants.KEY_IMAGE));
 
         tvInvSet.setOnClickListener(view1-> startActivity(new Intent(getActivity(), InventorySet.class)));
 
@@ -135,5 +148,11 @@ public class ManagerHomeFragment extends Fragment {
             }
             spinnerUser.setSelection(index);
         }
+    }
+
+    private void decodeImage(String encodedImage){
+        byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0, bytes.length);
+        rivHomeProfile.setImageBitmap(bitmap);
     }
 }

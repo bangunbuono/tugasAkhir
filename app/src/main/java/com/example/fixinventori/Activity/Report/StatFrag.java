@@ -452,7 +452,6 @@ public class StatFrag extends Fragment {
                     renderBarChart(barEntries, xValue, list);
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -508,8 +507,6 @@ public class StatFrag extends Fragment {
                 if(listBahan!=null){
                     lineEntries = new ArrayList<>();
                     xValue = new ArrayList<>();
-//                    listBahan.forEach(statModel -> System.out.println(statModel.getBahan()+
-//                            statModel.getJumlah()+statModel.getSatuan()+statModel.getDate()));
                     int index = 0;
                     for (StatModel model: listBahan) {
                         lineEntries.add(new Entry(index, model.getJumlah()));

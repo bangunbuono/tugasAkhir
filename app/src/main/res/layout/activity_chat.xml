@@ -19,9 +19,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_alignParentTop="true"
         android:layout_above="@id/supporter"
-        android:background="@color/primary"/>
+        android:layout_alignParentTop="true"
+        android:background="@color/primary" />
     <View
         android:id="@+id/supporter"
         android:layout_width="match_parent"
