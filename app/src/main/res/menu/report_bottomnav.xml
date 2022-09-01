@@ -7,8 +7,18 @@
         android:id="@+id/historyNav"/>
 
     <item
+        android:title="bahan"
+        android:icon="@drawable/ic_baseline_coffee_maker_24"
+        android:id="@+id/bahanNav"/>
+
+    <item
+        android:id="@+id/cashNav"
+        android:icon="@drawable/ic_baseline_payments_24"
+        android:title="Transaksi"/>
+
+    <item
         android:id="@+id/statNav"
         android:icon="@drawable/stat_nav_selector"
-        android:title="Statistik"/>
+        android:title="Grafik"/>
 
 </menu>

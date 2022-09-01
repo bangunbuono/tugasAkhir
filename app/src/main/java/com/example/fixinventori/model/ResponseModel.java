@@ -21,10 +21,55 @@ public class ResponseModel {
     private List<StatModel> statCashOut;
     private List<StatModel> statCashIn;
     private List<StatModel> statPengunjung;
+    private List<StatModel> maxMenu;
+    private List<StatModel> maxStockIn;
+    private List<StatModel> maxStockOut;
+    private List<StatModel> pengunjung;
+    private List<StatModel> cashIn;
+    private List<StatModel> cashOut;
+    private List<StatModel> bahanKeluar;
+
+    public List<StatModel> getBahanKeluar() {
+        return bahanKeluar;
+    }
+
+    public List<StatModel> getBahanMasuk() {
+        return bahanMasuk;
+    }
+
+    private List<StatModel> bahanMasuk;
+
+
+    public List<StatModel> getCashIn() {
+        return cashIn;
+    }
+
+
+    public List<StatModel> getCashOut() {
+        return cashOut;
+    }
+
     private List<StatModel> statMenu;
+
     private List<ManagerModel> recordManager;
     private List<UsageMenuModel> recordMenu;
     private List<UserModel> profilPicture;
+
+    public List<StatModel> getMaxMenu() {
+        return maxMenu;
+    }
+
+    public List<StatModel> getPengunjung() {
+        return pengunjung;
+    }
+
+    public List<StatModel> getMaxStockIn() {
+        return maxStockIn;
+    }
+
+    public List<StatModel> getMaxStockOut() {
+        return maxStockOut;
+    }
 
     public List<UserModel> getProfilPicture() {
         return profilPicture;

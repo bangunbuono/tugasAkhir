@@ -38,16 +38,19 @@ public class InventReport extends AppCompatActivity {
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             fragment = null;
-            switch (item.getItemId()){
-                case R.id.historyNav:
-                    manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.flFragmentReport, new HistoryFrag()).commit();
-                    break;
-
-                case R.id.statNav:
-                    manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.flFragmentReport, new StatFrag()).commit();
-                    break;
+            int itemId = item.getItemId();
+            if (itemId == R.id.historyNav) {
+                manager = getSupportFragmentManager();
+                manager.beginTransaction().replace(R.id.flFragmentReport, new HistoryFrag()).commit();
+            } else if (itemId == R.id.statNav) {
+                manager = getSupportFragmentManager();
+                manager.beginTransaction().replace(R.id.flFragmentReport, new StatFrag()).commit();
+            }else if (itemId == R.id.cashNav) {
+                manager = getSupportFragmentManager();
+                manager.beginTransaction().replace(R.id.flFragmentReport, new TransactionFragment()).commit();
+            }else if(itemId == R.id.bahanNav){
+                manager = getSupportFragmentManager();
+                manager.beginTransaction().replace(R.id.flFragmentReport, new MaterialFrag()).commit();
             }
             return true;
         });

@@ -205,6 +205,7 @@ public class StatFrag extends Fragment {
                     spinnerStatFilter2.setActivated(false);
                     spinnerStatFilter2.setVisibility(View.GONE);
                     initStat();
+                    clearArrayList();
                     getMenu();
                 }
                 else if(mode.equals("pengunjung")){

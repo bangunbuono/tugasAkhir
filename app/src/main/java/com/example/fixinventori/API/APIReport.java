@@ -190,5 +190,17 @@ public interface APIReport {
             @Field("keterangan") String keterangan
     );
 
+    @FormUrlEncoded
+    @POST("bahanin.php")
+    Call<ResponseModel> bahanIn(
+            @Field("user") String user
+    );
+
+    @FormUrlEncoded
+    @POST("bahanout.php")
+    Call<ResponseModel> bahanOut(
+            @Field("user") String user
+    );
+
 
 }

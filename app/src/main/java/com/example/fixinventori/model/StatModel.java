@@ -11,6 +11,12 @@ public class StatModel implements Comparable<StatModel>{
     private int jumlah;
     private int pengunjung;
 
+    public int getWeek() {
+        return week;
+    }
+
+    private int week;
+
     private int harga;
 
     @SerializedName("tanggal_masuk") private String dateIn;

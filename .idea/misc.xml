@@ -56,10 +56,12 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_history.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_manager_chat.xml" value="0.18" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_manager_home.xml" value="0.25" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_manager_home.xml" value="0.22" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_manager_settings.xml" value="0.25" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_material.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_setting.xml" value="0.18" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_stat.xml" value="0.225" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_transaction.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_usage_auto.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_usage_manual.xml" value="0.2064814814814815" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/komposisi_dialog.xml" value="0.225" />
@@ -69,12 +71,14 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/other_message_row.xml" value="0.14210526315789473" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/restock_dialog.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/restock_row.xml" value="0.25" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/transaction_row.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/tv_content_view.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/tv_selected_user.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/user_conversation_row.xml" value="0.14071661237785016" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/user_list_row.xml" value="0.21" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/menu/bottomnav.xml" value="0.5413533834586466" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/menu/manager_home.xml" value="0.1" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/menu/report_bottomnav.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/xml/root_preferences.xml" value="0.225" />
         <entry key="..\:/Users/hp/AppData/Local/Android/Sdk/platforms/android-32-2/data/res/layout/simple_spinner_item.xml" value="0.18947368421052632" />
       </map>

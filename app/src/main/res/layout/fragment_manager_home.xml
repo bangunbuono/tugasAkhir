@@ -65,8 +65,6 @@
             android:layout_below="@id/rrHeader"
             android:layout_marginStart="@dimen/_2sdp"
             android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
             android:layout_toEndOf="@id/tvSelectUser" />
 
         <androidx.cardview.widget.CardView
@@ -85,6 +83,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvUsageMaterial"
                     android:padding="@dimen/_3sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -132,6 +131,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvMenuSales"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Penjualan menu \n \n \n"
@@ -180,6 +180,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvCashFlow"
                     android:padding="@dimen/_3sdp"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
@@ -208,6 +209,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvVisitors"
                     android:padding="@dimen/_3sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
