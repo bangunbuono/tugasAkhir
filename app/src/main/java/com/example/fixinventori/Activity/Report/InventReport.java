@@ -51,6 +51,9 @@ public class InventReport extends AppCompatActivity {
             }else if(itemId == R.id.bahanNav){
                 manager = getSupportFragmentManager();
                 manager.beginTransaction().replace(R.id.flFragmentReport, new MaterialFrag()).commit();
+            }else if(itemId == R.id.menuNav){
+                manager = getSupportFragmentManager();
+                manager.beginTransaction().replace(R.id.flFragmentReport, new MenuFrag()).commit();
             }
             return true;
         });

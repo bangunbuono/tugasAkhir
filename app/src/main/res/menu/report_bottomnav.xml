@@ -7,9 +7,14 @@
         android:id="@+id/historyNav"/>
 
     <item
-        android:title="bahan"
+        android:title="Bahan"
         android:icon="@drawable/ic_baseline_coffee_maker_24"
         android:id="@+id/bahanNav"/>
+
+    <item
+        android:title="Menu"
+        android:icon="@drawable/ic_baseline_emoji_food_beverage_24"
+        android:id="@+id/menuNav"/>
 
     <item
         android:id="@+id/cashNav"

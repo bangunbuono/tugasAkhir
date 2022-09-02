@@ -29,6 +29,12 @@ public class ResponseModel {
     private List<StatModel> cashOut;
     private List<StatModel> bahanKeluar;
 
+    public List<StatModel> getMenu() {
+        return menu;
+    }
+
+    private List<StatModel> menu;
+
     public List<StatModel> getBahanKeluar() {
         return bahanKeluar;
     }

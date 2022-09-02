@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class MaterialFrag extends Fragment {
     AdapterBahan adapterBahan;
     ArrayList<String> filter;
     ArrayAdapter<String> adapter;
+    ProgressBar progressBar;
 
     public MaterialFrag() {
         // Required empty public constructor
@@ -55,7 +57,7 @@ public class MaterialFrag extends Fragment {
         user = session.getUserDetail().get("username");
         bahanIn = bahanOut = new ArrayList<>();
         services = Executors.newSingleThreadExecutor();
-        services.execute(this::getBahan);
+
         filter = new ArrayList<>();
         filter.add("Bahan keluar");
         filter.add("Bahan masuk");
@@ -68,8 +70,11 @@ public class MaterialFrag extends Fragment {
         View view = inflater.inflate(R.layout.fragment_material, container, false);
         spinnerBahanFilter = view.findViewById(R.id.spinnerFilterBahan);
         lvBahan = view.findViewById(R.id.lvBahan);
+        progressBar = view.findViewById(R.id.progressRegist);
 
-        adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item,filter);
+        services.execute(this::getBahan);
+
+        adapter = new ArrayAdapter<>(getActivity(),R.layout.material_data_spinner_item,filter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerBahanFilter.setAdapter(adapter);
 
@@ -83,11 +88,14 @@ public class MaterialFrag extends Fragment {
                             new Handler().postDelayed(()->{
                                 adapterBahan = new AdapterBahan(getActivity(),bahanOut);
                                 lvBahan.setAdapter(adapterBahan);
+                                loading(false);
                                 },200));
-                }else requireActivity().runOnUiThread(()->
+                }else
+                    requireActivity().runOnUiThread(()->
                         new Handler().postDelayed(()->{
                             adapterBahan = new AdapterBahan(getActivity(),bahanIn);
                             lvBahan.setAdapter(adapterBahan);
+                            loading(false);
                         },200));
             }
 
@@ -101,6 +109,7 @@ public class MaterialFrag extends Fragment {
     }
 
     private void getBahan(){
+        loading(true);
         APIReport data = ServerConnection.connection().create(APIReport.class);
         Call<ResponseModel> getBahanIn = data.bahanIn(user);
         Call<ResponseModel> getBahanOut = data.bahanOut(user);
@@ -110,7 +119,6 @@ public class MaterialFrag extends Fragment {
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 bahanIn = Objects.requireNonNull(response.body()).getBahanMasuk();
             }
-
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
                 Toast.makeText(getActivity(), "in"+t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -122,11 +130,20 @@ public class MaterialFrag extends Fragment {
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 bahanOut = Objects.requireNonNull(response.body()).getBahanKeluar();
             }
-
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
                 Toast.makeText(getActivity(), "out"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void loading(Boolean isLoading){
+        if (isLoading) {
+            progressBar.setVisibility(View.VISIBLE);
+            lvBahan.setVisibility(View.GONE);
+        }else {
+            progressBar.setVisibility(View.GONE);
+            lvBahan.setVisibility(View.VISIBLE);
+        }
     }
 }

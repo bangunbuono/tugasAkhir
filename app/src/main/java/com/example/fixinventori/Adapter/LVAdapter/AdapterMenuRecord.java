@@ -15,15 +15,15 @@ import com.example.fixinventori.model.StatModel;
 
 import java.util.List;
 
-public class AdapterBahan extends ArrayAdapter<StatModel> {
+public class AdapterMenuRecord extends ArrayAdapter<StatModel> {
 
     Context context;
-    List<StatModel> bahan;
+    List<StatModel> menu;
 
-    public AdapterBahan(Context context, List<StatModel> bahan){
-        super(context, R.layout.transaction_row,bahan);
+    public AdapterMenuRecord(Context context, List<StatModel> menu){
+        super(context, R.layout.transaction_row, menu);
         this.context = context;
-        this.bahan = bahan;
+        this.menu = menu;
     }
 
     @NonNull
@@ -35,9 +35,9 @@ public class AdapterBahan extends ArrayAdapter<StatModel> {
         TextView tvCashIn =convertView.findViewById(R.id.tvCashIn);
         TextView tvCashOut =convertView.findViewById(R.id.tvCashOut);
 
-        tvTanggal.setText(bahan.get(position).getTanggal());
-        tvCashIn.setText(bahan.get(position).getBahan());
-        tvCashOut.setText(String.format("%s %s", bahan.get(position).getJumlah(), bahan.get(position).getSatuan()));
+        tvTanggal.setText(menu.get(position).getTanggal());
+        tvCashIn.setText(menu.get(position).getMenu());
+        tvCashOut.setText(String.valueOf(menu.get(position).getJumlah()));
         return convertView;
     }
 }

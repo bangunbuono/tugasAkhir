@@ -58,14 +58,16 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_manager_chat.xml" value="0.18" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_manager_home.xml" value="0.22" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_manager_settings.xml" value="0.25" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_material.xml" value="0.18947368421052632" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_material.xml" value="0.25" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_menu.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_setting.xml" value="0.18" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_stat.xml" value="0.225" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_transaction.xml" value="0.18947368421052632" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_transaction.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_usage_auto.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/fragment_usage_manual.xml" value="0.2064814814814815" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/komposisi_dialog.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/komposisi_row.xml" value="0.18947368421052632" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/material_data_spinner_item.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/merge_komposisi_row.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/my_message_row.xml" value="0.14210526315789473" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/other_message_row.xml" value="0.14210526315789473" />

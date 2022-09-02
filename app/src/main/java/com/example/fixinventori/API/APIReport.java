@@ -202,5 +202,10 @@ public interface APIReport {
             @Field("user") String user
     );
 
+    @FormUrlEncoded
+    @POST("menudata.php")
+    Call<ResponseModel> menurecord(
+            @Field("user") String user
+    );
 
 }

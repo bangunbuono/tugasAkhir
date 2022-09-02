@@ -3,29 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Report.MaterialFrag"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Activity.Report.MenuFrag">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:text="Data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:layout_marginStart="@dimen/_2sdp"/>
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinnerFilterBahan"/>
-
-    </LinearLayout>
+        android:text="Data Penjualan Menu Harian"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_2sdp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,7 +39,7 @@
             android:id="@+id/tvCashIn"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="Bahan"
+            android:text="Menu"
             android:textStyle="bold"
             android:textSize="17sp"
             android:layout_height="wrap_content"/>
@@ -73,10 +60,9 @@
         android:background="@color/black"/>
 
     <ListView
-        android:layout_margin="@dimen/_4sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lvBahan"/>
+        android:id="@+id/lvMenuRecord"/>
 
     <ProgressBar
         android:id="@+id/progressRegist"
@@ -86,6 +72,5 @@
         android:layout_gravity="center"
         android:visibility="gone"
         />
-
 
 </LinearLayout>

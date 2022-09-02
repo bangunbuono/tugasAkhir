@@ -3,11 +3,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Activity.Report.TransactionFragment">
 
-    <ListView
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data Arus Kas Harian"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_2sdp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lvCashTransaction"/>
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp">
+
+        <TextView
+            android:id="@+id/tvTanggal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="Tanggal"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvCashIn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="Pemasukan"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="Pengeluaran"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:id="@+id/tvCashOut"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"/>
+
+    <ListView
+        android:layout_margin="@dimen/_4sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvCashTransaction"
+        />
+
+    <ProgressBar
+        android:id="@+id/progressRegist"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_200sdp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        />
 
 </LinearLayout>

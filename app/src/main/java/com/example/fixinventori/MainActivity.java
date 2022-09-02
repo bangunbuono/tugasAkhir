@@ -40,10 +40,16 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         userSession = new UserSession(getApplicationContext());
-        if(!userSession.isLoggedIn()) moveToLogin();
+        if(!userSession.isLoggedIn()) {
+            moveToLogin();
+            finish();
+        }
 
-        if(userSession.getManagerDetail().get("manager")!=null)
+        if(userSession.getManagerDetail().get("manager")!=null){
             startActivity(new Intent(this, ManagerMainActivity.class));
+            finish();
+
+        }
         else if(userSession.getUserDetail().get("username")!=null){
             user = userSession.getUserDetail().get("username");
             getToken();
