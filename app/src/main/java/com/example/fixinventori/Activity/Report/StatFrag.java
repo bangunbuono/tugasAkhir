@@ -141,94 +141,68 @@ public class StatFrag extends Fragment {
                 }else {
                     radioAllCashFlow.setVisibility(View.GONE);
                 }
-//                if(mode.equals("mode 1") && filterBahan.equals("barang_keluar")){
-                if(mode.equals("mode 1")){
-                    radioGroupFilter.setVisibility(View.VISIBLE);
-                    radioGroupFilter.setActivated(true);
-                    spinnerStatFilter2.setVisibility(View.VISIBLE);
-                    spinnerStatFilter2.setActivated(true);
-                    initStat();
-                    lineChartSat.setVisibility(View.GONE);
-                    satuanList();
-                    check();
-                    checkFilter();
-//                    getDataSatuanOut();
-                }
-//                else if(mode.equals("mode 2") && filterBahan.equals("barang_keluar")){
-                else if(mode.equals("mode 2")){
-                    radioGroupFilter.setVisibility(View.VISIBLE);
-                    radioGroupFilter.setActivated(true);
-                    spinnerStatFilter2.setVisibility(View.VISIBLE);
-                    spinnerStatFilter2.setActivated(true);
-                    initStat();
-                    barChartStat.setVisibility(View.GONE);
-                    bahanList();
-                    check();
-                    checkFilter();
-//                    getDataBahanOut();
-                }
-//                else if(mode.equals("mode 1") && filterBahan.equals("barang_masuk")){
-//                    radioGroupFilter.setVisibility(View.VISIBLE);
-//                    radioGroupFilter.setActivated(true);
-//                    spinnerStatFilter2.setVisibility(View.VISIBLE);
-//                    spinnerStatFilter2.setActivated(true);
-//                    radioBahanMasuk.setText(R.string.bahan_masuk);
-//                    radioBahanKeluar.setText(R.string.bahan_keluar);
-//                    initStat();
-//                    lineChartSat.setVisibility(View.GONE);
-//                    satuanList();
-//                    check();
-//                    checkFilter();
-//                    getDataSatuanIn();
-//                }
-//                else if(mode.equals("mode 2") && filterBahan.equals("barang_masuk")){
-//                    radioGroupFilter.setVisibility(View.VISIBLE);
-//                    radioGroupFilter.setActivated(true);
-//                    spinnerStatFilter2.setVisibility(View.VISIBLE);
-//                    spinnerStatFilter2.setActivated(true);
-//                    radioBahanMasuk.setText(R.string.bahan_masuk);
-//                    radioBahanKeluar.setText(R.string.bahan_keluar);
-//                    initStat();
-//                    barChartStat.setVisibility(View.GONE);
-//                    bahanList();
-//                    check();
-//                    checkFilter();
-//                    getDataBahanIn();
-//                }
-                else if(mode.equals("menu")){
-                    radioGroupFilter.setVisibility(View.GONE);
-                    radioGroupFilter.setActivated(false);
-                    spinnerStatFilter2.setVisibility(View.VISIBLE);
-                    spinnerStatFilter2.setActivated(true);
-                    lineChartSat.setVisibility(View.GONE);
-                    barChartStat.setVisibility(View.VISIBLE);
-                    spinnerStatFilter2.setActivated(false);
-                    spinnerStatFilter2.setVisibility(View.GONE);
-                    initStat();
-                    clearArrayList();
-                    getMenu();
-                }
-                else if(mode.equals("pengunjung")){
-                    radioGroupFilter.setVisibility(View.GONE);
-                    radioGroupFilter.setActivated(false);
-                    spinnerStatFilter2.setVisibility(View.GONE);
-                    spinnerStatFilter2.setActivated(false);
-                    initStat();
-                    barChartStat.setVisibility(View.GONE);
-                    check();
-                    pengunjungList();
-                }
-                else  if(mode.equals("cash flow")){
-                    spinnerStatFilter2.setVisibility(View.GONE);
-                    spinnerStatFilter2.setActivated(false);
-                    radioGroupFilter.setVisibility(View.VISIBLE);
-                    radioGroupFilter.setActivated(true);
-                    radioBahanMasuk.setText(R.string.kas_masuk);
-                    radioBahanKeluar.setText(R.string.kas_keluar);
-                    initStat();
-                    barChartStat.setVisibility(View.GONE);
-                    check();
-                    getStatCash();
+                switch (mode) {
+                    case "mode 1":
+                        radioGroupFilter.setVisibility(View.VISIBLE);
+                        radioGroupFilter.setActivated(true);
+                        spinnerStatFilter2.setVisibility(View.VISIBLE);
+                        spinnerStatFilter2.setActivated(true);
+                        radioBahanMasuk.setText(R.string.bahan_masuk);
+                        radioBahanKeluar.setText(R.string.bahan_keluar);
+                        initStat();
+                        lineChartSat.setVisibility(View.GONE);
+                        satuanList();
+                        check();
+                        checkFilter();
+                        break;
+                    case "mode 2":
+                        radioGroupFilter.setVisibility(View.VISIBLE);
+                        radioGroupFilter.setActivated(true);
+                        spinnerStatFilter2.setVisibility(View.VISIBLE);
+                        spinnerStatFilter2.setActivated(true);
+                        radioBahanMasuk.setText(R.string.bahan_masuk);
+                        radioBahanKeluar.setText(R.string.bahan_keluar);
+                        initStat();
+                        barChartStat.setVisibility(View.GONE);
+                        bahanList();
+                        check();
+                        checkFilter();
+                        break;
+                    case "menu":
+                        radioGroupFilter.setVisibility(View.GONE);
+                        radioGroupFilter.setActivated(false);
+                        spinnerStatFilter2.setVisibility(View.VISIBLE);
+                        spinnerStatFilter2.setActivated(true);
+                        lineChartSat.setVisibility(View.GONE);
+                        barChartStat.setVisibility(View.VISIBLE);
+                        spinnerStatFilter2.setActivated(false);
+                        spinnerStatFilter2.setVisibility(View.GONE);
+                        initStat();
+                        clearArrayList();
+                        getMenu();
+                        break;
+                    case "pengunjung":
+                        radioGroupFilter.setVisibility(View.GONE);
+                        radioGroupFilter.setActivated(false);
+                        spinnerStatFilter2.setVisibility(View.GONE);
+                        spinnerStatFilter2.setActivated(false);
+                        initStat();
+                        barChartStat.setVisibility(View.GONE);
+                        check();
+                        pengunjungList();
+                        break;
+                    case "cash flow":
+                        spinnerStatFilter2.setVisibility(View.GONE);
+                        spinnerStatFilter2.setActivated(false);
+                        radioGroupFilter.setVisibility(View.VISIBLE);
+                        radioGroupFilter.setActivated(true);
+                        radioBahanMasuk.setText(R.string.kas_masuk);
+                        radioBahanKeluar.setText(R.string.kas_keluar);
+                        initStat();
+                        barChartStat.setVisibility(View.GONE);
+                        check();
+                        getStatCash();
+                        break;
                 }
             }
 

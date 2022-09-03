@@ -74,7 +74,6 @@ public class ManagerHomeFragment extends Fragment {
         cashOut = new ArrayList<>();
         visitors= new ArrayList<>();
         getWeek();
-
     }
 
     @Override
@@ -99,7 +98,7 @@ public class ManagerHomeFragment extends Fragment {
 
         tvMoreReport.setOnClickListener(view1-> startActivity(new Intent(getActivity(), InventReport.class)));
 
-        tvManagerHome.setText(String.format("%s%s",
+        tvManagerHome.setText(String.format("Dashboard %s%s",
                 manager.substring(0,1).toUpperCase(Locale.ROOT),
                 manager.substring(1).toLowerCase(Locale.ROOT)));
 
@@ -195,8 +194,7 @@ public class ManagerHomeFragment extends Fragment {
                     maxMenu = response.body().getMaxMenu();
                     requireActivity().runOnUiThread(()->{
                         if(maxMenu!=null && maxMenu.size()>0) {
-                            tvMenuSales.setText(String.format("MENU\n" +
-                                            "paling banyak terjual: %s\n" +
+                            tvMenuSales.setText(String.format("Paling banyak terjual: %s\n" +
                                             "paling sedikit terjual: %s",
                                     maxMenu.get(0).getMenu() +" "+ maxMenu.get(0).getJumlah(),
                                     maxMenu.get(maxMenu.size()-1).getMenu() +" "+ maxMenu.get(maxMenu.size()-1).getJumlah()));
@@ -246,8 +244,8 @@ public class ManagerHomeFragment extends Fragment {
                         if(maxStockOut!=null)
                             if(maxStockOut.size()>0 && maxStockIn.size()>0)
                                 tvUsageMaterial.setText(String.
-                                        format("BAHAN \npaling banyak digunakan minggu ini: %s %s %s \n" +
-                                                        "paling banyak dibeli minggu ini: %s %s %s",
+                                        format("paling banyak digunakan: %s %s %s \n" +
+                                                        "paling banyak dibeli: %s %s %s",
                                                 maxStockOut.get(0).getBahan(),
                                                 maxStockOut.get(0).getJumlah(),
                                                 maxStockOut.get(0).getSatuan(),
@@ -278,7 +276,8 @@ public class ManagerHomeFragment extends Fragment {
                     requireActivity().runOnUiThread(()->{
                         if(visitors!=null && visitors.size()>0){
                             tvVisitor.setText(String.
-                                    format("PENGUNJUNG\nminggu ini: %s \n" +
+                                    format("PENGUNJUNG\n" +
+                                                    "minggu ini: %s \n" +
                                                     "minggu lalu: %s",
                                             visitors.get(1).getPengunjung(),
                                             visitors.get(0).getPengunjung()));
@@ -333,11 +332,11 @@ public class ManagerHomeFragment extends Fragment {
                             if(untung0<untung){
                                 tvCashflow.setText(String.format("%s dari minggu lalu",
                                         "pendapatan minggu ini Rp"+untung +"\n" +
-                                                "naik "+((untung-untung0)/untung0)*100+"%"));
+                                                "(+ "+((untung-untung0)/untung0)*100+"%)"));
                             } else
                                 tvCashflow.setText(String.format("%s dari minggu lalu",
                                         "pendapatan minggu ini Rp"+untung +"\n" +
-                                                "turun "+((untung0-untung)/untung0)*100+"%"));
+                                                "(- "+((untung0-untung)/untung0)*100+"%)"));
                         }
                     }
                 });
