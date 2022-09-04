@@ -36,9 +36,20 @@ public class AdapterTransaction extends ArrayAdapter<StatModel> {
         TextView tvCashIn =convertView.findViewById(R.id.tvCashIn);
         TextView tvCashOut =convertView.findViewById(R.id.tvCashOut);
 
-        tvTanggal.setText(cashIn.get(position).getTanggal().substring(0,10));
-        tvCashIn.setText(String.valueOf(cashIn.get(position).getHarga()));
-        tvCashOut.setText(String.valueOf(cashOut.get(position).getHarga()));
+        if (cashOut==null || cashOut.size()==0){
+            tvTanggal.setText(cashIn.get(position).getTanggal().substring(0,10));
+            tvCashIn.setText(String.valueOf(cashIn.get(position).getHarga()));
+            tvCashOut.setText(String.valueOf(0));
+        }else if(cashIn==null || cashIn.size()==0) {
+            tvTanggal.setText(cashOut.get(position).getTanggal().substring(0,10));
+            tvCashIn.setText(String.valueOf(0));
+            tvCashOut.setText(String.valueOf(cashOut.get(position).getHarga()));
+        }else {
+            tvTanggal.setText(cashIn.get(position).getTanggal().substring(0,10));
+            tvCashIn.setText(String.valueOf(cashIn.get(position).getHarga()));
+            tvCashOut.setText(String.valueOf(cashOut.get(position).getHarga()));
+        }
+
 
         return convertView;
     }

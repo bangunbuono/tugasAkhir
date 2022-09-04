@@ -86,17 +86,29 @@ public class MaterialFrag extends Fragment {
                 if(adapter.getItem(i).equals("Bahan keluar")){
                     requireActivity().runOnUiThread(()->
                             new Handler().postDelayed(()->{
-                                adapterBahan = new AdapterBahan(getActivity(),bahanOut);
-                                lvBahan.setAdapter(adapterBahan);
-                                loading(false);
-                                },200));
+                                if(bahanOut!=null) {
+                                    adapterBahan = new AdapterBahan(getActivity(), bahanOut);
+                                    lvBahan.setAdapter(adapterBahan);
+                                    lvBahan.setVisibility(View.VISIBLE);
+                                    loading(false);
+                                }else {
+                                    lvBahan.setVisibility(View.GONE);
+                                    Toast.makeText(getActivity(), "Tidak ada data", Toast.LENGTH_SHORT).show();
+                                }
+                                },400));
                 }else
                     requireActivity().runOnUiThread(()->
                         new Handler().postDelayed(()->{
-                            adapterBahan = new AdapterBahan(getActivity(),bahanIn);
-                            lvBahan.setAdapter(adapterBahan);
-                            loading(false);
-                        },200));
+                            if(bahanIn!=null) {
+                                adapterBahan = new AdapterBahan(getActivity(), bahanIn);
+                                lvBahan.setAdapter(adapterBahan);
+                                lvBahan.setVisibility(View.VISIBLE);
+                                loading(false);
+                            }else {
+                                lvBahan.setVisibility(View.GONE);
+                                Toast.makeText(getActivity(), "Tidak ada data", Toast.LENGTH_SHORT).show();
+                            }
+                            },400));
             }
 
             @Override
