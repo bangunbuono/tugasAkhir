@@ -244,8 +244,8 @@ public class ManagerHomeFragment extends Fragment {
                         if(maxStockOut!=null)
                             if(maxStockOut.size()>0 && maxStockIn.size()>0)
                                 tvUsageMaterial.setText(String.
-                                        format("paling banyak digunakan: %s %s %s \n" +
-                                                        "paling banyak dibeli: %s %s %s",
+                                        format("paling banyak keluar: %s %s %s \n" +
+                                                        "paling banyak masuk: %s %s %s",
                                                 maxStockOut.get(0).getBahan(),
                                                 maxStockOut.get(0).getJumlah(),
                                                 maxStockOut.get(0).getSatuan(),
@@ -330,13 +330,16 @@ public class ManagerHomeFragment extends Fragment {
                             float untung = masuk-keluar;
                             float untung0 = cashIn.get(0).getHarga() - cashOut.get(0).getHarga();
                             if(untung0<untung){
-                                tvCashflow.setText(String.format("%s dari minggu lalu",
-                                        "pendapatan minggu ini Rp"+untung +"\n" +
-                                                "(+ "+((untung-untung0)/untung0)*100+"%)"));
+                                tvCashflow.setText(String.format("%s dari minggu lalu)",
+                                        "minggu ini Rp"+untung +"\n" +
+                                                "(+"+
+                                                String.valueOf(((untung-untung0)/untung0)*100).substring(0,4)
+                                                +"%"));
                             } else
-                                tvCashflow.setText(String.format("%s dari minggu lalu",
-                                        "pendapatan minggu ini Rp"+untung +"\n" +
-                                                "(- "+((untung0-untung)/untung0)*100+"%)"));
+                                tvCashflow.setText(String.format("%s dari minggu lalu)",
+                                        "minggu ini Rp"+untung +"\n" +
+                                                "(-"+String.valueOf(((untung0-untung)/untung0)*100).substring(0,4)
+                                                +"%"));
                         }
                     }
                 });

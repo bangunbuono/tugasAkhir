@@ -22,9 +22,9 @@ import retrofit2.Response;
 
 public class InventorySetDetail extends AppCompatActivity {
 
-    EditText etStockName, etStockJumlah, etStockSatuan, etStockID, etStockWaktu, etStockMinPesan;
+    EditText etStockName, etStockJumlah, etStockSatuan, etStockID, etStockWaktu, etStockWaktuMax, etStockMinPesan;
     Button btnStockSave;
-    int id, waktu, min_pesan, jumlah;
+    int id, waktu,waktuMax, min_pesan, jumlah;
     String bahan_baku,bahanBaru, satuan, user;
     UserSession userSession;
 
@@ -43,6 +43,7 @@ public class InventorySetDetail extends AppCompatActivity {
         etStockSatuan = findViewById(R.id.etStockSatuan);
         etStockWaktu = findViewById(R.id.etStockWaktu);
         etStockMinPesan = findViewById(R.id.etStockMinPesan);
+        etStockWaktuMax = findViewById(R.id.etStockWaktuMax);
         btnStockSave = findViewById(R.id.btnStockSave);
 
         Intent intent = getIntent();
@@ -52,6 +53,7 @@ public class InventorySetDetail extends AppCompatActivity {
         min_pesan = intent.getIntExtra("min_pesan",-1);
         bahan_baku = intent.getStringExtra("bahan");
         satuan = intent.getStringExtra("satuan");
+        waktuMax = intent.getIntExtra("waktuMax",-1);
 
         etStockID.setText(id+"");
         etStockWaktu.setText(waktu+"" );
@@ -59,13 +61,18 @@ public class InventorySetDetail extends AppCompatActivity {
         etStockName.setText(bahan_baku);
         etStockMinPesan.setText(min_pesan+"");
         etStockJumlah.setText(jumlah+"");
+        etStockWaktuMax.setText(String.valueOf(waktuMax));
         System.out.println(bahan_baku);
 
         btnStockSave.setOnClickListener(view -> {
+            if(!etStockName.getText().toString().isEmpty() || !etStockJumlah.getText().toString().isEmpty() ||
+            !etStockWaktu.getText().toString().isEmpty()|| !etStockMinPesan.getText().toString().isEmpty()||
+            !etStockSatuan.getText().toString().isEmpty())
             id = Integer.parseInt(etStockID.getText().toString().trim());
             bahanBaru = etStockName.getText().toString().trim();
             jumlah = Integer.parseInt(etStockJumlah.getText().toString().trim());
             waktu = Integer.parseInt(etStockWaktu.getText().toString().trim());
+            waktuMax = Integer.parseInt(etStockWaktuMax.getText().toString().trim());
             min_pesan = Integer.parseInt(etStockMinPesan.getText().toString().trim());
             satuan = etStockSatuan.getText().toString().trim();
 
@@ -77,7 +84,7 @@ public class InventorySetDetail extends AppCompatActivity {
     private void updateStock(){
         APIRequestStock stockData = ServerConnection.connection().create(APIRequestStock.class);
         Call<ResponseModel> updataData = stockData.updateData(
-                id,bahan_baku,jumlah,satuan,min_pesan,waktu,user,bahanBaru);
+                id,bahan_baku,jumlah,satuan,min_pesan,waktu,waktuMax,user,bahanBaru);
 
         updataData.enqueue(new Callback<ResponseModel>() {
             @Override

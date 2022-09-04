@@ -21,10 +21,10 @@ import retrofit2.Response;
 
 public class AddStock extends AppCompatActivity {
 
-    EditText etNameStock, etJumlah, etSatuan, etStockPesan, etStockWaktuTgu;
+    EditText etNameStock, etJumlah, etSatuan, etStockPesan, etStockWaktuTgu, etStockWaktuTguMax;
     TextView tvStockUser;
     Button btnStockAdd;
-    int waktu, min_pesan, jumlah;
+    int waktu, min_pesan, jumlah, waktuMax;
     String bahan_baku, satuan, user;
     UserSession userSession;
 
@@ -42,17 +42,20 @@ public class AddStock extends AppCompatActivity {
         etSatuan = findViewById(R.id.etSatuanStock);
         etStockPesan = findViewById(R.id.etPesanStock);
         etStockWaktuTgu = findViewById(R.id.etStockWaktuTgu);
+        etStockWaktuTguMax = findViewById(R.id.etStockWaktuTguMax);
         btnStockAdd = findViewById(R.id.btnStockAdd);
         tvStockUser.setText(user);
 
         btnStockAdd.setOnClickListener(view -> {
             if(etJumlah.getText().toString().isEmpty() || etNameStock.getText().toString().isEmpty() ||
                     etSatuan.getText().toString().isEmpty() || etStockPesan.getText().toString().isEmpty() ||
-                    etStockWaktuTgu.getText().toString().isEmpty()){
+                    etStockWaktuTgu.getText().toString().isEmpty() ||
+                    etStockWaktuTguMax.getText().toString().isEmpty() ){
                 Toast.makeText(AddStock.this, "Harus diisi", Toast.LENGTH_SHORT).show();
             }
             else {
                 tvStockUser.getText().toString();
+                waktuMax = Integer.parseInt(etStockWaktuTguMax.getText().toString().trim());
                 bahan_baku = etNameStock.getText().toString().trim();
                 jumlah = Integer.parseInt(etJumlah.getText().toString().trim());
                 waktu = Integer.parseInt(etStockWaktuTgu.getText().toString().trim());
@@ -65,7 +68,7 @@ public class AddStock extends AppCompatActivity {
 
     private void addStock(){
         APIRequestStock stockData = ServerConnection.connection().create(APIRequestStock.class);
-        Call<ResponseModel> addData = stockData.addData(bahan_baku, jumlah, satuan, min_pesan, waktu, user);
+        Call<ResponseModel> addData = stockData.addData(bahan_baku, jumlah, satuan, min_pesan, waktu, waktuMax, user);
 
         addData.enqueue(new Callback<ResponseModel>() {
             @Override

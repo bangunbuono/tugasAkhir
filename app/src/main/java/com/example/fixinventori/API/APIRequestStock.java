@@ -30,6 +30,7 @@ public interface APIRequestStock {
             @Field("satuan") String satuan,
             @Field("min_pesan") int min_pesan,
             @Field("waktu") int waktu,
+            @Field("waktu_max") int waktuMax,
             @Field("user") String user,
             @Field("bahanBaru") String bahanBaru
     );
@@ -42,6 +43,7 @@ public interface APIRequestStock {
             @Field("satuan") String satuan,
             @Field("min_pesan") int min_pesan,
             @Field("waktu") int waktu,
+            @Field("waktu_max") int waktuMax,
             @Field("user") String user
     );
 

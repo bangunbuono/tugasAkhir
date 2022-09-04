@@ -5,6 +5,12 @@ public class StocksModel {
 
     private int id;
     private int waktu;
+
+    public int getWaktu_max() {
+        return waktu_max;
+    }
+
+    private int waktu_max;
     private int min_pesan;
     private int jumlah;
     private String bahan_baku;

@@ -8,83 +8,179 @@
     android:animateLayoutChanges="true"
     tools:context="com.example.fixinventori.Activity.Stock.InventorySetDetail">
 
-    <EditText
-        android:id="@+id/etStockID"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="20sp"
-        android:visibility="gone" />
-
-    <EditText
-        android:id="@+id/etStockName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/etStockJumlah"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/etStockSatuan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/etStockMinPesan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="20sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/etStockWaktu"
-            android:layout_width="0dp"
+        android:layout_margin="@dimen/_5sdp"
+        app:cardCornerRadius="@dimen/_25sdp"
+        app:cardBackgroundColor="@color/secondary_text">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="number"
-            android:textSize="20sp" />
+            android:orientation="vertical"
+            android:layout_margin="@dimen/_5sdp">
 
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:layout_weight="5"
-            android:text="hari"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            <EditText
+                android:id="@+id/etStockID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:inputType="number"
+                android:textSize="20sp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Bahan"
+                android:textStyle="bold"
+                android:textColor="@color/primary_dark"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/etStockName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textColor="@color/primary_dark"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jumlah"
+                android:textColor="@color/primary_dark"
+                android:textStyle="bold"
+                android:layout_margin="5dp"
+                android:textSize="16sp"/>
+
+            <EditText
+                android:id="@+id/etStockJumlah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:ems="10"
+                android:textColor="@color/primary_dark"
+                android:inputType="number"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Satuan"
+                android:textStyle="bold"
+                android:textColor="@color/primary_dark"
+                android:layout_margin="5dp"
+                android:textSize="16sp"/>
+
+            <EditText
+                android:id="@+id/etStockSatuan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:ems="10"
+                android:textColor="@color/primary_dark"
+                android:inputType="textPersonName"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jumlah Minimal (Safety Stock)"
+                android:textStyle="bold"
+                android:textColor="@color/primary_dark"
+                android:layout_margin="5dp"
+                android:textSize="16sp"/>
+
+            <EditText
+                android:id="@+id/etStockMinPesan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:ems="10"
+                android:textColor="@color/primary_dark"
+                android:inputType="number"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Waktu tunggu"
+                android:textStyle="bold"
+                android:textColor="@color/primary_dark"
+                android:layout_margin="5dp"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp">
+
+                <EditText
+                    android:id="@+id/etStockWaktu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/primary_dark"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:text="-"
+                    android:gravity="center_horizontal"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etStockWaktuMax"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="5"
+                    android:text="hari"
+                    android:textColor="@color/primary_dark"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/btnStockSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/_5sdp"
         android:text="Simpan"
         app:cornerRadius="25dp" />
 

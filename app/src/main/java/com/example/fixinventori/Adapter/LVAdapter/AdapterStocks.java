@@ -101,25 +101,28 @@ public class AdapterStocks extends ArrayAdapter<StocksModel> {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
 
-                assert response.body() != null;
-                list = response.body().getStocksModels();
-                int stockId = list.get(0).getId();
-                int stockWaktu = list.get(0).getWaktu();
-                int stockMinPesan = list.get(0).getMin_pesan();
-                String bahanBaku = list.get(0).getBahan_baku();
-                String stockSatuan = list.get(0).getSatuan();
-                int stockJumlah = list.get(0).getJumlah();
+                if (response.body() != null) {
+                    list = response.body().getStocksModels();
+                    int stockId = list.get(0).getId();
+                    int stockWaktu = list.get(0).getWaktu();
+                    int stockMinPesan = list.get(0).getMin_pesan();
+                    String bahanBaku = list.get(0).getBahan_baku();
+                    String stockSatuan = list.get(0).getSatuan();
+                    int stockJumlah = list.get(0).getJumlah();
+                    int waktu_max = list.get(0).getWaktu_max();
 
-                Intent intent = new Intent(context, InventorySetDetail.class);
+                    Intent intent = new Intent(context, InventorySetDetail.class);
 
-                intent.putExtra("id", stockId);
-                intent.putExtra("bahan", bahanBaku);
-                intent.putExtra("jumlah", stockJumlah);
-                intent.putExtra("satuan", stockSatuan);
-                intent.putExtra("min_pesan", stockMinPesan);
-                intent.putExtra("waktu", stockWaktu);
+                    intent.putExtra("id", stockId);
+                    intent.putExtra("bahan", bahanBaku);
+                    intent.putExtra("jumlah", stockJumlah);
+                    intent.putExtra("satuan", stockSatuan);
+                    intent.putExtra("min_pesan", stockMinPesan);
+                    intent.putExtra("waktu", stockWaktu);
+                    intent.putExtra("waktuMax", waktu_max);
 
-                context.startActivity(intent);
+                    context.startActivity(intent);
+                }
             }
 
             @Override
