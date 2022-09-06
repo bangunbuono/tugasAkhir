@@ -22,6 +22,12 @@ public class KomposisiModel {
         this.harga = harga;
     }
 
+    public KomposisiModel(String bahan, String satuan, int jumlah) {
+        this.bahan = bahan;
+        this.satuan = satuan;
+        this.jumlah = jumlah;
+    }
+
     public int getHarga() {
         return harga;
     }

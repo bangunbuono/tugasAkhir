@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fixinventori.API.APIRequestStock;
@@ -61,9 +62,20 @@ public class InventorySet extends AppCompatActivity{
         getStocks();
 
         tvAddStock.setOnClickListener(view -> {
-            Intent intent = new Intent(InventorySet.this, AddStock.class);
-            intent.putExtra("user", user);
-            launcher.launch(intent);
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("Tambah Bahan");
+            dialog.setMessage("Ingin kombinasikan bahan atau tambah bahan baru");
+            dialog.setPositiveButton("Tambah", (dialogInterface, i) -> {
+                Intent intent = new Intent(InventorySet.this, AddStock.class);
+                intent.putExtra("user", user);
+                launcher.launch(intent);
+            });
+            dialog.setNegativeButton("Kombinasikan bahan", (dialogInterface, i) -> {
+                Intent intent = new Intent(InventorySet.this, CombineStocksActivity.class);
+                intent.putExtra("user", user);
+                launcher.launch(intent);
+            });
+            dialog.show();
         });
 
     }

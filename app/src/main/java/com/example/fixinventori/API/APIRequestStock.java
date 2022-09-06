@@ -48,6 +48,32 @@ public interface APIRequestStock {
     );
 
     @FormUrlEncoded
+    @POST("stockcombineadd.php")
+    Call<ResponseModel> addCombineData(
+            @Field("bahan_baku") String bahan,
+            @Field("jumlah") int jumlah,
+            @Field("satuan") String satuan,
+            @Field("keterangan") String keterangan,
+            @Field("user") String user
+    );
+
+    @FormUrlEncoded
+    @POST("stockoutcombine.php")
+    Call<ResponseModel> stockOutCombineData(
+            @Field("bahan") String bahan,
+            @Field("jumlah") int jumlah,
+            @Field("user") String user
+    );
+
+    @FormUrlEncoded
+    @POST("combineadd.php")
+    Call<ResponseModel> addCombineStock(
+            @Field("bahan_akhir") String bahanAkhir,
+            @Field("bahan") String bahan,
+            @Field("user") String user
+    );
+
+    @FormUrlEncoded
     @POST("restockadd.php")
     Call<ResponseModel> addStocks(
             @Field("id") int id,

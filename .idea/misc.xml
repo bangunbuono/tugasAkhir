@@ -25,6 +25,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_add_menu.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_add_stock.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_chat.xml" value="0.21" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_combine_stocks.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_invent_forecast.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_invent_report.xml" value="0.225" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/activity_invent_restock.xml" value="0.225" />
@@ -73,6 +74,8 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/other_message_row.xml" value="0.14210526315789473" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/restock_dialog.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/restock_row.xml" value="0.25" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/stat_bahan_row.xml" value="0.18947368421052632" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/stock_row.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/transaction_row.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/tv_content_view.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/tv_selected_user.xml" value="0.18947368421052632" />
