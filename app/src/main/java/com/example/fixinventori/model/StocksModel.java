@@ -17,6 +17,12 @@ public class StocksModel {
     private String satuan;
     private String user;
 
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    private String keterangan;
+
     public StocksModel(int id, int waktu, int min_pesan, int jumlah, String bahan_baku, String satuan) {
         this.id = id;
         this.waktu = waktu;

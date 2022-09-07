@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.fixinventori.API.APIReport;
 import com.example.fixinventori.API.APIRequestStock;
 import com.example.fixinventori.API.APIRestock;
 import com.example.fixinventori.API.ServerConnection;
@@ -25,6 +26,8 @@ import com.example.fixinventori.model.KomposisiModel;
 import com.example.fixinventori.model.ResponseModel;
 import com.example.fixinventori.model.RestockModel;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,13 +43,14 @@ public class CombineStocksActivity extends AppCompatActivity {
     ListView lvCombine;
     Button btnAddCombineList, btnConfirmCombine;
     UserSession session;
-    String user, bahan, satuan, bahanAkhir, satuanAkhir, bahanI, satuanI;
+    String user, bahan, satuan, bahanAkhir, satuanAkhir, bahanI, satuanI, month, orderSeries, date, formatedTime;
     int jumlah, jumlahAkhir, jumlahI;
     List<RestockModel> restockList = new ArrayList<>();
     public static List<String> listBahan = new ArrayList<>();
     public static List<KomposisiModel> listCombine = new ArrayList<>();
     AdapterSpinnerRestock adapterSpinnerRestock;
     AdapterCombine adapterCombineList;
+    LocalDateTime time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +111,16 @@ public class CombineStocksActivity extends AppCompatActivity {
                 bahanAkhir = etBahanCombine.getText().toString();
                 jumlahAkhir = Integer.parseInt(etJumlahCombine.getText().toString().trim());
                 satuanAkhir = etSatuanCombine.getText().toString();
+
+                time = LocalDateTime.now();
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyMMddHHmmss");
+                DateTimeFormatter timeStamp = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                DateTimeFormatter monthType = DateTimeFormatter.ofPattern("MM/yyyy");
+                month = monthType.format(time);
+                formatedTime = timeStamp.format(time);
+                date = dtf.format(time);
+                orderSeries = "B."+date;
+
                 if(listCombine.size()>=2) addDataBahan();
                 else Toast.makeText(CombineStocksActivity.this, "Bahan yang dicampur " +
                             "hanya 1", Toast.LENGTH_SHORT).show();
@@ -161,24 +175,26 @@ public class CombineStocksActivity extends AppCompatActivity {
                if (response.body() != null) {
                    int code = response.body().getCode();
                    if(code == 1) {
+                       record();
                        for (int i = 0; i < listCombine.size(); i++) {
                            View view1 = lvCombine.getChildAt(i);
 
                            TextView tvBahan = view1.findViewById(R.id.tvStockName);
                            TextView tvJumlah = view1.findViewById(R.id.tvStockJumlah);
-//                               TextView tvSatuan = view1.findViewById(R.id.tvStockSatuan);
+                           TextView tvSatuan = view1.findViewById(R.id.tvStockSatuan);
 
                            bahanI = tvBahan.getText().toString().trim();
                            jumlahI = Integer.parseInt(tvJumlah.getText().toString().trim());
+                           satuanI = tvSatuan.getText().toString().trim();
                            addCombineStock();
                            stockOutCombine();
+                           reportManualUsage();
 
                            if(i== listCombine.size()) {
                                listBahan.clear();
                                listCombine.clear();
                                finish();
                            }
-//                               satuanI = tvSatuan.getText().toString().trim();
                        }
                        finish();
                    }else
@@ -197,7 +213,7 @@ public class CombineStocksActivity extends AppCompatActivity {
 
    private void addCombineStock(){
         APIRequestStock data = ServerConnection.connection().create(APIRequestStock.class);
-        Call<ResponseModel> addData = data.addCombineStock(bahanAkhir, bahanI, user);
+        Call<ResponseModel> addData = data.addCombineStock(bahanAkhir, bahanI, satuanI, user);
 
         addData.enqueue(new Callback<ResponseModel>() {
             @Override
@@ -230,4 +246,39 @@ public class CombineStocksActivity extends AppCompatActivity {
             }
         });
    }
+
+    private void reportManualUsage(){
+        APIReport report = ServerConnection.connection().create(APIReport.class);
+        Call<ResponseModel> reportData = report.recordUsage(
+                orderSeries, bahanI, jumlahI, satuanI,"kombinasi", user,1,formatedTime );
+
+        reportData.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
+                Toast.makeText(CombineStocksActivity.this, "report gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void record(){
+        APIReport recordData = ServerConnection.connection().create(APIReport.class);
+        Call<ResponseModel> record = recordData.record(orderSeries,"barang keluar", formatedTime, user, month);
+
+        record.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                Toast.makeText(CombineStocksActivity.this, "record gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

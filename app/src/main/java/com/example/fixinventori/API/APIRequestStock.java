@@ -36,6 +36,14 @@ public interface APIRequestStock {
     );
 
     @FormUrlEncoded
+    @POST("stockcombineupdate.php")
+    Call<ResponseModel> updateCombineData(
+            @Field("bahan_baku") String bahan,
+            @Field("user") String user,
+            @Field("bahanBaru") String bahanBaru
+    );
+
+    @FormUrlEncoded
     @POST("stockadd.php")
     Call<ResponseModel> addData(
             @Field("bahan_baku") String bahan,
@@ -70,6 +78,7 @@ public interface APIRequestStock {
     Call<ResponseModel> addCombineStock(
             @Field("bahan_akhir") String bahanAkhir,
             @Field("bahan") String bahan,
+            @Field("satuan") String satuan,
             @Field("user") String user
     );
 
@@ -93,5 +102,12 @@ public interface APIRequestStock {
       @Field("id") int id,
       @Field("bahan") String bahan,
       @Field("user") String user
+    );
+
+    @FormUrlEncoded
+    @POST("combinedetail.php")
+    Call<ResponseModel> combineDetail(
+            @Field("bahan") String bahan,
+            @Field("user") String user
     );
 }

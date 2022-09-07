@@ -24,10 +24,23 @@
             android:button="@drawable/null_usage_button"
             android:checked="true"
             android:onClick="usageSelector"
-            android:text="Auto"
+            android:text="Menu"
             android:textAlignment="center"
             android:textColor="@drawable/usage_text_selector"
             android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioCombine"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:button="@drawable/null_usage_button"
+            android:textColor="@drawable/usage_text_selector"
+            android:text="Kombinasi"
+            android:textStyle="bold"
+            android:background="@drawable/cash_flow_selector"
+            android:gravity="center"
+            android:onClick="usageSelector"
+            />
 
         <RadioButton
             android:id="@+id/radio_usage_manual"
@@ -36,7 +49,7 @@
             android:background="@drawable/usagemanual_selector"
             android:button="@drawable/null_usage_button"
             android:onClick="usageSelector"
-            android:text="Manual"
+            android:text="bahan"
             android:textAlignment="center"
             android:textColor="@drawable/usage_text_selector"
             android:textStyle="bold" />

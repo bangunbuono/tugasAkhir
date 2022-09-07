@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.fixinventori.API.APIRequestStock;
 import com.example.fixinventori.API.ServerConnection;
+import com.example.fixinventori.Activity.Stock.CombineStockDetail;
 import com.example.fixinventori.Activity.Stock.InventorySetDetail;
 import com.example.fixinventori.Activity.User.UserSession;
 import com.example.fixinventori.R;
@@ -65,7 +66,6 @@ public class AdapterStocks extends ArrayAdapter<StocksModel> {
             tvStockSatuan.setText(stocksModelList.get(position).getSatuan());
         }
 
-
         convertView.setOnClickListener(view -> {
             index = stocksModelList.get(position).getId();
             stockDetail();
@@ -110,18 +110,28 @@ public class AdapterStocks extends ArrayAdapter<StocksModel> {
                     String stockSatuan = list.get(0).getSatuan();
                     int stockJumlah = list.get(0).getJumlah();
                     int waktu_max = list.get(0).getWaktu_max();
+                    String keterangan = list.get(0).getKeterangan();
 
-                    Intent intent = new Intent(context, InventorySetDetail.class);
-
-                    intent.putExtra("id", stockId);
-                    intent.putExtra("bahan", bahanBaku);
-                    intent.putExtra("jumlah", stockJumlah);
-                    intent.putExtra("satuan", stockSatuan);
-                    intent.putExtra("min_pesan", stockMinPesan);
-                    intent.putExtra("waktu", stockWaktu);
-                    intent.putExtra("waktuMax", waktu_max);
-
-                    context.startActivity(intent);
+                    if(keterangan.equals("utama")){
+                        Intent intent = new Intent(context, InventorySetDetail.class);
+                        intent.putExtra("id", stockId);
+                        intent.putExtra("bahan", bahanBaku);
+                        intent.putExtra("jumlah", stockJumlah);
+                        intent.putExtra("satuan", stockSatuan);
+                        intent.putExtra("min_pesan", stockMinPesan);
+                        intent.putExtra("waktu", stockWaktu);
+                        intent.putExtra("waktuMax", waktu_max);
+                        intent.putExtra("keterangan", keterangan);
+                        context.startActivity(intent);
+                    }else if(keterangan.equals("kombinasi")){
+                        Intent intent = new Intent(context, CombineStockDetail.class);
+                        intent.putExtra("id", stockId);
+                        intent.putExtra("bahan", bahanBaku);
+                        intent.putExtra("jumlah", stockJumlah);
+                        intent.putExtra("satuan", stockSatuan);
+                        intent.putExtra("keterangan", keterangan);
+                        context.startActivity(intent);
+                    }
                 }
             }
 

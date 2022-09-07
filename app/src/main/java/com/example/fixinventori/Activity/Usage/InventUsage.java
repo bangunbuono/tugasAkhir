@@ -1,7 +1,9 @@
 package com.example.fixinventori.Activity.Usage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,21 +12,35 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.fixinventori.R;
 
+import java.util.Objects;
+
 public class InventUsage extends AppCompatActivity {
     RadioGroup radiogroupUsage;
+    RadioButton radioCombine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invent_usage);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         radiogroupUsage = findViewById(R.id.radiogroupUsage);
+        radioCombine = findViewById(R.id.radioCombine);
 
-        FragmentManager fmAuto = getSupportFragmentManager();
-        FragmentTransaction ftAuto = fmAuto.beginTransaction().replace(R.id.flUsage, new UsageAutoFrag());
-        ftAuto.commit();
+        Intent intent = getIntent();
+        String fragment = intent.getStringExtra("fragment");
+        if(fragment!=null && fragment.equals("combine")) {
+            FragmentManager fmCombine = getSupportFragmentManager();
+            FragmentTransaction ftCombine = fmCombine.beginTransaction().replace(R.id.flUsage, new CombineUsageFrag());
+            ftCombine.commit();
+            radioCombine.setChecked(true);
+        }else {
+            FragmentManager fmAuto = getSupportFragmentManager();
+            FragmentTransaction ftAuto = fmAuto.beginTransaction().replace(R.id.flUsage, new UsageAutoFrag());
+            ftAuto.commit();
+            radioCombine.setChecked(false);
+        }
     }
 
     public void usageSelector(View v){
@@ -35,6 +51,12 @@ public class InventUsage extends AppCompatActivity {
                 FragmentManager fmAuto = getSupportFragmentManager();
                 FragmentTransaction ftAuto = fmAuto.beginTransaction().replace(R.id.flUsage, new UsageAutoFrag());
                 ftAuto.commit();
+                break;
+
+            case R.id.radioCombine:
+                FragmentManager fmCombine = getSupportFragmentManager();
+                FragmentTransaction ftCombine = fmCombine.beginTransaction().replace(R.id.flUsage, new CombineUsageFrag());
+                ftCombine.commit();
                 break;
 
             case R.id.radio_usage_manual:

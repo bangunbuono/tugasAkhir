@@ -9,6 +9,12 @@ import java.util.List;
 public class ResponseModel {
     private int code;
     private List<StocksModel> stocksModels;
+
+    public List<StocksModel> getCombineDetail() {
+        return combineDetail;
+    }
+
+    private List<StocksModel> combineDetail;
     private ArrayList<RestockModel> stocks;
     private String pesan, status;
     private List<MenuModel> data;

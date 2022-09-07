@@ -89,8 +89,15 @@ public class InventorySetDetail extends AppCompatActivity {
         updataData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                finish();
-                Toast.makeText(InventorySetDetail.this, "berhasil menyimpan", Toast.LENGTH_SHORT).show();
+                int code;
+                if (response.body() != null) {
+                    code = response.body().getCode();
+                    if(code!=2) {
+                        finish();
+                        Toast.makeText(InventorySetDetail.this, "berhasil menyimpan", Toast.LENGTH_SHORT).show();
+
+                    }else Toast.makeText(InventorySetDetail.this, "Nama bahan sudah digunakan", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

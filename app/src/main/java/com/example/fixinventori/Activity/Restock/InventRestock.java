@@ -197,7 +197,8 @@ public class InventRestock extends AppCompatActivity {
                 if (response.body() != null) {
                     restockList = response.body().getStocks();
                     adapterRestock = new AdapterSpinnerRestock(InventRestock.this, restockList);
-                    spinRestock.setAdapter(adapterRestock);
+                    if(restockList!=null)
+                        spinRestock.setAdapter(adapterRestock);
                 }
             }
             @Override
