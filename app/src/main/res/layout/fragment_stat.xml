@@ -136,7 +136,6 @@
             android:id="@+id/tvStat"
             android:textSize="@dimen/_13ssp"
             android:visibility="gone"
-            android:textStyle="bold"
             android:textColor="@color/primary_dark"
 
             android:text="akkakaak"

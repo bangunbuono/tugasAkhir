@@ -448,14 +448,18 @@ public class StatFrag extends Fragment {
                     if(list!=null) {
                         barEntries = new ArrayList<>();
                         xValue = new ArrayList<>();
+                        StringBuilder bahan = new StringBuilder();
                         int index = 0;
                         for (StatModel model: list) {
                             barEntries.add(new BarEntry(index++, model.getJumlah()));
-                        }
-                        for (StatModel a: list) {
-                            xValue.add(a.getBahan());
+                            xValue.add(model.getBahan());
+                            bahan.append(model.getBahan()).append(" ")
+                                    .append(model.getJumlah()).append(" ").append(filterItem).append("\n");
                         }
                         renderBarChart(barEntries,xValue,list);
+                        tvStat.setText(bahan);
+                        tvStat.setVisibility(View.VISIBLE);
+
                     }else {
                         barChartStat.clear();
                     }
@@ -482,13 +486,18 @@ public class StatFrag extends Fragment {
                 if(listBahan!=null){
                     lineEntries = new ArrayList<>();
                     xValue = new ArrayList<>();
+                    int jumlah = 0;
                     int index = 0;
                     for (StatModel model: listBahan) {
                         lineEntries.add(new Entry(index, model.getJumlah()));
                         xValue.add(model.getDate());
                         index++;
+                        jumlah += model.getJumlah();
                     }
                     renderLineChart(lineEntries, xValue, listBahan);
+                    tvStat.setText(String.format("Total %s yang keluar adalah %s %s"
+                            , filterItem, jumlah, listBahan.get(0).getSatuan()));
+                    tvStat.setVisibility(View.VISIBLE);
 
                 }else {
                     lineChartSat.clear();
@@ -518,12 +527,15 @@ public class StatFrag extends Fragment {
                     barEntries = new ArrayList<>();
                     xValue = new ArrayList<>();
                     int index = 0;
+                    StringBuilder bahan = new StringBuilder();
                     for (StatModel model: list) {
                         barEntries.add(new BarEntry(index++, model.getJumlah()));
+                        xValue.add(model.getBahan());
+                        bahan.append(model.getBahan()).append(" ")
+                                .append(model.getJumlah()).append(" ").append(filterItem).append("\n");
                     }
-                    for (StatModel a: list) {
-                        xValue.add(a.getBahan());
-                    }
+                    tvStat.setText(bahan);
+                    tvStat.setVisibility(View.VISIBLE);
                     renderBarChart(barEntries,xValue,list);
 //
                 }else {
@@ -553,11 +565,16 @@ public class StatFrag extends Fragment {
                     listBahan.forEach(statModel -> System.out.println(statModel.getBahan()+
                             statModel.getJumlah()+statModel.getSatuan()+statModel.getDateIn()));
                     int index = 0;
+                    int jumlah = 0;
                     for (StatModel model: listBahan) {
                         lineEntries.add(new Entry(index, model.getJumlah()));
                         xValue.add(model.getDateIn());
                         index++;
+                        jumlah += model.getJumlah();
                     }
+                    tvStat.setText(String.format("Total %s yang masuk adalah %s %s"
+                            , filterItem, jumlah, listBahan.get(0).getSatuan()));
+                    tvStat.setVisibility(View.VISIBLE);
                     renderLineChart(lineEntries, xValue, listBahan);
 
                 }else {
@@ -586,13 +603,16 @@ public class StatFrag extends Fragment {
                     barEntries = new ArrayList<>();
                     xValue = new ArrayList<>();
                     int index = 0;
+                    StringBuilder menu = new StringBuilder();
                     for (StatModel model: listMenu) {
                         barEntries.add(new BarEntry(index, model.getJumlah()));
-//                        lineEntries.add(new Entry(index, model.getJumlah()));
                         xValue.add(model.getMenu());
                         index++;
+                        menu.append(model.getMenu()).append(" dipesan sebanyak ").append(model.getJumlah()).append("\n");
                     }
                     renderBarChart(barEntries,xValue,listMenu);
+                    tvStat.setText(menu);
+                    tvStat.setVisibility(View.VISIBLE);
 //                    renderLineChart(lineEntries, xValue, listMenu);
 
                 }else {
@@ -620,13 +640,16 @@ public class StatFrag extends Fragment {
                         lineEntries = new ArrayList<>();
                         xValue = new ArrayList<>();
                         int index = 0;
+                        int jumlah = 0;
                         for (StatModel model : listPengunjung) {
                             lineEntries.add(new Entry(index, model.getPengunjung()));
                             xValue.add(model.getTanggal());
                             index++;
+                            jumlah += model.getPengunjung();
                         }
                         renderLineChart(lineEntries, xValue, listPengunjung);
-//
+                        tvStat.setText(String.format("Jumlah pengunjung periode ini : %s orang", jumlah));
+                        tvStat.setVisibility(View.GONE);
                     } else {
                         lineChartSat.clear();
                     }

@@ -1,8 +1,11 @@
 package com.example.fixinventori.BottomNavBar;
 
+import static java.lang.Math.abs;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -47,7 +50,7 @@ public class ManagerHomeFragment extends Fragment {
     String manager, selectedUser;
     Spinner spinnerUser;
     TextView tvManagerHome, tvInvSet, tvMenuSet, tvMoreReport
-            , tvVisitor, tvCashflow, tvMenuSales, tvUsageMaterial;
+            , tvVisitor, tvCashflow, tvMenuSales, tvUsageMaterial, tvCashFlowOut, tvProfit;
     List<ManagerModel> userList;
     List<StatModel> maxMenu,maxStockOut,maxStockIn, cashIn, cashOut, visitors;
     ArrayList<String> user = new ArrayList<>();
@@ -91,6 +94,8 @@ public class ManagerHomeFragment extends Fragment {
         spinnerUser = view.findViewById(R.id.spinnerUser);
         tvMoreReport = view.findViewById(R.id.tvMoreReport);
         rivHomeProfile = view.findViewById(R.id.rivHomeProfile);
+        tvCashFlowOut = view.findViewById(R.id.tvCashFlowOut);
+        tvProfit = view.findViewById(R.id.tvCashFlowProfit);
 
         service = Executors.newSingleThreadExecutor();
 
@@ -147,7 +152,6 @@ public class ManagerHomeFragment extends Fragment {
                 String user = userList.get(position).getUsername();
                 session.putString("username", user);
                 selectedUser = user;
-
                 service.execute(()->{
                     getCashIn();
                     getMaxMenu();
@@ -155,7 +159,6 @@ public class ManagerHomeFragment extends Fragment {
                     getPengunjung();
                 });
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -276,9 +279,8 @@ public class ManagerHomeFragment extends Fragment {
                     requireActivity().runOnUiThread(()->{
                         if(visitors!=null && visitors.size()>0){
                             tvVisitor.setText(String.
-                                    format("PENGUNJUNG\n" +
-                                                    "minggu ini: %s \n" +
-                                                    "minggu lalu: %s",
+                                    format("Pekan ini: %s \n" +
+                                                    "Pekan lalu: %s",
                                             visitors.get(1).getPengunjung(),
                                             visitors.get(0).getPengunjung()));
                         }
@@ -324,22 +326,22 @@ public class ManagerHomeFragment extends Fragment {
                 if (response.body()!=null) cashOut = response.body().getCashOut();
                 requireActivity().runOnUiThread(()->{
                     if(cashOut!=null){
+                        int masuk, keluar;
                         if(cashIn.size()>0 || cashOut.size()>0){
-                            float keluar = cashOut.get(1).getHarga();
-                            float masuk = cashIn.get(1).getHarga();
-                            float untung = masuk-keluar;
-                            float untung0 = cashIn.get(0).getHarga() - cashOut.get(0).getHarga();
-                            if(untung0<untung){
-                                tvCashflow.setText(String.format("%s dari minggu lalu)",
-                                        "minggu ini Rp"+untung +"\n" +
-                                                "(+"+
-                                                String.valueOf(((untung-untung0)/untung0)*100).substring(0,4)
-                                                +"%"));
-                            } else
-                                tvCashflow.setText(String.format("%s dari minggu lalu)",
-                                        "minggu ini Rp"+untung +"\n" +
-                                                "(-"+String.valueOf(((untung0-untung)/untung0)*100).substring(0,4)
-                                                +"%"));
+                            try {
+                                masuk = cashIn.get(1).getHarga();
+                            }catch (IndexOutOfBoundsException e){
+                                masuk = 0;
+                            }
+                            try {
+                                keluar = cashOut.get(1).getHarga();
+                            }catch (IndexOutOfBoundsException e){
+                                keluar = 0;
+                            }
+                            tvCashflow.setText(String.format("Rp%s",masuk));
+                            tvCashFlowOut.setText(String.format("Rp%s",keluar));
+                            tvProfit.setText(String.format("Selisih Rp%s", abs(masuk-keluar)));
+                            if(keluar>masuk) tvProfit.setTextColor(Color.RED);
                         }
                     }
                 });
