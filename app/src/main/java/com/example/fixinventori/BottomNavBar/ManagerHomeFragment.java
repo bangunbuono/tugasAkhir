@@ -223,7 +223,9 @@ public class ManagerHomeFragment extends Fragment {
                     maxStockIn = new ArrayList<>();
                     maxStockIn = response.body().getMaxStockIn();
                     if(maxStockIn!=null) getMaxStockOut();
-                    else System.out.println("bahan masuk kosong");
+                    else {
+                        getMaxStockOut();
+                    }
                 }
             }
             @Override
@@ -244,7 +246,7 @@ public class ManagerHomeFragment extends Fragment {
                     maxStockOut = new ArrayList<>();
                     maxStockOut = response.body().getMaxStockOut();
                     requireActivity().runOnUiThread(()->{
-                        if(maxStockOut!=null)
+                        if(maxStockOut!=null && maxStockIn!=null) {
                             if(maxStockOut.size()>0 && maxStockIn.size()>0)
                                 tvUsageMaterial.setText(String.
                                         format("paling banyak keluar: %s %s %s \n" +
@@ -255,7 +257,22 @@ public class ManagerHomeFragment extends Fragment {
                                                 maxStockIn.get(0).getBahan(),
                                                 maxStockIn.get(0).getJumlah(),
                                                 maxStockIn.get(0).getSatuan()));
-                            else System.out.println("bahan keluar kosong");
+                            else {
+                                System.out.println("bahan keluar kosong");
+                            }
+                        }else if (maxStockIn==null && maxStockOut!=null){
+                            tvUsageMaterial.setText(String.
+                                    format("paling banyak keluar: %s %s %s",
+                                            maxStockOut.get(0).getBahan(),
+                                            maxStockOut.get(0).getJumlah(),
+                                            maxStockOut.get(0).getSatuan()));
+                        }else if (maxStockIn != null){
+                            tvUsageMaterial.setText(String.
+                                    format("paling banyak masuk: %s %s %s",
+                                            maxStockIn.get(0).getBahan(),
+                                            maxStockIn.get(0).getJumlah(),
+                                            maxStockIn.get(0).getSatuan()));
+                        }
                     });
                 }
             }
@@ -277,12 +294,22 @@ public class ManagerHomeFragment extends Fragment {
                 if(response.body()!=null){
                     visitors = response.body().getPengunjung();
                     requireActivity().runOnUiThread(()->{
-                        if(visitors!=null && visitors.size()>0){
+                        if(visitors!=null && visitors.size()>1){
                             tvVisitor.setText(String.
                                     format("Pekan ini: %s \n" +
                                                     "Pekan lalu: %s",
                                             visitors.get(1).getPengunjung(),
                                             visitors.get(0).getPengunjung()));
+                        }else if(visitors!=null && visitors.size()>0){
+                            tvVisitor.setText(String.
+                                    format("Pekan ini: 0 \n" +
+                                                    "Pekan lalu: %s",
+                                            visitors.get(0).getPengunjung()));
+                        }else {
+                            if(visitors != null) {
+                                visitors.size();
+                                tvVisitor.setText("Pekan ini: 0\nPekan lalu: 0");
+                            }
                         }
                     });
                 }

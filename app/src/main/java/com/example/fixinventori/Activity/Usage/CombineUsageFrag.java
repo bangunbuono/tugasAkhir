@@ -225,7 +225,7 @@ public class CombineUsageFrag extends Fragment {
     private void reportManualUsage(){
         APIReport report = ServerConnection.connection().create(APIReport.class);
         Call<ResponseModel> reportData = report.recordUsage(
-                orderSeries, bahanI, jumlahI, satuanI,"kombinasi", user,1,formatedTime );
+                orderSeries, bahanI, jumlahI, satuanI,"kombinasi", user,0,formatedTime );
 
         reportData.enqueue(new Callback<ResponseModel>() {
             @Override

@@ -1,17 +1,15 @@
 package com.example.fixinventori.Activity.Report;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.example.fixinventori.API.APIReport;
 import com.example.fixinventori.API.ServerConnection;
@@ -29,6 +27,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +42,7 @@ public class TransactionFragment extends Fragment {
     List<StatModel> cashIn, cashOut;
     AdapterTransaction adapterTransaction;
     ProgressBar progressBar;
+    ExecutorService service;
 
     public TransactionFragment() {
         // Required empty public constructor
@@ -55,7 +56,7 @@ public class TransactionFragment extends Fragment {
         getWeek();
         cashIn = new ArrayList<>();
         cashOut = new ArrayList<>();
-
+        service = Executors.newSingleThreadExecutor();
     }
 
     @Override
@@ -65,28 +66,14 @@ public class TransactionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_transaction, container, false);
         lvCashTransation = view.findViewById(R.id.lvCashTransaction);
         progressBar = view.findViewById(R.id.progressRegist);
+
+        loading(true);
         getTransaction();
-
-        if(cashOut.size()==cashIn.size()){
-            new Handler().postDelayed(()->{
-                cashIn.sort((obj1,obj2)->
-                        Objects.requireNonNull(convertToDate(obj2.getTanggal()))
-                                .compareTo(convertToDate(obj1.getTanggal())));
-                cashOut.sort((obj1,obj2)->
-                        Objects.requireNonNull(convertToDate(obj2.getTanggal()))
-                                .compareTo(convertToDate(obj1.getTanggal())));
-                loading(false);
-                adapterTransaction = new AdapterTransaction(getActivity(), cashIn, cashOut);
-                lvCashTransation.setAdapter(adapterTransaction);
-            },400);
-
-        }
 
         return view;
     }
 
     private void getTransaction(){
-        loading(true);
         APIReport data = ServerConnection.connection().create(APIReport.class);
         Call<ResponseModel> getDataIn = data.statCashIn(user,week, month, year, "yearly");
         Call<ResponseModel> getDataOut = data.statCashOut(user,week, month, year, "yearly");
@@ -96,18 +83,33 @@ public class TransactionFragment extends Fragment {
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 if(response.body()!=null){
                     cashIn = response.body().getStatCashIn();
-                    getDataOut.enqueue(new Callback<ResponseModel>() {
-                        @Override
-                        public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                            if(response.body()!=null){
-                                cashOut = response.body().getStatCashOut();
+                    if(cashIn!=null) {
+                        cashIn.sort((obj1, obj2)->
+                                Objects.requireNonNull(convertToDate(obj2.getTanggal()))
+                                        .compareTo(convertToDate(obj1.getTanggal())));
+                        getDataOut.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+                                if(response.body()!=null){
+                                    cashOut = response.body().getStatCashOut();
+                                    if(cashOut!=null){
+                                        cashOut.sort((obj1,obj2)->
+                                                Objects.requireNonNull(convertToDate(obj2.getTanggal()))
+                                                        .compareTo(convertToDate(obj1.getTanggal())));
+                                        if(cashIn.size() == cashOut.size()){
+                                            loading(false);
+                                            adapterTransaction = new AdapterTransaction(getActivity(), cashIn, cashOut);
+                                            lvCashTransation.setAdapter(adapterTransaction);
+                                        }
+                                    }
+                                }
                             }
-                        }
-                        @Override
-                        public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                            Toast.makeText(getActivity(), "b"+t.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                            @Override
+                            public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                                Toast.makeText(getActivity(), "b"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }
             }
             @Override

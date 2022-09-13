@@ -79,6 +79,7 @@ public class ReportDetail extends AppCompatActivity {
     }
 
     private void getRecordDetail(){
+        System.out.println(user+code+keterangan);
         APIReport record = ServerConnection.connection().create(APIReport.class);
         Call<ResponseModel> recordData = record.recordDetail(user, code, keterangan);
 
@@ -89,6 +90,10 @@ public class ReportDetail extends AppCompatActivity {
                     recordDetail = response.body().getRecordDetail();
                 if(recordDetail!=null){
                     if(code.contains("B")){
+                        if(recordDetail.get(0).getKeterangan().equals("kombinasi")
+                                || recordDetail.get(0).getKeterangan().equals("manual"))
+                            tvJumlahPengunjung.setVisibility(View.GONE);
+                        else tvJumlahPengunjung.setVisibility(View.VISIBLE);
                         getMenuRecord();
                         if(recordDetail.get(0).getPengunjung()==0) tvJumlahPengunjung.setText(R.string.ojek_online);
                         else tvJumlahPengunjung.setText(String.format("Jumlah pengunjung: %s", recordDetail.get(0).getPengunjung()));

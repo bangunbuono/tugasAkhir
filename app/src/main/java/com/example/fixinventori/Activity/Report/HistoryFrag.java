@@ -192,7 +192,9 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
                                         .compareTo(convertToDate(obj1.getTanggal())));
                         dateListLayoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
                         rvDateList.setLayoutManager(dateListLayoutManager);
-                        rvDateList.setAdapter(adapterDate);
+                        new Handler().postDelayed(()->
+                                rvDateList.setAdapter(adapterDate),1000);
+
                     }
 
                 }
