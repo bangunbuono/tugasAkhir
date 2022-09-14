@@ -110,4 +110,13 @@ public interface APIRequestStock {
             @Field("bahan") String bahan,
             @Field("user") String user
     );
+
+    @FormUrlEncoded
+    @POST("combinedelete.php")
+    Call<ResponseModel> combineDelete(
+            @Field("bahan") String bahan,
+            @Field("user") String user
+    );
+
+
 }

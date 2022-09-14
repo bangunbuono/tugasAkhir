@@ -147,7 +147,6 @@ public class MenuSetDetail extends AppCompatActivity {
                     bahan = etBahan.getText().toString().trim();
                     jumlah = Integer.parseInt(etJumlah.getText().toString().trim());
                     satuan = etSatuan.getText().toString().trim();
-
                     updateKomposisi();
                 }
             }
@@ -155,6 +154,8 @@ public class MenuSetDetail extends AppCompatActivity {
                 jumlah = Integer.parseInt(etJumlahy.getText().toString());
                 addKomposisi();
             }
+
+            finish();
         });
 
         btnTambahKomposisiy.setOnClickListener(view -> {
@@ -224,8 +225,13 @@ public class MenuSetDetail extends AppCompatActivity {
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 if(response.body()!=null){
                     String pesan = response.body().getPesan();
-                    finish();
-                    Toast.makeText(MenuSetDetail.this, pesan,
+                    int code = response.body().getCode();
+                    if(code ==2){
+                        Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
+                    }if(code ==0){
+                        Toast.makeText(MenuSetDetail.this, pesan, Toast.LENGTH_SHORT).show();
+                    }else
+                    Toast.makeText(MenuSetDetail.this, "behasil",
                         Toast.LENGTH_SHORT).show();
                 }
             }

@@ -3,6 +3,8 @@ package com.example.fixinventori.Activity.Stock;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -37,7 +39,8 @@ import retrofit2.Response;
 
 public class CombineStocksActivity extends AppCompatActivity {
     Spinner spinnerCombine;
-    EditText etCombine, etBahanCombine, etJumlahCombine, etSatuanCombine;
+    EditText etCombine, etBahanCombine, etJumlahCombine;
+    AutoCompleteTextView etSatuanCombine;
     TextView tvCombine;
     public static LinearLayout llDaftarCombine;
     ListView lvCombine;
@@ -70,6 +73,11 @@ public class CombineStocksActivity extends AppCompatActivity {
         btnConfirmCombine = findViewById(R.id.btnConfirmCombine);
         llDaftarCombine = findViewById(R.id.llDaftarCombine);
         lvCombine = findViewById(R.id.lvCombine);
+
+        String[] units = {"gram", "ml", "kilogram", "liter","buah"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, units);
+        etSatuanCombine.setAdapter(adapter);
 
         adapterCombineList = new AdapterCombine(this, listCombine);
         restockList();
@@ -111,6 +119,14 @@ public class CombineStocksActivity extends AppCompatActivity {
                 bahanAkhir = etBahanCombine.getText().toString();
                 jumlahAkhir = Integer.parseInt(etJumlahCombine.getText().toString().trim());
                 satuanAkhir = etSatuanCombine.getText().toString();
+
+                if(satuanAkhir.equals("kg") || satuanAkhir.equals("kilogram")) {
+                    satuanAkhir = "gram";
+                    jumlahAkhir = jumlah*1000;
+                }else if(satuanAkhir.equals("liter") || satuanAkhir.equals("l")){
+                    satuanAkhir = "ml";
+                    jumlahAkhir = jumlah*1000;
+                }
 
                 time = LocalDateTime.now();
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyMMddHHmmss");

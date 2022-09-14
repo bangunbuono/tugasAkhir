@@ -69,7 +69,6 @@ public class AdapterStocks extends ArrayAdapter<StocksModel> {
         convertView.setOnClickListener(view -> {
             index = stocksModelList.get(position).getId();
             stockDetail();
-
         });
 
         convertView.setOnLongClickListener(view -> {
@@ -81,6 +80,7 @@ public class AdapterStocks extends ArrayAdapter<StocksModel> {
                posisi = position;
                bahan = stocksModelList.get(position).getBahan_baku();
                deleteBahan();
+               if(stocksModelList.get(position).getKeterangan().equals("kombinasi")) deleteKombinasi();
             });
             dialog.setNegativeButton("batal", (dialogInterface, i) -> {
 
@@ -161,6 +161,26 @@ public class AdapterStocks extends ArrayAdapter<StocksModel> {
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
 
+            }
+        });
+    }
+
+    private void deleteKombinasi() {
+        APIRequestStock data = ServerConnection.connection().create(APIRequestStock.class);
+        Call<ResponseModel> deleteData = data.combineDelete(bahan, user);
+
+        deleteData.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+                if(response.isSuccessful() && response.body()!=null){
+                    int code = response.body().getCode();
+                    if(code==0) Toast.makeText(context, "gagal "+response.body().getPesan(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                Toast.makeText(context, "Gagal hapus combine"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

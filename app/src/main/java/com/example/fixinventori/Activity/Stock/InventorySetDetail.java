@@ -92,11 +92,14 @@ public class InventorySetDetail extends AppCompatActivity {
                 int code;
                 if (response.body() != null) {
                     code = response.body().getCode();
-                    if(code!=2) {
+                    if(code==1) {
                         finish();
                         Toast.makeText(InventorySetDetail.this, "berhasil menyimpan", Toast.LENGTH_SHORT).show();
-
-                    }else Toast.makeText(InventorySetDetail.this, "Nama bahan sudah digunakan", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(code==0)
+                        Toast.makeText(InventorySetDetail.this, response.body().getPesan(), Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(InventorySetDetail.this, "Nama bahan sudah digunakan", Toast.LENGTH_SHORT).show();
                 }
             }
 

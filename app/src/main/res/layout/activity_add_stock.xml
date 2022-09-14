@@ -78,16 +78,18 @@
                 android:textColor="@color/primary_dark"
                 android:textSize="16sp" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/etSatuanStock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
+                android:completionThreshold="0"
                 android:ems="10"
                 android:hint="(gram, ml, dll)"
                 android:inputType="textPersonName"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"

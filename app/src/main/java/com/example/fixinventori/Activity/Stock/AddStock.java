@@ -1,6 +1,8 @@
 package com.example.fixinventori.Activity.Stock;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,7 +23,8 @@ import retrofit2.Response;
 
 public class AddStock extends AppCompatActivity {
 
-    EditText etNameStock, etJumlah, etSatuan, etStockPesan, etStockWaktuTgu, etStockWaktuTguMax;
+    EditText etNameStock, etJumlah, etStockPesan, etStockWaktuTgu, etStockWaktuTguMax;
+    AutoCompleteTextView etSatuan;
     TextView tvStockUser;
     Button btnStockAdd;
     int waktu, min_pesan, jumlah, waktuMax;
@@ -46,6 +49,11 @@ public class AddStock extends AppCompatActivity {
         btnStockAdd = findViewById(R.id.btnStockAdd);
         tvStockUser.setText(user);
 
+        String[] units = {"gram", "ml", "kilogram", "liter","buah"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, units);
+        etSatuan.setAdapter(adapter);
+
         btnStockAdd.setOnClickListener(view -> {
             if(etJumlah.getText().toString().isEmpty() || etNameStock.getText().toString().isEmpty() ||
                     etSatuan.getText().toString().isEmpty() || etStockPesan.getText().toString().isEmpty() ||
@@ -54,13 +62,21 @@ public class AddStock extends AppCompatActivity {
                 Toast.makeText(AddStock.this, "Harus diisi", Toast.LENGTH_SHORT).show();
             }
             else {
-                tvStockUser.getText().toString();
                 waktuMax = Integer.parseInt(etStockWaktuTguMax.getText().toString().trim());
                 bahan_baku = etNameStock.getText().toString().trim();
                 jumlah = Integer.parseInt(etJumlah.getText().toString().trim());
                 waktu = Integer.parseInt(etStockWaktuTgu.getText().toString().trim());
                 min_pesan = Integer.parseInt(etStockPesan.getText().toString().trim());
                 satuan = etSatuan.getText().toString().trim();
+                if(satuan.equals("kg") || satuan.equals("kilogram")) {
+                    satuan = "gram";
+                    jumlah = jumlah*1000;
+                    min_pesan = min_pesan*100;
+                }else if(satuan.equals("liter") || satuan.equals("l")){
+                    satuan = "ml";
+                    jumlah = jumlah*1000;
+                    min_pesan = min_pesan*1000;
+                }
                 addStock();
             }
         });

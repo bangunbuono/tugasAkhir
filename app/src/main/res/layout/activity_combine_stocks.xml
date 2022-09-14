@@ -153,9 +153,10 @@
                 android:textColor="@color/primary"
                 android:textSize="@dimen/_14ssp"/>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/etSatuanCombine"
                 android:hint="Contoh: ml, gram"
+                android:completionThreshold="0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"

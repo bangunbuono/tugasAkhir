@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -54,6 +56,8 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
     public static ArrayList<String> recordFilter;
     ArrayAdapter<String> filter;
     public static String choosenFilter;
+    ProgressBar progressBar, progressBar2;
+    LinearLayout llHistory, llHistory2;
 
     public HistoryFrag() {
         // Required empty public constructor
@@ -73,6 +77,10 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
         rvMonth = view.findViewById(R.id.rvMonth);
         rvDateList = view.findViewById(R.id.rvRecordList);
         spinnerRecordFilter = view.findViewById(R.id.spinnerRecordFilter);
+        progressBar = view.findViewById(R.id.progressRegist);
+        progressBar2 = view.findViewById(R.id.progressRegist2);
+        llHistory = view.findViewById(R.id.llHistory);
+        llHistory2 = view.findViewById(R.id.llHistory2);
         displayMetrics = new DisplayMetrics();
         requireActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
@@ -148,6 +156,7 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
     }
 
     private void getMonth(){
+        loading(true);
         APIReport reportData = ServerConnection.connection().create(APIReport.class);
         Call<ResponseModel> month = reportData.date(user);
 
@@ -160,6 +169,7 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
                     if(monthList!= null){
                         new Handler().postDelayed(()->{
                             rvMonth.setAdapter(adapter);
+                            loading(false);
     //                        new Handler().postDelayed(()->
                         },200);
                         dateRecordInitiate();
@@ -170,13 +180,15 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-
+                loading(false);
+                Toast.makeText(getActivity(), "gagal memuat bulan"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
     public void dateRecord(){
+        loading2(true);
         APIReport record = ServerConnection.connection().create(APIReport.class);
         Call<ResponseModel> recordData = record.dateList(user,month);
 
@@ -192,9 +204,9 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
                                         .compareTo(convertToDate(obj1.getTanggal())));
                         dateListLayoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
                         rvDateList.setLayoutManager(dateListLayoutManager);
-                        new Handler().postDelayed(()->
-                                rvDateList.setAdapter(adapterDate),1000);
-
+//                        new Handler().postDelayed(()->
+                                rvDateList.setAdapter(adapterDate);//,1000);
+                        loading2(false);
                     }
 
                 }
@@ -202,7 +214,8 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                loading2(false);
+                Toast.makeText(getActivity(), "gagal memuat date"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -218,16 +231,21 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
                     dateRecord = response.body().getDate();
                     adapterDate = new AdapterDate(getActivity(), dateRecord);
                     if (dateRecord != null) {
+                        dateRecord.sort((obj1,obj2)->
+                                Objects.requireNonNull(convertToDate(obj2.getTanggal()))
+                                        .compareTo(convertToDate(obj1.getTanggal())));
                         rvDateList.setAdapter(adapterDate);
                         dateListLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                         rvDateList.setLayoutManager(dateListLayoutManager);
+                        loading(false);
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-
+                loading(false);
+                Toast.makeText(getActivity(), "gagal memuat date"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -240,4 +258,26 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
             return null;
         }
     }
+
+    private void loading(Boolean isLoading){
+        if (isLoading) {
+            progressBar.setVisibility(View.VISIBLE);
+            llHistory.setVisibility(View.GONE);
+        }else {
+            progressBar.setVisibility(View.GONE);
+            llHistory.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void loading2(Boolean isLoading){
+        if (isLoading) {
+            progressBar2.setVisibility(View.VISIBLE);
+            llHistory2.setVisibility(View.GONE);
+        }else {
+            progressBar2.setVisibility(View.GONE);
+            llHistory2.setVisibility(View.VISIBLE);
+        }
+    }
+
+
 }
