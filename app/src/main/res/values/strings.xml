@@ -9,4 +9,7 @@
     <string name="kas_keluar">Kas keluar</string>
     <string name="bahan_masuk">Bahan masuk</string>
     <string name="bahan_keluar">Bahan keluar</string>
+    <string name="dataPeramalanKurang">Data untuk peramalan masih kurang mencukupi</string>
+    <string name="holt">holt</string>
+    <string name="doubleMA">doubleMA</string>
 </resources>

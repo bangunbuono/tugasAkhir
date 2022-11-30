@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class Constants {
     public static final String KEY_COLLECTION_USERS = "users";
     public static final String KEY_COLLECTION_MANAGERS = "managers";
+    public static final String KEY_SESSION = "session";
     public static final String KEY_NAME = "name";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";

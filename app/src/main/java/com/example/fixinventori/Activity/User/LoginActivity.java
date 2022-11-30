@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         userSession.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
                         userSession.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
+                        userSession.putString(Constants.KEY_SESSION,"usersession");
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         loading(false);
                         startActivity(intent);

@@ -68,11 +68,13 @@ public class AddStock extends AppCompatActivity {
                 waktu = Integer.parseInt(etStockWaktuTgu.getText().toString().trim());
                 min_pesan = Integer.parseInt(etStockPesan.getText().toString().trim());
                 satuan = etSatuan.getText().toString().trim();
-                if(satuan.equals("kg") || satuan.equals("kilogram")) {
+                if(satuan.equals("kg") || satuan.equals("kilogram")
+                        || satuan.equals("Kg") || satuan.equals("KG") || satuan.equals("Kilogram")) {
                     satuan = "gram";
                     jumlah = jumlah*1000;
                     min_pesan = min_pesan*100;
-                }else if(satuan.equals("liter") || satuan.equals("l")){
+                }else if(satuan.equals("liter") || satuan.equals("l") || satuan.equals("L")
+                        || satuan.equals("Liter")){
                     satuan = "ml";
                     jumlah = jumlah*1000;
                     min_pesan = min_pesan*1000;

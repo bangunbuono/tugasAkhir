@@ -1,7 +1,6 @@
 package com.example.fixinventori.model;
 
 import com.example.fixinventori.Chat.Model.ManagerModel;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,16 @@ public class ResponseModel {
     }
 
     private List<StocksModel> combineDetail;
+
+    private List<StocksModel> avgDay;
+
     private ArrayList<RestockModel> stocks;
+    private List<TimeSeriesModel> history;
+
+    public List<TimeSeriesModel> getHistory() {
+        return history;
+    }
+
     private String pesan, status;
     private List<MenuModel> data;
     private List<KomposisiModel> komposisiModelList, komposisiOpsiList;
@@ -34,7 +42,6 @@ public class ResponseModel {
     private List<StatModel> cashIn;
     private List<StatModel> cashOut;
     private List<StatModel> bahanKeluar;
-
     public List<StatModel> getMenu() {
         return menu;
     }
@@ -64,9 +71,9 @@ public class ResponseModel {
     private List<StatModel> statMenu;
 
     private List<ManagerModel> recordManager;
+
     private List<UsageMenuModel> recordMenu;
     private List<UserModel> profilPicture;
-
     public List<StatModel> getMaxMenu() {
         return maxMenu;
     }
@@ -77,6 +84,10 @@ public class ResponseModel {
 
     public List<StatModel> getMaxStockIn() {
         return maxStockIn;
+    }
+
+    public List<StocksModel> getAvgDay() {
+        return avgDay;
     }
 
     public List<StatModel> getMaxStockOut() {

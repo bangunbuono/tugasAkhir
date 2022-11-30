@@ -2,6 +2,7 @@ package com.example.fixinventori.Activity.Stock;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -37,6 +38,7 @@ public class InventorySet extends AppCompatActivity{
     List<StocksModel> stocksModelList;
     TextView tvAddStock;
     String user;
+    int totalDay;
     UserSession userSession;
 
     @Override
@@ -46,6 +48,8 @@ public class InventorySet extends AppCompatActivity{
 
         userSession = new UserSession(this);
         user = userSession.getUserDetail().get("username");
+
+        totalDay();
 
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -59,7 +63,9 @@ public class InventorySet extends AppCompatActivity{
         lvStocks = findViewById(R.id.lvStocks);
         tvAddStock = findViewById(R.id.tvAddStock);
         stocksModelList = new ArrayList<>();
-        getStocks();
+
+        new Handler().postDelayed(this::getStocks, 300);
+
 
         tvAddStock.setOnClickListener(view -> {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -89,14 +95,35 @@ public class InventorySet extends AppCompatActivity{
                 if(response.body()!= null)
                 stocksModelList = response.body().getStocksModels();
                 if(stocksModelList != null){
-                    adapterStocks = new AdapterStocks(InventorySet.this, stocksModelList);
-                    lvStocks.setAdapter(adapterStocks);
+                    adapterStocks = new AdapterStocks(InventorySet.this, stocksModelList, totalDay);
+                    new Handler().postDelayed(()->lvStocks.setAdapter(adapterStocks),500);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
                 Toast.makeText(InventorySet.this, "Gagal memuat stock: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void totalDay(){
+        APIRequestStock data = ServerConnection.connection().create(APIRequestStock.class);
+        Call<ResponseModel> getData = data.totalDay(user);
+
+        getData.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
+                List<StocksModel> totalList;
+                if(response.body()!=null){
+                    totalList = response.body().getAvgDay();
+                    if(totalList!=null) totalDay = totalList.get(0).getTotal();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
+                Toast.makeText(InventorySet.this, "Gagal mendapat jumlah hari "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

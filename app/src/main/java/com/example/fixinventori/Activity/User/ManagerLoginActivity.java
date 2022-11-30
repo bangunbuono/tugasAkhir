@@ -111,6 +111,7 @@ public class ManagerLoginActivity extends AppCompatActivity {
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         session.putString(Constants.KEY_MANAGER_ID, documentSnapshot.getId());
                         session.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
+                        session.putString(Constants.KEY_SESSION,"managersession");
                         loading(false);
                         startActivity(new Intent(ManagerLoginActivity.this, ManagerMainActivity.class));
                         finish();

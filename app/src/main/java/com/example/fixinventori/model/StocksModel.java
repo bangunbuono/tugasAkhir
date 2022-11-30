@@ -13,6 +13,12 @@ public class StocksModel {
     private int waktu_max;
     private int min_pesan;
     private int jumlah;
+
+    public int getTotal() {
+        return total;
+    }
+
+    private int total;
     private String bahan_baku;
     private String satuan;
     private String user;

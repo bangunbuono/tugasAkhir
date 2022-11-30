@@ -8,9 +8,9 @@
     android:animateLayoutChanges="true"
     tools:context="com.example.fixinventori.Activity.Forecast.InventForecast">
 
-    <TextView
-        android:id="@+id/textView5"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvForecast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="forecast" />
+        tools:listitem="@layout/forecast_row"/>
 </LinearLayout>

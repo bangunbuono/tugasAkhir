@@ -118,5 +118,11 @@ public interface APIRequestStock {
             @Field("user") String user
     );
 
+    @FormUrlEncoded
+    @POST("totalday.php")
+    Call<ResponseModel> totalDay(
+            @Field("user") String user
+    );
+
 
 }
