@@ -36,7 +36,7 @@ public class AdapterStocks extends ArrayAdapter<StocksModel> {
     List<StocksModel> list;
     TextView tvIdStock, tvStockName, tvStockJumlah, tvStockSatuan, tvROP, tvAvgUsage;
     LinearLayout llRop, llMainStock;
-    int index, posisi, total;
+    int index, posisi, total, rop;
     String bahan, user;
     UserSession session;
 
@@ -72,49 +72,43 @@ public class AdapterStocks extends ArrayAdapter<StocksModel> {
             tvStockName.setText(bahan);
             tvStockJumlah.setText(String.valueOf(stocksModelList.get(position).getJumlah()));
             tvStockSatuan.setText(stocksModelList.get(position).getSatuan());
+
             if(total!=0){
                 if(stocksModelList.get(position).getTotal()!=0){
                     llRop.setVisibility(View.VISIBLE);
                     int avgUsage = stocksModelList.get(position).getTotal()/total;
-                    int rop =0;
+                    if(stocksModelList.get(position).getWaktu()==0
+                            && stocksModelList.get(position).getWaktuMax()==0
+                    &&stocksModelList.get(position).getMin_pesan()!=0) {
+                        rop = stocksModelList.get(position).getMin_pesan();
+                        System.out.println("a");
+                    }
+                    else if(stocksModelList.get(position).getWaktu()==0
+                            && stocksModelList.get(position).getWaktuMax()==0
+                            && stocksModelList.get(position).getMin_pesan()==0) {
+                        rop = avgUsage;
+                        System.out.println("b");
+                    }
+                    else if(stocksModelList.get(position).getWaktuMax()!=0) {
+                        rop = avgUsage*stocksModelList.get(position).getWaktuMax()
+                                +stocksModelList.get(position).getMin_pesan();
+                        System.out.println("c");
+                    }
+                    else {
+                        rop = avgUsage*stocksModelList.get(position).getWaktu()
+                                +stocksModelList.get(position).getMin_pesan();
+                        System.out.println("d");
+                    }
+                    System.out.println(rop);
+
                     tvAvgUsage.setText(String.format("digunakan %s %s/hari",
                             avgUsage,
                             stocksModelList.get(position).getSatuan()));
-                    if(stocksModelList.get(position).getWaktu_max()!=0 && stocksModelList.get(position).getMin_pesan()!=0){
 
-                        rop = stocksModelList.get(position).getWaktu_max()*avgUsage+
-                              stocksModelList.get(position).getMin_pesan();
-
-                      tvROP.setText(String.format("Pemesanan dilakukan saat %s %s",
-                              rop, stocksModelList.get(position).getSatuan()));
-                    }
-                    else if(stocksModelList.get(position).getWaktu_max()!=0
-                            && stocksModelList.get(position).getMin_pesan()==0){
-
-                        rop = stocksModelList.get(position).getWaktu_max()*avgUsage;
-
-                        tvROP.setText(String.format("Pemesanan dilakukan saat %s %s",
-                                rop, stocksModelList.get(position).getSatuan()));
-                    }
-                    else if(stocksModelList.get(position).getWaktu_max()==0){
-
-                        rop = stocksModelList.get(position).getWaktu()*avgUsage;
-
-                        tvROP.setText(String.format("Pemesanan dilakukan saat %s %s",
-                                rop, stocksModelList.get(position).getSatuan()));
-                    }
-                    else if(stocksModelList.get(position).getWaktu()==0){
-
-                        rop = stocksModelList.get(position).getWaktu()*avgUsage;
-
-                        tvROP.setText(String.format("Pemesanan dilakukan saat %s %s",
-                                rop, stocksModelList.get(position).getSatuan()));
-                    }
-                    else tvROP.setText(String.format("Pemesanan dilakukan saat %s %s",
-                                avgUsage, stocksModelList.get(position).getSatuan()));
-
+                    tvROP.setText(String.format("Pemesanan dilakukan saat %s %s",
+                            rop, stocksModelList.get(position).getSatuan()));
                     if(rop==stocksModelList.get(position).getJumlah()) llMainStock.setBackgroundColor(Color.YELLOW);
-                    if(rop<=stocksModelList.get(position).getJumlah()) llMainStock.setBackgroundColor(Color.RED);
+                    if(rop>=stocksModelList.get(position).getJumlah()) llMainStock.setBackgroundColor(Color.RED);
                 }
             }
         }
@@ -158,7 +152,7 @@ public class AdapterStocks extends ArrayAdapter<StocksModel> {
                     String bahanBaku = list.get(0).getBahan_baku();
                     String stockSatuan = list.get(0).getSatuan();
                     int stockJumlah = list.get(0).getJumlah();
-                    int waktu_max = list.get(0).getWaktu_max();
+                    int waktu_max = list.get(0).getWaktuMax();
                     String keterangan = list.get(0).getKeterangan();
 
                     if(keterangan.equals("utama")){

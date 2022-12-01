@@ -49,9 +49,6 @@ public class InventForecast extends AppCompatActivity {
 
         rvForecast = findViewById(R.id.rvForecast);
 
-        if(getTomorrow()>5) check = getString(R.string.holt);
-        else check = getString(R.string.doubleMA);
-
         getTimeSeries();
     }
 
@@ -65,7 +62,7 @@ public class InventForecast extends AppCompatActivity {
                 if(response.isSuccessful() && response.body()!=null){
                     history = response.body().getHistory();
                     if(history!=null){
-                        adapterForecast = new AdapterForecast(history, InventForecast.this, check);
+                        adapterForecast = new AdapterForecast(history, InventForecast.this);
                         manager = new LinearLayoutManager(InventForecast.this, RecyclerView.VERTICAL, false);
                         rvForecast.setLayoutManager(manager);
                         rvForecast.setAdapter(adapterForecast);
@@ -88,10 +85,14 @@ public class InventForecast extends AppCompatActivity {
         });
     }
 
-    int getTomorrow(){
+    public static int getTomorrow(){
         int day;
         LocalDateTime date = LocalDateTime.now();
         day = date.getDayOfWeek().getValue();
-        return day+2;
+        System.out.println(day);
+        if(day==5) return 7;
+        else if (day==6) return 1;
+        else if(day==7) return 2;
+        else return day+2;
     }
 }

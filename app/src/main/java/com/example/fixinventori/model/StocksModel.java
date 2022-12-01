@@ -6,11 +6,11 @@ public class StocksModel {
     private int id;
     private int waktu;
 
-    public int getWaktu_max() {
-        return waktu_max;
+    public int getWaktuMax() {
+        return waktuMax;
     }
 
-    private int waktu_max;
+    private int waktuMax;
     private int min_pesan;
     private int jumlah;
 

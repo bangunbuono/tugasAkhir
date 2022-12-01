@@ -11,8 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fixinventori.Activity.Forecast.InventForecast;
 import com.example.fixinventori.R;
-import com.example.fixinventori.model.Data;
+
 import com.example.fixinventori.model.TimeSeriesModel;
 
 import java.util.ArrayList;
@@ -23,12 +24,11 @@ public class AdapterForecast extends RecyclerView.Adapter<AdapterForecast.Holder
     public List<TimeSeriesModel> data;
     ArrayList<Float> ma4, ma4x4, at, tt, forecast;
     Context context;
-    String checkDays;
+//    String checkDays;
 
-    public AdapterForecast(List<TimeSeriesModel> data, Context context, String checkDays) {
+    public AdapterForecast(List<TimeSeriesModel> data, Context context) {
         this.data = data;
         this.context = context;
-        this.checkDays = checkDays;
     }
 
     public class Holder extends RecyclerView.ViewHolder{
@@ -58,19 +58,29 @@ public class AdapterForecast extends RecyclerView.Adapter<AdapterForecast.Holder
         data.get(position).getData().forEach(data1 -> demand.add(data1.getJumlah()));
 
         new Handler().postDelayed(()->{
-            if(checkDays.equals(String.valueOf(R.string.doubleMA))){
-                if(demand.size()>=8) holder.tvForecast.
-                        setText(String.format("Perkiraan penggunaan %s besok adalah %s %s",
-                                data.get(position).getBahan(), doubleMA(demand),
-                                data.get(position).getData().get(0).getSatuan()));
+//            if(checkDays.equals(String.valueOf(R.string.doubleMA))){
+            if(InventForecast.getTomorrow()-1<=5){
+                if(demand.size()>=8) {
+                    float y = doubleMA(demand);
+                    holder.tvForecast.
+                            setText(String.format("Perkiraan penggunaan %s besok adalah %s %s",
+                                    data.get(position).getBahan(),y ,
+                                    data.get(position).getData().get(0).getSatuan()));
+                }
                 else holder.tvForecast.setText(R.string.dataPeramalanKurang);
-            }else{
-                if(demand.size()>=4) holder.tvForecast.
-                        setText(String.format("Perkiraan penggunaan %s besok adalah %s %s",
-                                data.get(position).getBahan(), holtForecaster(demand),
-                                data.get(position).getData().get(0).getSatuan()));
+                System.out.println("DMA");
+//            }else if(checkDays.equals(String.valueOf(R.string.holt))){
+            }else if(InventForecast.getTomorrow()-1>5){
+                if(demand.size()>=4) {
+                    float y = holtForecaster(demand);
+                    holder.tvForecast.
+                            setText(String.format("Perkiraan penggunaan %s besok adalah %s %s",
+                                    data.get(position).getBahan(),y ,
+                                    data.get(position).getData().get(0).getSatuan()));
+                }
                 else holder.tvForecast.setText(R.string.dataPeramalanKurang);
-            }
+                System.out.println("HOLT");
+            }else System.out.println("day 0");
         },200);
 
 
@@ -82,6 +92,8 @@ public class AdapterForecast extends RecyclerView.Adapter<AdapterForecast.Holder
     }
 
     private float doubleMA(ArrayList<Integer> data){
+        ma4 = new ArrayList<>();
+        ma4x4 = new ArrayList<>();
 //        long start = System.currentTimeMillis();
         for (int i = 0; i < data.size()-4; i++) {
             ma4.add((data.get(i)+data.get(i+1)+data.get(i+2)+data.get(i+3))/4f);
@@ -91,14 +103,15 @@ public class AdapterForecast extends RecyclerView.Adapter<AdapterForecast.Holder
             System.out.println(2f*ma4.get(i+3)- ma4x4.get(i)+2/3f*(ma4.get(i+3)-ma4x4.get(i))*1);
         }
 //        float elapsedTime = System.currentTimeMillis()-start;
-        return 2f*ma4.get(ma4.size()-2)- ma4x4.get(ma4x4.size()-1)+
-                2/3f*(ma4.get(ma4.size()-2)-ma4x4.get(ma4x4.size()-1))*2;
+        return Math.abs(2f*ma4.get(ma4.size()-2)- ma4x4.get(ma4x4.size()-1)+
+                2/3f*(ma4.get(ma4.size()-2)-ma4x4.get(ma4x4.size()-1))*2);
 
     }
 
     private float holtForecaster(ArrayList<Integer> demand){
         at = new ArrayList<>();
         tt = new ArrayList<>();
+        forecast = new ArrayList<>();
 
         float alpha = 0.1f;
         float beta = 0.01f;
@@ -112,7 +125,7 @@ public class AdapterForecast extends RecyclerView.Adapter<AdapterForecast.Holder
         }
 
         forecast.forEach(System.out::println);
-        return at.get(at.size()-1)+ tt.get(tt.size()-1)*1;
+        return Math.abs(at.get(at.size()-1)+ tt.get(tt.size()-1)*1);
     }
 
 
