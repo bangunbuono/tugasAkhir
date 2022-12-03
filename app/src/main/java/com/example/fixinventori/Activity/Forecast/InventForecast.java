@@ -85,7 +85,7 @@ public class InventForecast extends AppCompatActivity {
         });
     }
 
-    public static int getTomorrow(){
+    public int getTomorrow(){
         int day;
         LocalDateTime date = LocalDateTime.now();
         day = date.getDayOfWeek().getValue();
@@ -94,5 +94,13 @@ public class InventForecast extends AppCompatActivity {
         else if (day==6) return 1;
         else if(day==7) return 2;
         else return day+2;
+    }
+
+    public static int getToday(){
+        int day;
+        LocalDateTime date = LocalDateTime.now();
+        day = date.getDayOfWeek().getValue();
+        System.out.println(day);
+        return day;
     }
 }

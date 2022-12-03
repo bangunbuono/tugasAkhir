@@ -59,18 +59,7 @@ public class AdapterForecast extends RecyclerView.Adapter<AdapterForecast.Holder
 
         new Handler().postDelayed(()->{
 //            if(checkDays.equals(String.valueOf(R.string.doubleMA))){
-            if(InventForecast.getTomorrow()-1<=5){
-                if(demand.size()>=8) {
-                    float y = doubleMA(demand);
-                    holder.tvForecast.
-                            setText(String.format("Perkiraan penggunaan %s besok adalah %s %s",
-                                    data.get(position).getBahan(),y ,
-                                    data.get(position).getData().get(0).getSatuan()));
-                }
-                else holder.tvForecast.setText(R.string.dataPeramalanKurang);
-                System.out.println("DMA");
-//            }else if(checkDays.equals(String.valueOf(R.string.holt))){
-            }else if(InventForecast.getTomorrow()-1>5){
+            if(InventForecast.getToday()==5||InventForecast.getToday()==6){
                 if(demand.size()>=4) {
                     float y = holtForecaster(demand);
                     holder.tvForecast.
@@ -80,7 +69,18 @@ public class AdapterForecast extends RecyclerView.Adapter<AdapterForecast.Holder
                 }
                 else holder.tvForecast.setText(R.string.dataPeramalanKurang);
                 System.out.println("HOLT");
-            }else System.out.println("day 0");
+//            }else if(checkDays.equals(String.valueOf(R.string.holt))){
+            }else{
+                if(demand.size()>=8) {
+                    float y = doubleMA(demand);
+                    holder.tvForecast.
+                            setText(String.format("Perkiraan penggunaan %s besok adalah %s %s",
+                                    data.get(position).getBahan(),y ,
+                                    data.get(position).getData().get(0).getSatuan()));
+                }
+                else holder.tvForecast.setText(R.string.dataPeramalanKurang);
+                System.out.println("DMA");
+            }
         },200);
 
 
