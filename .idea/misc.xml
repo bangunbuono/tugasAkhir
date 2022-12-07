@@ -80,6 +80,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/record_row.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/restock_dialog.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/restock_row.xml" value="0.25" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/simple_spinner_style.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/stat_bahan_row.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/stock_row.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/transaction_row.xml" value="0.25" />
@@ -91,6 +92,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/menu/manager_home.xml" value="0.1" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/menu/report_bottomnav.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/xml/root_preferences.xml" value="0.225" />
+        <entry key="..\:/Users/hp/AppData/Local/Android/Sdk/platforms/android-32-2/data/res/layout/simple_spinner_dropdown_item.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AppData/Local/Android/Sdk/platforms/android-32-2/data/res/layout/simple_spinner_item.xml" value="0.18947368421052632" />
       </map>
     </option>

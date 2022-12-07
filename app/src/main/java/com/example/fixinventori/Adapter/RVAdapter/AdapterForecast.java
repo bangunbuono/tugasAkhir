@@ -16,6 +16,7 @@ import com.example.fixinventori.R;
 
 import com.example.fixinventori.model.TimeSeriesModel;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,12 +60,12 @@ public class AdapterForecast extends RecyclerView.Adapter<AdapterForecast.Holder
 
         new Handler().postDelayed(()->{
 //            if(checkDays.equals(String.valueOf(R.string.doubleMA))){
-            if(InventForecast.getToday()==5||InventForecast.getToday()==6){
+            if(DayOfWeek.valueOf(InventForecast.day).getValue()==7||DayOfWeek.valueOf(InventForecast.day).getValue()==6){
                 if(demand.size()>=4) {
                     float y = holtForecaster(demand);
                     holder.tvForecast.
-                            setText(String.format("Perkiraan penggunaan %s besok adalah %s %s",
-                                    data.get(position).getBahan(),y ,
+                            setText(String.format("Perkiraan penggunaan %s pada %s adalah %s %s",
+                                    data.get(position).getBahan(),InventForecast.day.toLowerCase(),y ,
                                     data.get(position).getData().get(0).getSatuan()));
                 }
                 else holder.tvForecast.setText(R.string.dataPeramalanKurang);
@@ -74,8 +75,8 @@ public class AdapterForecast extends RecyclerView.Adapter<AdapterForecast.Holder
                 if(demand.size()>=8) {
                     float y = doubleMA(demand);
                     holder.tvForecast.
-                            setText(String.format("Perkiraan penggunaan %s besok adalah %s %s",
-                                    data.get(position).getBahan(),y ,
+                            setText(String.format("Perkiraan penggunaan %s pada %s adalah %s %s",
+                                    data.get(position).getBahan(),InventForecast.day.toLowerCase(),y ,
                                     data.get(position).getData().get(0).getSatuan()));
                 }
                 else holder.tvForecast.setText(R.string.dataPeramalanKurang);
