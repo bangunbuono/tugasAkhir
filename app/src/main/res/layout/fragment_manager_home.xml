@@ -439,14 +439,34 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/tvMoreReport"
+            android:id="@+id/tvForecast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/cardStatVisitor"
+            android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_10sdp"
+            android:backgroundTint="@color/white"
+            android:clickable="true"
+            android:text="Perkiraan"
+            android:textColor="@color/primary"
+            android:textColorHighlight="@color/primary"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvMoreReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:backgroundTint="@color/white"
             android:clickable="true"
             android:text="Laporan Detail"

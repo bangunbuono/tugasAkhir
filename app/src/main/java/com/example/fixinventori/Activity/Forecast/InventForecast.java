@@ -1,6 +1,7 @@
 package com.example.fixinventori.Activity.Forecast;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,13 +21,10 @@ import com.example.fixinventori.R;
 import com.example.fixinventori.model.ResponseModel;
 import com.example.fixinventori.model.TimeSeriesModel;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -68,22 +66,22 @@ public class InventForecast extends AppCompatActivity {
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, R.layout.simple_spinner_style, getDayInWeek());
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerDayForecasting.setAdapter(spinnerAdapter);
-
-
+        if(getDayInWeek()!=null) spinnerDayForecasting.setAdapter(spinnerAdapter);
 
         spinnerDayForecasting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                day = dayList.get(position).split(" ")[0].toUpperCase();
-                System.out.println(DayOfWeek.valueOf(day).getValue());
+                day = calendarDay(dayList.get(position).split(" ")[0].toUpperCase());
 
-                getTimeSeries(getTodaySQL(DayOfWeek.valueOf(day).getValue()));
+//                System.out.println(DayOfWeek.valueOf(day).getValue());
+
+                new Handler().postDelayed(()->
+                        getTimeSeries(getTodaySQL(DayOfWeek.valueOf(day).getValue())),200);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                Toast.makeText(InventForecast.this, "pilih hari untuk peramalan", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -151,8 +149,19 @@ public class InventForecast extends AppCompatActivity {
             Calendar calendar = new GregorianCalendar();
             calendar.add(Calendar.DATE, i);
             String day = sdf.format(calendar.getTime());
-            if(i!=0) dayList.add(day);
+            if (i != 0) dayList.add(day);
         }
         return dayList;
+    }
+
+    public String calendarDay(String day){
+        if(day.equals("SENIN")) return "MONDAY";
+        if(day.equals("SELASA")) return "TUESDAY";
+        if(day.equals("RABU")) return "WEDNESDAY";
+        if(day.equals("KAMIS")) return "THURSDAY";
+        if(day.equals("JUMAT")) return "FRIDAY";
+        if(day.equals("SABTU")) return "SATURDAY";
+        if(day.equals("MINGGU")) return "SUNDAY";
+        else return day;
     }
 }

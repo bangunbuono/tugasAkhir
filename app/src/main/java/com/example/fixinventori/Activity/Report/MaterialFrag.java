@@ -78,7 +78,7 @@ public class MaterialFrag extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerBahanFilter.setAdapter(adapter);
 
-        spinnerBahanFilter.setSelection(0);
+        spinnerBahanFilter.setSelection(1);
 
         spinnerBahanFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

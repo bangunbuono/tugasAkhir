@@ -98,8 +98,10 @@ public class TransactionFragment extends Fragment {
                                                         .compareTo(convertToDate(obj1.getTanggal())));
                                         if(cashIn.size() == cashOut.size()){
                                             loading(false);
-                                            adapterTransaction = new AdapterTransaction(getActivity(), cashIn, cashOut);
-                                            lvCashTransation.setAdapter(adapterTransaction);
+                                            if (getActivity() != null) {
+                                                adapterTransaction = new AdapterTransaction(getActivity(), cashIn, cashOut);
+                                                lvCashTransation.setAdapter(adapterTransaction);
+                                            }
                                         }
                                     }
                                 }

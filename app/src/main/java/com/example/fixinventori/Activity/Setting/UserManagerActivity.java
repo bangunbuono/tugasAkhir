@@ -82,6 +82,7 @@ public class UserManagerActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     UsageAutoApplication.listConnectedUser = list = response.body().getRecordManager();
                     adapter = new UserConnectedAdapter(UserManagerActivity.this, list);
+                    if(list !=null || UsageAutoApplication.listConnectedUser!=null)
                     lvUserList.setAdapter(adapter);
                 }
             }

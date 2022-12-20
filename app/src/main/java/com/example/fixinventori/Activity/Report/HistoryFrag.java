@@ -252,9 +252,11 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
 
     private Date convertToDate(String date){
         try {
-            return new SimpleDateFormat("dd MMMMM yy", Locale.getDefault()).parse(date);
+            System.out.println(date);
+            return new SimpleDateFormat("dd MMMMM yy", Locale.US).parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
+            System.out.println("error di "+e.getMessage());
             return null;
         }
     }
@@ -279,5 +281,39 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
         }
     }
 
-
+    public String replaceMonth(String date){
+        String oldMonth = date.split(" ")[1];
+        String newMonth;
+        switch (oldMonth) {
+            case "July":
+                newMonth = "Juli";
+                return date.replaceAll(oldMonth, newMonth);
+            case "August":
+                newMonth = "Agustus";
+                return date.replaceAll(oldMonth, newMonth);
+            case "October":
+                newMonth = "Oktober";
+                return date.replaceAll(oldMonth, newMonth);
+            case "December":
+                newMonth = "Desember";
+                return date.replaceAll(oldMonth, newMonth);
+            case "January":
+                newMonth = "Januari";
+                return date.replaceAll(oldMonth, newMonth);
+            case "February":
+                newMonth = "Feberuari";
+                return date.replaceAll(oldMonth, newMonth);
+            case "March":
+                newMonth = "Maret";
+                return date.replaceAll(oldMonth, newMonth);
+            case "May":
+                newMonth = "Mei";
+                return date.replaceAll(oldMonth, newMonth);
+            case "Juny":
+                newMonth = "Juni";
+                return date.replaceAll(oldMonth, newMonth);
+            default:
+                return date;
+        }
+    }
 }

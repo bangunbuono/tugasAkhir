@@ -115,8 +115,10 @@ public class StatFrag extends Fragment {
         keterangan = "weekly";
         filterBahan = "barang_keluar";
 
-        IMarker iMarker = new LineChartMarkerView(getActivity(), R.layout.tv_content_view, lineChartSat);
-        lineChartSat.setMarker(iMarker);
+        if(getActivity()!=null) {
+            IMarker iMarker = new LineChartMarkerView(getActivity(), R.layout.tv_content_view, lineChartSat);
+            lineChartSat.setMarker(iMarker);
+        }
 
         ArrayList<String> modeFilter = new ArrayList<>();
         modeFilter.add("mode 1");
@@ -129,6 +131,7 @@ public class StatFrag extends Fragment {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerStatFilter.setAdapter(spinnerAdapter);
         satuanListOutInitiate();
+
 
         spinnerStatFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -331,19 +334,22 @@ public class StatFrag extends Fragment {
                     for (StatModel model: filter) {
                         satuanFilter.add(model.getSatuan());
                     }
-                    filter2adapter = new ArrayAdapter<>(getActivity(),
-                            R.layout.custom_simple_spinner_item, satuanFilter);
-                    filter2adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerStatFilter2.setAdapter(filter2adapter);
-                    spinnerStatFilter2.setSelection(0);
-                    initiateFilter = spinnerStatFilter2.getItemAtPosition(0).toString();
-
+                    if(getActivity()!=null) {
+                        filter2adapter = new ArrayAdapter<>(getActivity(),
+                                R.layout.custom_simple_spinner_item, satuanFilter);
+                        filter2adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerStatFilter2.setAdapter(filter2adapter);
+                        spinnerStatFilter2.setSelection(0);
+                        initiateFilter = spinnerStatFilter2.getItemAtPosition(0).toString();
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(getActivity(),"i"+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null) {
+                    Toast.makeText(getActivity(),"i"+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -361,16 +367,20 @@ public class StatFrag extends Fragment {
                     for (StocksModel model: bahanList) {
                         bahanFilter.add(model.getBahan_baku());
                     }
-                    filter2adapter = new ArrayAdapter<>(getActivity(), R.layout.custom_simple_spinner_item, bahanFilter);
-                    filter2adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerStatFilter2.setAdapter(filter2adapter);
-                    spinnerStatFilter2.setSelection(0);
+                    if(getActivity()!=null) {
+                        filter2adapter = new ArrayAdapter<>(getActivity(), R.layout.custom_simple_spinner_item, bahanFilter);
+                        filter2adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerStatFilter2.setAdapter(filter2adapter);
+                        spinnerStatFilter2.setSelection(0);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null) {
+                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -387,20 +397,24 @@ public class StatFrag extends Fragment {
                     for (StatModel model: filter) {
                         satuanFilter.add(model.getSatuan());
                     }
-                    filter2adapter = new ArrayAdapter<>(getActivity(),
-                            R.layout.custom_simple_spinner_item, satuanFilter);
-                    filter2adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerStatFilter2.setAdapter(filter2adapter);
-                    spinnerStatFilter2.setSelection(0);
-                    initiateFilter = spinnerStatFilter2.getItemAtPosition(0).toString();
-                    filterItem = satuanFilter.get(0);
-                    getDataSatuanOutInitiate();
+                    if(getActivity()!=null) {
+                        filter2adapter = new ArrayAdapter<>(getActivity(),
+                                R.layout.custom_simple_spinner_item, satuanFilter);
+                        filter2adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerStatFilter2.setAdapter(filter2adapter);
+                        spinnerStatFilter2.setSelection(0);
+                        initiateFilter = spinnerStatFilter2.getItemAtPosition(0).toString();
+                        filterItem = satuanFilter.get(0);
+                        getDataSatuanOutInitiate();
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(getActivity(), "b"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null) {
+                    Toast.makeText(getActivity(), "b"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -429,7 +443,9 @@ public class StatFrag extends Fragment {
             }
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null) {
+                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
                 System.out.println(t.getMessage());
             }
         });
@@ -506,8 +522,10 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                System.out.println(t.getMessage());
+                if(getActivity()!=null) {
+                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    System.out.println(t.getMessage());
+                }
             }
         });
     }
@@ -545,7 +563,9 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null) {
+                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
                 System.out.println(t.getMessage());
             }
         });
@@ -584,7 +604,9 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null) {
+                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
                 System.out.println(t.getMessage());
             }
         });
@@ -597,32 +619,36 @@ public class StatFrag extends Fragment {
         getData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
-                if(response.body()!=null) listMenu = response.body().getStatMenu();
-                if(listMenu!=null){
+                if(response.body()!=null) {
+                    listMenu = response.body().getStatMenu();
+                    if (listMenu != null) {
 //                    lineEntries = new ArrayList<>();
-                    barEntries = new ArrayList<>();
-                    xValue = new ArrayList<>();
-                    int index = 0;
-                    StringBuilder menu = new StringBuilder();
-                    for (StatModel model: listMenu) {
-                        barEntries.add(new BarEntry(index, model.getJumlah()));
-                        xValue.add(model.getMenu());
-                        index++;
-                        menu.append(model.getMenu()).append(" dipesan sebanyak ").append(model.getJumlah()).append("\n");
-                    }
-                    renderBarChart(barEntries,xValue,listMenu);
-                    tvStat.setText(menu);
-                    tvStat.setVisibility(View.VISIBLE);
+                        barEntries = new ArrayList<>();
+                        xValue = new ArrayList<>();
+                        int index = 0;
+                        StringBuilder menu = new StringBuilder();
+                        for (StatModel model : listMenu) {
+                            barEntries.add(new BarEntry(index, model.getJumlah()));
+                            xValue.add(model.getMenu());
+                            index++;
+                            menu.append(model.getMenu()).append(" dipesan sebanyak ").append(model.getJumlah()).append("\n");
+                        }
+                        renderBarChart(barEntries, xValue, listMenu);
+                        tvStat.setText(menu);
+                        tvStat.setVisibility(View.VISIBLE);
 //                    renderLineChart(lineEntries, xValue, listMenu);
 
-                }else {
-                    lineChartSat.clear();
+                    } else {
+                        lineChartSat.clear();
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "Gagal memuat chart menu" +t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null) {
+                    Toast.makeText(getActivity(), "Gagal memuat chart menu" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -658,7 +684,9 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+                if(getActivity()!=null) {
                 Toast.makeText(getActivity(), "Gagal memuat chart pengunjung "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -796,7 +824,9 @@ public class StatFrag extends Fragment {
 
                     @Override
                     public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                        Toast.makeText(getActivity(), "Gagal memuat data: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        if(getActivity()!=null) {
+                            Toast.makeText(getActivity(), "Gagal memuat data: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
@@ -804,7 +834,9 @@ public class StatFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "Gagal memuat data: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null) {
+                    Toast.makeText(getActivity(), "Gagal memuat data: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -25,6 +25,7 @@
                 android:layout_weight="1"
                 android:text="TextView"
                 android:textSize="20sp"
+                android:textAllCaps="true"
                 android:textStyle="bold" />
 
             <TextView

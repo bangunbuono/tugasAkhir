@@ -15,7 +15,7 @@
             android:text="Data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="19sp"
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:layout_marginStart="@dimen/_2sdp"/>
@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:text="Tanggal"
             android:textStyle="bold"
-            android:textSize="17sp"
+            android:textSize="19sp"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -54,13 +54,13 @@
             android:layout_weight="1"
             android:text="Bahan"
             android:textStyle="bold"
-            android:textSize="17sp"
+            android:textSize="19sp"
             android:layout_height="wrap_content"/>
 
         <TextView
             android:text="Jumlah"
             android:textStyle="bold"
-            android:textSize="17sp"
+            android:textSize="19sp"
             android:id="@+id/tvCashOut"
             android:layout_width="0dp"
             android:layout_weight="1"

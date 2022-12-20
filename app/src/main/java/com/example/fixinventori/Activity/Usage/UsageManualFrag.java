@@ -92,7 +92,9 @@ public class UsageManualFrag extends Fragment {
 
         manualUsageList = new ArrayList<>();
         listId = new ArrayList<>();
-        adapterList = new AdapterUsageManualFrag(getActivity(), manualUsageList);
+        if(getActivity()!=null){
+            adapterList = new AdapterUsageManualFrag(getActivity(), manualUsageList);
+        }
 
         if(manualUsageList!=null){
             lvManualUsage.setAdapter(adapterList);
@@ -117,7 +119,9 @@ public class UsageManualFrag extends Fragment {
 
         btnAddManualList.setOnClickListener(view1 -> {
             if(etJumlahStock.getText().toString().isEmpty()){
-                Toast.makeText(getActivity(), "Isi jumlah dulu", Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "Isi jumlah dulu", Toast.LENGTH_SHORT).show();
+                }
             }else {
                 if (!listId.contains(id)){
                     jumlah = Integer.parseInt(etJumlahStock.getText().toString().trim());
@@ -129,7 +133,9 @@ public class UsageManualFrag extends Fragment {
                     checkItem();
                 }
                 else {
-                    Toast.makeText(getActivity(), "Bahan sudah ada", Toast.LENGTH_SHORT).show();
+                    if(getActivity()!=null){
+                        Toast.makeText(getActivity(), "Bahan sudah ada", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -143,26 +149,28 @@ public class UsageManualFrag extends Fragment {
             date = dtf.format(time);
             orderSeries = "B."+date;
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Konfirmasi pesanan?");
-            builder.setPositiveButton("iya", (dialogInterface, i) -> {
-                if(manualUsageList!= null){
-                    record();
-                    for(i =0; i<manualUsageList.size();i++){
-                        idx = manualUsageList.get(i).getId();
-                        bahanx = manualUsageList.get(i).getBahan();
-                        jumlahx = manualUsageList.get(i).getJumlah();
-                        satuanx = manualUsageList.get(i).getSatuan();
-                        reportManualUsage();
-                        stockUsage();
+            if(getActivity()!=null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Konfirmasi pesanan?");
+                builder.setPositiveButton("iya", (dialogInterface, i) -> {
+                    if (manualUsageList != null) {
+                        record();
+                        for (i = 0; i < manualUsageList.size(); i++) {
+                            idx = manualUsageList.get(i).getId();
+                            bahanx = manualUsageList.get(i).getBahan();
+                            jumlahx = manualUsageList.get(i).getJumlah();
+                            satuanx = manualUsageList.get(i).getSatuan();
+                            reportManualUsage();
+                            stockUsage();
+                        }
                     }
-                }
-                getActivity().finish();
-            });
-            builder.setNegativeButton("batal", (dialogInterface, i) -> {
+                    getActivity().finish();
+                });
+                builder.setNegativeButton("batal", (dialogInterface, i) -> {
 
-            });
-            builder.show();
+                });
+                builder.show();
+            }
 
         });
         return view;
@@ -187,10 +195,14 @@ public class UsageManualFrag extends Fragment {
         getData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call,@NonNull Response<ResponseModel> response) {
-                assert response.body() != null;
-                stockList = response.body().getStocks();
-                adapter = new AdapterSpinnerRestock(requireActivity(), stockList);
-                spinner.setAdapter(adapter);
+                if (response.body() != null) {
+                    stockList = response.body().getStocks();
+                    if(stockList!=null && getActivity()!=null)
+                    adapter = new AdapterSpinnerRestock(getActivity(), stockList);
+                    spinner.setAdapter(adapter);
+                } else {
+                    throw new AssertionError();
+                }
             }
 
             @Override
@@ -208,14 +220,18 @@ public class UsageManualFrag extends Fragment {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull retrofit2.Response<ResponseModel> response) {
                 etJumlahStock.setText(null);
-                Toast.makeText(getActivity(), "berhasil", Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "berhasil", Toast.LENGTH_SHORT).show();
+                }
 
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "stock update gagal "+t.getMessage(),
-                        Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "stock update gagal "+t.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -233,7 +249,9 @@ public class UsageManualFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(getActivity(), "report gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "report gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -250,7 +268,9 @@ public class UsageManualFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "record gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "record gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

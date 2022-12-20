@@ -170,15 +170,19 @@ public class CombineUsageFrag extends Fragment {
                             listCombine.add(new RestockModel(stocksModelList.get(i).getId(),
                                     stocksModelList.get(i).getBahan_baku(), stocksModelList.get(i).getSatuan()));
                     }
-                    adapterSpinnerRestock = new AdapterSpinnerRestock(requireActivity(), listCombine);
-                    spinner.setAdapter(adapterSpinnerRestock);
-                    spinner.setSelection(0);
+                    if(getActivity()!=null) {
+                        adapterSpinnerRestock = new AdapterSpinnerRestock(getActivity(), listCombine);
+                        spinner.setAdapter(adapterSpinnerRestock);
+                        spinner.setSelection(0);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(getActivity(), "Gagal memuat stock: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "Gagal memuat stock: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -193,14 +197,18 @@ public class CombineUsageFrag extends Fragment {
                 if(response.body()!=null)
                     combineDetail = response.body().getCombineDetail();
                 if(combineDetail!=null){
-                    adapterUsageCombine = new AdapterUsageCombine(requireActivity(), combineDetail);
-                    lvInputCombine.setAdapter(adapterUsageCombine);
+                    if(getActivity()!=null) {
+                        adapterUsageCombine = new AdapterUsageCombine(getActivity(), combineDetail);
+                        lvInputCombine.setAdapter(adapterUsageCombine);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "detai gagal:" +t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "detai gagal:" +t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -217,7 +225,9 @@ public class CombineUsageFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "record gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "record gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -235,7 +245,9 @@ public class CombineUsageFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(getActivity(), "report gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "report gagal: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -252,7 +264,9 @@ public class CombineUsageFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "gagal record restock"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "gagal record restock"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -271,7 +285,9 @@ public class CombineUsageFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "gagal record"+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "gagal record"+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -289,7 +305,9 @@ public class CombineUsageFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
                 System.out.println(t.getMessage());
             }
         });
@@ -302,14 +320,18 @@ public class CombineUsageFrag extends Fragment {
         addStock.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull retrofit2.Response<ResponseModel> response) {
-                Toast.makeText(getActivity(), "berhasil menambahkan stok", Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "berhasil menambahkan stok", Toast.LENGTH_SHORT).show();
+                }
 
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "gagal menambahkan stok "+t.getMessage(),
-                        Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "gagal menambahkan stok "+t.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

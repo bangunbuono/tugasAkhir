@@ -36,7 +36,7 @@ public class InventorySet extends AppCompatActivity{
     ListView lvStocks;
     AdapterStocks adapterStocks;
     List<StocksModel> stocksModelList;
-    TextView tvAddStock;
+    TextView tvAddStock, tvTotalItem;
     String user;
     int totalDay;
     UserSession userSession;
@@ -62,6 +62,8 @@ public class InventorySet extends AppCompatActivity{
 
         lvStocks = findViewById(R.id.lvStocks);
         tvAddStock = findViewById(R.id.tvAddStock);
+        tvTotalItem = findViewById(R.id.tvTotalItem);
+
         stocksModelList = new ArrayList<>();
 
         new Handler().postDelayed(this::getStocks, 300);
@@ -96,7 +98,10 @@ public class InventorySet extends AppCompatActivity{
                 stocksModelList = response.body().getStocksModels();
                 if(stocksModelList != null){
                     adapterStocks = new AdapterStocks(InventorySet.this, stocksModelList, totalDay);
-                    new Handler().postDelayed(()->lvStocks.setAdapter(adapterStocks),500);
+                    new Handler().postDelayed(()->{
+                        lvStocks.setAdapter(adapterStocks);
+                        tvTotalItem.setText(String.format("PERSEDIAAN BAHAN (%s ITEM)", stocksModelList.size()));
+                    },500);
                 }
             }
 

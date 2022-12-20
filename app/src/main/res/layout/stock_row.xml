@@ -41,21 +41,25 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:text="TextView"
-                    android:textSize="18sp" />
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textSize="19sp" />
 
                 <TextView
                     android:id="@+id/tvStockJumlah"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="18sp" />
+                    android:textStyle="bold"
+                    android:textSize="19sp" />
 
                 <TextView
                     android:id="@+id/tvStockSatuan"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="18sp" />
+                    android:textStyle="bold"
+                    android:textSize="19sp" />
             </LinearLayout>
 
             <LinearLayout

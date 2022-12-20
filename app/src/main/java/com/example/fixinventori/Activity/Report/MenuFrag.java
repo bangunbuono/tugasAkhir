@@ -70,9 +70,13 @@ public class MenuFrag extends Fragment {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 menuRecord = Objects.requireNonNull(response.body()).getMenu();
-                adapterMenuRecord = new AdapterMenuRecord(getActivity(), menuRecord);
-                lvMenuRecord.setAdapter(adapterMenuRecord);
-                loading(false);
+                if(getActivity()!=null)
+                {
+                    adapterMenuRecord = new AdapterMenuRecord(getActivity(), menuRecord);
+                    if(menuRecord!=null)
+                    lvMenuRecord.setAdapter(adapterMenuRecord);
+                    loading(false);
+                }
             }
 
             @Override

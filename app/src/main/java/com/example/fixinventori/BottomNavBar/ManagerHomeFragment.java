@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.example.fixinventori.API.APIAccounts;
 import com.example.fixinventori.API.APIDashboardData;
 import com.example.fixinventori.API.ServerConnection;
+import com.example.fixinventori.Activity.Forecast.InventForecast;
 import com.example.fixinventori.Activity.Menu.MenuSet;
 import com.example.fixinventori.Activity.Report.InventReport;
 import com.example.fixinventori.Activity.Stock.InventorySet;
@@ -49,13 +50,13 @@ public class ManagerHomeFragment extends Fragment {
     UserSession session;
     String manager, selectedUser;
     Spinner spinnerUser;
-    TextView tvManagerHome, tvInvSet, tvMenuSet, tvMoreReport
+    TextView tvManagerHome, tvInvSet, tvMenuSet, tvMoreReport, tvForecast
             , tvVisitor, tvCashflow, tvMenuSales, tvUsageMaterial, tvCashFlowOut, tvProfit;
     List<ManagerModel> userList;
     List<StatModel> maxMenu,maxStockOut,maxStockIn, cashIn, cashOut, visitors;
     ArrayList<String> user = new ArrayList<>();
     ArrayAdapter<String> adapter;
-    int index, week;
+    int index, week,masuk, keluar;
     RoundedImageView rivHomeProfile;
     ExecutorService service;
 
@@ -96,6 +97,7 @@ public class ManagerHomeFragment extends Fragment {
         rivHomeProfile = view.findViewById(R.id.rivHomeProfile);
         tvCashFlowOut = view.findViewById(R.id.tvCashFlowOut);
         tvProfit = view.findViewById(R.id.tvCashFlowProfit);
+        tvForecast = view.findViewById(R.id.tvForecast);
 
         service = Executors.newSingleThreadExecutor();
 
@@ -114,6 +116,8 @@ public class ManagerHomeFragment extends Fragment {
 
         tvMenuSet.setOnClickListener(view1-> startActivity(new Intent(getActivity(), MenuSet.class)));
 
+        tvForecast.setOnClickListener(view1 -> startActivity(new Intent(getActivity(), InventForecast.class)));
+
         return view;
     }
 
@@ -128,19 +132,23 @@ public class ManagerHomeFragment extends Fragment {
                     userList = response.body().getRecordManager();
                     if (userList!=null){
                         userList.forEach(managerModel -> user.add(managerModel.username));
-                        adapter = new ArrayAdapter<>(
-                                getActivity(),R.layout.tv_selected_user, user);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinnerUser.setAdapter(adapter);
-                        spinnerUser.setSelection(0);
-                        spinnerItemSelection();
-                        setSpinnerSelection();
+                        if(getActivity()!=null){
+                            adapter = new ArrayAdapter<>(
+                                    getActivity(),R.layout.tv_selected_user, user);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinnerUser.setAdapter(adapter);
+                            spinnerUser.setSelection(0);
+                            spinnerItemSelection();
+                            setSpinnerSelection();
+                        }
                     }
                 }
             }
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -207,7 +215,9 @@ public class ManagerHomeFragment extends Fragment {
             }
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(getActivity(), "a"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "a"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -230,7 +240,9 @@ public class ManagerHomeFragment extends Fragment {
             }
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "b"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "b"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -279,7 +291,9 @@ public class ManagerHomeFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call,@NonNull Throwable t) {
-                Toast.makeText(getActivity(), "c"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "c"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -301,6 +315,12 @@ public class ManagerHomeFragment extends Fragment {
                                             visitors.get(1).getPengunjung(),
                                             visitors.get(0).getPengunjung()));
                         }else if(visitors!=null && visitors.size()>0){
+                            if(visitors.get(0).getWeek()==week)
+                                tvVisitor.setText(String.
+                                        format("Pekan ini: %s \n" +
+                                                        "Pekan lalu: 0",
+                                                visitors.get(0).getPengunjung()));
+                            else
                             tvVisitor.setText(String.
                                     format("Pekan ini: 0 \n" +
                                                     "Pekan lalu: %s",
@@ -317,7 +337,9 @@ public class ManagerHomeFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "d" +t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "d" +t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -331,15 +353,15 @@ public class ManagerHomeFragment extends Fragment {
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 if(response.body()!=null){
                     cashIn = response.body().getCashIn();
-                    if(cashIn!=null){
-                        getCashOut();
-                    }
+                    getCashOut();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "e"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "e"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -352,30 +374,76 @@ public class ManagerHomeFragment extends Fragment {
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 if (response.body()!=null) cashOut = response.body().getCashOut();
                 requireActivity().runOnUiThread(()->{
-                    if(cashOut!=null){
-                        int masuk, keluar;
+                    if(cashOut!=null && cashIn!=null){
                         if(cashIn.size()>0 || cashOut.size()>0){
                             try {
-                                masuk = cashIn.get(1).getHarga();
+                                if(cashIn.get(0).getWeek()==week)
+                                    masuk = cashIn.get(0).getHarga();
+                                else masuk = cashIn.get(1).getHarga();
                             }catch (IndexOutOfBoundsException e){
                                 masuk = 0;
                             }
                             try {
-                                keluar = cashOut.get(1).getHarga();
+                                if(cashOut.get(0).getWeek()==week)
+                                keluar= cashIn.get(0).getHarga();
+                                else keluar = cashOut.get(1).getHarga();
                             }catch (IndexOutOfBoundsException e){
                                 keluar = 0;
                             }
+                            System.out.println(masuk +"-"+keluar);
                             tvCashflow.setText(String.format("Rp%s",masuk));
                             tvCashFlowOut.setText(String.format("Rp%s",keluar));
                             tvProfit.setText(String.format("Selisih Rp%s", abs(masuk-keluar)));
                             if(keluar>masuk) tvProfit.setTextColor(Color.RED);
+                            cashIn.forEach(statModel -> System.out.println(statModel.getHarga() + statModel.getWeek()));
+                            }
+                    }else if(cashIn!=null) {
+                        if (cashIn.size() > 0) {
+                            try {
+                                if (cashIn.get(0).getWeek() == week)
+                                    masuk = cashIn.get(0).getHarga();
+                                else masuk = cashIn.get(1).getHarga();
+                            } catch (IndexOutOfBoundsException e) {
+                                masuk = 0;
+                            }
+
+                            System.out.println(masuk + "-" + keluar);
+                            tvCashflow.setText(String.format("Rp%s", masuk));
+                            tvCashFlowOut.setText(String.format("Rp%s", 0));
+                            tvProfit.setText(String.format("Selisih Rp%s", abs(masuk - keluar)));
+                            if (keluar > masuk) tvProfit.setTextColor(Color.RED);
+                            cashIn.forEach(statModel -> System.out.println(statModel.getHarga() + statModel.getWeek()));
                         }
+                    }else if(cashOut!=null){
+                        if(cashOut.size()>0) {
+                            try {
+                                if (cashOut.get(0).getWeek() == week)
+                                    keluar = cashIn.get(0).getHarga();
+                                else keluar = cashOut.get(1).getHarga();
+                            } catch (IndexOutOfBoundsException e) {
+                                keluar = 0;
+                            }
+                            System.out.println(masuk + "-" + keluar);
+                            tvCashflow.setText(String.format("Rp%s", 0));
+                            tvCashFlowOut.setText(String.format("Rp%s", keluar));
+                            tvProfit.setText(String.format("Selisih Rp%s", abs(masuk - keluar)));
+                            if (keluar > masuk) tvProfit.setTextColor(Color.RED);
+                            cashIn.forEach(statModel -> System.out.println(statModel.getHarga() + statModel.getWeek()));
+                            }
+                        }
+                    else {
+                        tvCashflow.setText(String.format("Rp%s", 0));
+                        tvCashFlowOut.setText(String.format("Rp%s", 0));
                     }
+
                 });
+
             }
             @Override
             public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "f"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(), "f"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

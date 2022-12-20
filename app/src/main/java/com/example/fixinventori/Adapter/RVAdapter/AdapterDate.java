@@ -28,6 +28,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -81,7 +82,7 @@ public class AdapterDate extends RecyclerView.Adapter<AdapterDate.Holder> {
 
         String date = holder.tvRecordDate.getText().toString();
         try {
-            Date date1 = new SimpleDateFormat("dd MMMMM yy").parse(date);
+            Date date1 = new SimpleDateFormat("dd MMMMM yy", Locale.US).parse(date);
             dateFormated = Objects.requireNonNull(date1).toInstant().
                     atOffset(ZoneOffset.from(ZonedDateTime.now())).
                     format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,36 +54,41 @@ public class AdapterForecast extends RecyclerView.Adapter<AdapterForecast.Holder
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        holder.itemView.setTag(data.get(position));
-        holder.tvStockName.setText(data.get(position).getBahan());
+        if(data.get(position)!=null) holder.itemView.setTag(data.get(position));
+        if(data.get(position).getBahan()!=null) holder.tvStockName.setText(data.get(position).getBahan());
         ArrayList<Integer> demand = new ArrayList<>();
         data.get(position).getData().forEach(data1 -> demand.add(data1.getJumlah()));
 
-        new Handler().postDelayed(()->{
+        try{
+            new Handler().postDelayed(()->{
 //            if(checkDays.equals(String.valueOf(R.string.doubleMA))){
-            if(DayOfWeek.valueOf(InventForecast.day).getValue()==7||DayOfWeek.valueOf(InventForecast.day).getValue()==6){
-                if(demand.size()>=4) {
-                    float y = holtForecaster(demand);
-                    holder.tvForecast.
-                            setText(String.format("Perkiraan penggunaan %s pada %s adalah %s %s",
-                                    data.get(position).getBahan(),InventForecast.day.toLowerCase(),y ,
-                                    data.get(position).getData().get(0).getSatuan()));
-                }
-                else holder.tvForecast.setText(R.string.dataPeramalanKurang);
-                System.out.println("HOLT");
+                if(DayOfWeek.valueOf(InventForecast.day).getValue()==7||DayOfWeek.valueOf(InventForecast.day).getValue()==6){
+                    if(demand.size()>=4) {
+                        float y = holtForecaster(demand);
+                        holder.tvForecast.
+                                setText(String.format("Perkiraan penggunaan %s pada %s adalah %s %s",
+                                        data.get(position).getBahan(),InventForecast.day.toLowerCase(),y ,
+                                        data.get(position).getData().get(0).getSatuan()));
+                    }
+                    else holder.tvForecast.setText(R.string.dataPeramalanKurang);
+                    System.out.println("HOLT");
 //            }else if(checkDays.equals(String.valueOf(R.string.holt))){
-            }else{
-                if(demand.size()>=8) {
-                    float y = doubleMA(demand);
-                    holder.tvForecast.
-                            setText(String.format("Perkiraan penggunaan %s pada %s adalah %s %s",
-                                    data.get(position).getBahan(),InventForecast.day.toLowerCase(),y ,
-                                    data.get(position).getData().get(0).getSatuan()));
+                }else{
+                    if(demand.size()>=8) {
+                        float y = doubleMA(demand);
+                        holder.tvForecast.
+                                setText(String.format("Perkiraan penggunaan %s pada %s adalah %s %s",
+                                        data.get(position).getBahan(),InventForecast.day.toLowerCase(),y ,
+                                        data.get(position).getData().get(0).getSatuan()));
+                    }
+                    else holder.tvForecast.setText(R.string.dataPeramalanKurang);
+                    System.out.println("DMA");
                 }
-                else holder.tvForecast.setText(R.string.dataPeramalanKurang);
-                System.out.println("DMA");
-            }
-        },200);
+            },200);
+        }
+        catch (Exception e){
+            Toast.makeText(context, "gagal meramal", Toast.LENGTH_SHORT).show();
+        }
 
 
     }

@@ -140,10 +140,12 @@ public class UsageAutoFrag extends Fragment {
 
                     menuModels = response.body().getData();
                     if (menuModels != null) {
-                        adapterUsageAuto = new AdapterUsageAuto(getActivity(), menuModels);
-                        lvUsageAuto.setAdapter(adapterUsageAuto);
-                        Toast.makeText(getActivity(),
-                                "success: " + "(" + code + ")" + " " + pesan, Toast.LENGTH_SHORT).show();
+                        if(getActivity()!=null) {
+                            adapterUsageAuto = new AdapterUsageAuto(getActivity(), menuModels);
+                            lvUsageAuto.setAdapter(adapterUsageAuto);
+                            Toast.makeText(getActivity(),
+                                    "success: " + "(" + code + ")" + " " + pesan, Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }

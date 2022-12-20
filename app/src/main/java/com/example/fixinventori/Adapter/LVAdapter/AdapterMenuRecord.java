@@ -1,6 +1,7 @@
 package com.example.fixinventori.Adapter.LVAdapter;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ public class AdapterMenuRecord extends ArrayAdapter<StatModel> {
         TextView tvTanggal =convertView.findViewById(R.id.tvTanggal);
         TextView tvCashIn =convertView.findViewById(R.id.tvCashIn);
         TextView tvCashOut =convertView.findViewById(R.id.tvCashOut);
+
+        tvCashOut.setGravity(Gravity.CENTER);
 
         tvTanggal.setText(menu.get(position).getTanggal());
         tvCashIn.setText(menu.get(position).getMenu());
