@@ -36,10 +36,9 @@
                 android:inputType="number" />
         </LinearLayout>
 
-
-
         <ListView
             android:id="@+id/lvUsageAuto1"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/usage_auto_row"/>

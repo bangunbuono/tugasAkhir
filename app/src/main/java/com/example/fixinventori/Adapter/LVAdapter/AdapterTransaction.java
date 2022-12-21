@@ -63,6 +63,8 @@ public class AdapterTransaction extends ArrayAdapter<StatModel> {
             tvCashOut.setText(String.format("%s",df.format(priceOut)));
         }
 
+        if(position %2 !=0) convertView.setBackgroundResource(R.color.teal_200);
+
         return convertView;
     }
 }

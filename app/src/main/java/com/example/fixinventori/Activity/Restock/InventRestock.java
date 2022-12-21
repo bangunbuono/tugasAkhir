@@ -133,6 +133,7 @@ public class InventRestock extends AppCompatActivity {
                 new Handler().postDelayed(()->{
                     if(forecastList!=null) {
                         if(recentStock<total) {
+                            System.out.println(total +" "+ recentStock);
                             tvRecommendation.setText(String.format(
                                     "Rekomendasi jumlah pembelian %s: %s %s", bahan, total-recentStock, satuan));
                         }else tvRecommendation.setText(String.format("bahan %s masih cukup", bahan));

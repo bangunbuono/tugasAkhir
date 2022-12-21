@@ -5,26 +5,27 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
         app:cardBackgroundColor="@color/teal_200"
+        android:layout_weight="1"
         app:cardCornerRadius="25dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/_7sdp">
 
             <TextView
                 android:id="@+id/tvMenu"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:text="TextView"
-                android:textSize="20sp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="9"
+                android:textSize="21sp"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
 
@@ -32,8 +33,8 @@
                 android:id="@+id/tvIdMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
                 android:visibility="gone"/>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -22,6 +22,7 @@ import com.example.fixinventori.Adapter.LVAdapter.AdapterStocks;
 import com.example.fixinventori.R;
 import com.example.fixinventori.model.ResponseModel;
 import com.example.fixinventori.model.StocksModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,8 @@ public class InventorySet extends AppCompatActivity{
     ListView lvStocks;
     AdapterStocks adapterStocks;
     List<StocksModel> stocksModelList;
-    TextView tvAddStock, tvTotalItem;
+    TextView  tvTotalItem;
+    FloatingActionButton tvAddStock;
     String user;
     int totalDay;
     UserSession userSession;

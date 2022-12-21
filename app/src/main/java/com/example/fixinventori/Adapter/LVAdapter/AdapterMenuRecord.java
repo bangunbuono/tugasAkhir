@@ -38,6 +38,8 @@ public class AdapterMenuRecord extends ArrayAdapter<StatModel> {
 
         tvCashOut.setGravity(Gravity.CENTER);
 
+        if(position %2 !=0) convertView.setBackgroundResource(R.color.teal_200);
+
         tvTanggal.setText(menu.get(position).getTanggal());
         tvCashIn.setText(menu.get(position).getMenu());
         tvCashOut.setText(String.valueOf(menu.get(position).getJumlah()));

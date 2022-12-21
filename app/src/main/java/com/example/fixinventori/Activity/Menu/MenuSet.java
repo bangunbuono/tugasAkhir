@@ -3,7 +3,6 @@ package com.example.fixinventori.Activity.Menu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -18,6 +17,7 @@ import com.example.fixinventori.Adapter.LVAdapter.AdapterMenuSet;
 import com.example.fixinventori.R;
 import com.example.fixinventori.model.MenuModel;
 import com.example.fixinventori.model.ResponseModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class MenuSet extends AppCompatActivity {
     AdapterMenuSet adapter;
     ListView lvMenu;
     List<MenuModel> listMenu;
-    TextView tvAddMenu;
+    FloatingActionButton tvAddMenu;
     UserSession userSession;
     String user;
 
@@ -72,8 +72,8 @@ public class MenuSet extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
                 if(response.body()!=null){
-                    int code = response.body().getCode();
-                    String pesan = response.body().getPesan();
+//                    int code = response.body().getCode();
+//                    String pesan = response.body().getPesan();
                     listMenu = response.body().getData();
                     if (listMenu != null){
                         adapter = new AdapterMenuSet(MenuSet.this, listMenu);

@@ -2,6 +2,7 @@ package com.example.fixinventori.Adapter.LVAdapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 
 import com.example.fixinventori.API.APIRequestMenu;
 import com.example.fixinventori.API.ServerConnection;
@@ -34,6 +36,7 @@ public class AdapterMenuSet extends ArrayAdapter<MenuModel> {
     private List<MenuModel> listMenu;
     private List<MenuModel> menu;
     public TextView tvIdMenu, tvMenu;
+    CardView cvMenu;
     int index;
     String menuName, user;
     UserSession userSession;
@@ -56,6 +59,7 @@ public class AdapterMenuSet extends ArrayAdapter<MenuModel> {
 
         tvMenu =convertView.findViewById(R.id.tvMenu);
         tvIdMenu = convertView.findViewById(R.id.tvIdMenu);
+        cvMenu = convertView.findViewById(R.id.cvMenu);
 
         tvMenu.setText(listMenu.get(position).getMenu());
         tvIdMenu.setText(String.valueOf(listMenu.get(position).getId()));
@@ -85,6 +89,8 @@ public class AdapterMenuSet extends ArrayAdapter<MenuModel> {
             builder.show();
             return false;
         });
+
+//        if(position%2==0) cvMenu.setCardBackgroundColor(Color.argb(100, 8,236,213));
 
         return convertView;
 
