@@ -12,4 +12,5 @@
     <string name="dataPeramalanKurang">Data untuk peramalan masih kurang mencukupi</string>
     <string name="holt">holt</string>
     <string name="doubleMA">doubleMA</string>
+    <string name="dataKurang">Data untuk rekomendasi pembelian masih kurang</string>
 </resources>

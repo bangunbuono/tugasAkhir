@@ -45,6 +45,19 @@
                 android:layout_marginTop="@dimen/_2sdp"
                 android:id="@+id/llInputData">
 
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tvRecomendation"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
                 <EditText
                     android:layout_width="@dimen/_250sdp"
                     android:layout_height="wrap_content"
