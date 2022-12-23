@@ -86,42 +86,44 @@ public class UsageAutoFrag extends Fragment {
 
             }else {
                 jumlahPengunjung = Integer.parseInt(etJumlahPengunjung.getText().toString().trim());
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("konfirmasi pesanan");
-                konfirmasi = "item: ";
-                for (int i = 0; i < menuModels.size(); i++) {
-                    if (menuModels.get(i).getQty() != 0) {
-                        pesanan = menuModels.get(i).getMenu();
-                        jumlah = menuModels.get(i).getQty();
-                        konfirmasi = konfirmasi + "\n" + pesanan + ": " + jumlah + "\n";
-                    }
-                }
-
-                builder.setMessage(konfirmasi);
-
-                builder.setPositiveButton("Ok", (dialogInterface, i) -> {
-                    UsageAutoApplication.orderList = new ArrayList<>();
-                    for (i = 0; i < menuModels.size(); i++) {
+                if(getActivity()!=null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("konfirmasi pesanan");
+                    konfirmasi = "item: ";
+                    for (int i = 0; i < menuModels.size(); i++) {
                         if (menuModels.get(i).getQty() != 0) {
-                            jumlah = menuModels.get(i).getQty();
                             pesanan = menuModels.get(i).getMenu();
-                            harga = menuModels.get(i).getHarga();
-                            for (int repetisi = 0; repetisi < jumlah; repetisi++) {
-                                UsageAutoApplication.orderList.add(new UsageMenuModel(pesanan, 1, harga));
-                            }
-                            menuModels.get(i).setQty(0);
+                            jumlah = menuModels.get(i).getQty();
+                            konfirmasi = konfirmasi + "\n" + pesanan + ": " + jumlah + "\n";
                         }
-                        //konfirmOrder();
                     }
-                    startActivity(new Intent(getActivity(), UsageKomposisiDetail.class));
-                    getActivity().finish();
+
+                    builder.setMessage(konfirmasi);
+
+                    builder.setPositiveButton("Ok", (dialogInterface, i) -> {
+                        UsageAutoApplication.orderList = new ArrayList<>();
+                        for (i = 0; i < menuModels.size(); i++) {
+                            if (menuModels.get(i).getQty() != 0) {
+                                jumlah = menuModels.get(i).getQty();
+                                pesanan = menuModels.get(i).getMenu();
+                                harga = menuModels.get(i).getHarga();
+                                for (int repetisi = 0; repetisi < jumlah; repetisi++) {
+                                    UsageAutoApplication.orderList.add(new UsageMenuModel(pesanan, 1, harga));
+                                }
+                                menuModels.get(i).setQty(0);
+                            }
+                            //konfirmOrder();
+                        }
+                        startActivity(new Intent(getActivity(), UsageKomposisiDetail.class));
+                        getActivity().finish();
 //                adapterUsageAuto.notifyDataSetChanged();
 
-                });
-                builder.setNegativeButton(
-                        "Cancel", (dialogInterface, i) -> {
-                        });
-                builder.show();
+                    });
+                    builder.setNegativeButton(
+                            "Cancel", (dialogInterface, i) -> {
+                            });
+                    builder.show();
+                }
             }
         });
         return view;

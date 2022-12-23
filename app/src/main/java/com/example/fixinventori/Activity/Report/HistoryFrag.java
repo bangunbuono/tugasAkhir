@@ -143,8 +143,9 @@ public class HistoryFrag extends Fragment implements AdapterMonth.onClick{
             int x = rvMonth.getChildLayoutPosition(view);
             int y = rvMonth.getWidth()/2 - view.getWidth()/2;
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) rvMonth.getLayoutManager();
-            assert linearLayoutManager != null;
-            linearLayoutManager.scrollToPositionWithOffset(x,y);
+            if (linearLayoutManager != null) {
+                linearLayoutManager.scrollToPositionWithOffset(x, y);
+            }
             month = monthList.get(i).getBulan();
             dateRecord();
         }

@@ -16,6 +16,8 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/chat.xml" value="0.1345" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/filter_background.xml" value="0.134" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1365" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right_24.xml" value="0.155" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/ic_baseline_tips_and_updates_24.xml" value="0.155" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/usageauto_selected.xml" value="0.1385" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/usageauto_selector.xml" value="0.1365" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/drawable/usagemanual_not_selected.xml" value="0.1365" />
@@ -84,6 +86,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/simple_spinner_style.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/stat_bahan_row.xml" value="0.18947368421052632" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/stock_row.xml" value="0.25" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/tips_row.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/transaction_row.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/tv_content_view.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/FixInventori/app/src/main/res/layout/tv_selected_user.xml" value="0.18947368421052632" />

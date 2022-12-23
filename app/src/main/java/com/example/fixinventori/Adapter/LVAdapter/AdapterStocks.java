@@ -107,8 +107,10 @@ public class AdapterStocks extends ArrayAdapter<StocksModel> {
 
                     tvROP.setText(String.format("Pemesanan dilakukan saat %s %s",
                             rop, stocksModelList.get(position).getSatuan()));
-                    if(rop==stocksModelList.get(position).getJumlah()) llMainStock.setBackgroundColor(Color.YELLOW);
-                    if(rop>=stocksModelList.get(position).getJumlah()) llMainStock.setBackgroundColor(Color.RED);
+                    if(rop==stocksModelList.get(position).getJumlah())
+                        llMainStock.setBackgroundColor(Color.rgb(233,236,107)); //yellow
+                    if(rop>=stocksModelList.get(position).getJumlah())
+                        llMainStock.setBackgroundColor(Color.rgb(250,161,155)); //red
                 }
             }
         }

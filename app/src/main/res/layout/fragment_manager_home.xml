@@ -117,9 +117,9 @@
                         android:layout_marginTop="@dimen/_2sdp"
                         android:layout_marginBottom="@dimen/_2sdp"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="2dp"
                         android:layout_marginStart="@dimen/_3sdp"
-                        android:background="@color/black"/>
+                        android:background="@color/white"/>
 
                     <TextView
                         android:id="@+id/tvInvSet"
@@ -187,9 +187,9 @@
                         android:layout_marginTop="@dimen/_2sdp"
                         android:layout_marginBottom="@dimen/_2sdp"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="2dp"
                         android:layout_marginStart="@dimen/_3sdp"
-                        android:background="@color/black"/>
+                        android:background="@color/white"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -252,10 +252,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="2dp"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_1sdp"
-                    android:background="@color/black"/>
+                    android:background="@color/white"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -305,9 +305,9 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="1dp"
+                        android:layout_width="2dp"
                         android:layout_height="match_parent"
-                        android:background="@color/black"
+                        android:background="@color/white"
                         android:layout_marginBottom="@dimen/_minus3sdp"
                         />
 
@@ -356,10 +356,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="2dp"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_1sdp"
-                    android:background="@color/black"/>
+                    android:background="@color/white"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -421,9 +421,9 @@
                             android:layout_marginTop="@dimen/_2sdp"
                             android:layout_marginBottom="@dimen/_2sdp"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="2dp"
                             android:layout_marginStart="@dimen/_3sdp"
-                            android:background="@color/black"/>
+                            android:background="@color/white"/>
 
                         <TextView
                             android:id="@+id/tvVisitors"

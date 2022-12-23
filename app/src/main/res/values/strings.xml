@@ -13,4 +13,19 @@
     <string name="holt">holt</string>
     <string name="doubleMA">doubleMA</string>
     <string name="dataKurang">Data untuk rekomendasi pembelian masih kurang</string>
+    <string name="tips1">1. Atur bahan baku \n2. Atur menu dan komposisi \n3. Sistem siap digunakan</string>
+    <string name="tips2">bahan kombinasi adalah bahan dari gabungan 2 bahan utama</string>
+    <string name="tips3">waktu tunggu adalah waktu yang diperlukan dari mememesan hingga stok sampai</string>
+    <string name="tips4">komposisi utama adalah komposisi yang bahan dan jumlah sudah pasti</string>
+    <string name="tips5">komposisi opsi adalah komposisi yang bahan atau jumlahnya bisa berubah ubah</string>
+    <string name="tips6">gunakan generate pada setting untuk menghubungkan ke akun manajer</string>
+
+    <string-array name="tips">
+        <item>@string/tips1</item>
+        <item>@string/tips2</item>
+        <item>@string/tips3</item>
+        <item>@string/tips4</item>
+        <item>@string/tips5</item>
+        <item>@string/tips6</item>
+    </string-array>
 </resources>

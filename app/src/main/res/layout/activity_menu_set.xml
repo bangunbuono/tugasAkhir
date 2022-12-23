@@ -62,7 +62,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/_16sdp"
         android:layout_marginBottom="@dimen/_40sdp"
-        android:backgroundTint="#314BEC"
+        android:backgroundTint="#77dd77"
         android:src="@drawable/ic_baseline_add_white" />
 
 </RelativeLayout>

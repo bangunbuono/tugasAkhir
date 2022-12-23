@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="@dimen/_45sdp"
         android:background="@color/primary_dark">
 
         <com.makeramen.roundedimageview.RoundedImageView
@@ -19,7 +19,7 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="@dimen/_18sdp"
             android:background="@drawable/rounded_image"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_baseline_account_circle_24"
@@ -39,179 +39,224 @@
 
     </RelativeLayout>
 
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginRight="14dp"
-        app:cardBackgroundColor="@color/primary"
-        app:cardCornerRadius="@dimen/_15sdp">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            app:cardBackgroundColor="@color/primary"
+            app:cardCornerRadius="@dimen/_15sdp">
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/rivInv"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:src="@drawable/icons8_ingredients_100" />
-
-            <Button
-                android:id="@+id/btnInvSet"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_toEndOf="@id/rivInv"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
-                android:text="Pengaturan Stok Bahan"
-                android:textAlignment="viewStart" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_toEndOf="@id/rivInv"
-                android:orientation="horizontal"
-                android:layout_below="@id/btnInvSet"
-                android:id="@+id/llSupport1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/primary_dark" />
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/rivInv"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/ingredients_putih" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/rivMenu"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_below="@id/llSupport1"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:src="@drawable/icons8_restaurant_menu_96" />
+                <Button
+                    android:id="@+id/btnInvSet"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_toEndOf="@id/rivInv"
+                    android:drawableEnd="@drawable/ic_baseline_chevron_right_24"
+                    android:text="Pengaturan Stok Bahan"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnMenuSet"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_below="@id/llSupport1"
-                android:layout_toEndOf="@id/rivMenu"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
-                android:text="menu"
-                android:textAlignment="viewStart" />
+                <LinearLayout
+                    android:id="@+id/llSupport1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/btnInvSet"
+                    android:layout_toEndOf="@id/rivInv"
+                    android:background="@color/white"
+                    android:orientation="horizontal" />
 
-            <LinearLayout
-                android:layout_toEndOf="@id/rivMenu"
-                android:orientation="horizontal"
-                android:layout_below="@id/btnMenuSet"
-                android:id="@+id/llSupport2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/primary_dark"/>
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/rivMenu"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_below="@id/llSupport1"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/menu_putih" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/rivOut"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_below="@id/llSupport2"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:src="@drawable/icons8_outbox_100" />
+                <Button
+                    android:id="@+id/btnMenuSet"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_below="@id/llSupport1"
+                    android:layout_toEndOf="@id/rivMenu"
+                    android:drawableEnd="@drawable/ic_baseline_chevron_right_24"
+                    android:text=" pengaturan menu"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnUsage"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_below="@id/llSupport2"
-                android:layout_toEndOf="@id/rivOut"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
-                android:text="stok keluar"
-                android:textAlignment="viewStart" />
+                <LinearLayout
+                    android:id="@+id/llSupport2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/btnMenuSet"
+                    android:layout_toEndOf="@id/rivMenu"
+                    android:background="@color/white"
+                    android:orientation="horizontal" />
 
-            <LinearLayout
-                android:layout_toEndOf="@id/rivOut"
-                android:orientation="horizontal"
-                android:layout_below="@id/btnUsage"
-                android:id="@+id/llSupport3"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/primary_dark"/>
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/rivOut"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_below="@id/llSupport2"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/outbox_putih" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/rivIn"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_below="@id/llSupport3"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:src="@drawable/icons8_inbox_100" />
+                <Button
+                    android:id="@+id/btnUsage"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_below="@id/llSupport2"
+                    android:layout_toEndOf="@id/rivOut"
+                    android:drawableEnd="@drawable/ic_baseline_chevron_right_24"
+                    android:text="stok keluar"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
 
-            <Button
-                android:layout_toEndOf="@id/rivIn"
-                android:layout_below="@id/llSupport3"
-                android:id="@+id/btnRestock"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:text="stok masuk"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
-                android:textAlignment="viewStart" />
+                <LinearLayout
+                    android:id="@+id/llSupport3"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/btnUsage"
+                    android:layout_toEndOf="@id/rivOut"
+                    android:background="@color/white"
+                    android:orientation="horizontal" />
 
-            <LinearLayout
-                android:layout_toEndOf="@id/rivIn"
-                android:id="@+id/llSupport4"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/btnRestock"
-                android:background="@color/primary_dark"
-                android:orientation="horizontal" />
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/rivIn"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_below="@id/llSupport3"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/icon_putih" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/rivForecast"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_below="@id/llSupport4"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:src="@drawable/icons8_strategy_100" />
+                <Button
+                    android:id="@+id/btnRestock"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_below="@id/llSupport3"
+                    android:layout_toEndOf="@id/rivIn"
+                    android:drawableEnd="@drawable/ic_baseline_chevron_right_24"
+                    android:text="stok masuk"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
 
-            <Button
-                android:layout_toEndOf="@id/rivForecast"
-                android:layout_below="@id/llSupport4"
-                android:id="@+id/btnForecast"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:textAlignment="viewStart"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
-                android:text="perkiraan" />
+                <LinearLayout
+                    android:id="@+id/llSupport4"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/btnRestock"
+                    android:layout_toEndOf="@id/rivIn"
+                    android:background="@color/white"
+                    android:orientation="horizontal" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_below="@id/btnForecast"
-                android:id="@+id/llSupport5"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_toEndOf="@id/rivForecast"
-                android:background="@color/primary_dark"/>
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/rivForecast"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_below="@id/llSupport4"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/strategy_putih" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/rivReport"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_below="@id/llSupport5"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:src="@drawable/icons8_report_file_100" />
+                <Button
+                    android:id="@+id/btnForecast"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_below="@id/llSupport4"
+                    android:layout_toEndOf="@id/rivForecast"
+                    android:drawableEnd="@drawable/ic_baseline_chevron_right_24"
+                    android:text="perkiraan"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
 
-            <Button
-                android:layout_toEndOf="@id/rivReport"
-                android:layout_below="@id/llSupport5"
-                android:id="@+id/btnReport"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:textAlignment="viewStart"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
-                android:text="Laporan" />
+                <LinearLayout
+                    android:id="@+id/llSupport5"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/btnForecast"
+                    android:layout_toEndOf="@id/rivForecast"
+                    android:background="@color/white"
+                    android:orientation="horizontal" />
 
-        </RelativeLayout>
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/rivReport"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_below="@id/llSupport5"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/report_putih" />
 
-    </androidx.cardview.widget.CardView>
+                <Button
+                    android:id="@+id/btnReport"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_below="@id/llSupport5"
+                    android:layout_toEndOf="@id/rivReport"
+                    android:drawableEnd="@drawable/ic_baseline_chevron_right_24"
+                    android:text="Laporan"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </ScrollView>
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/rvTips"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        tools:listitem="@layout/tips_row"-->
+<!--        android:layout_marginBottom="@dimen/_20sdp"/>-->
+
+    <com.smarteist.autoimageslider.SliderView
+        android:layout_margin="@dimen/_12sdp"
+        android:id="@+id/slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:sliderAnimationDuration="3000"
+        app:sliderAutoCycleDirection="back_and_forth"
+        app:sliderAutoCycleEnabled="true"
+        app:sliderIndicatorAnimationDuration="1000"
+        app:sliderIndicatorGravity="center_horizontal|bottom"
+        app:sliderIndicatorMargin="14dp"
+        app:sliderIndicatorOrientation="horizontal"
+        app:sliderIndicatorPadding="3dp"
+        app:sliderIndicatorRadius="2dp"
+        app:sliderIndicatorSelectedColor="#5a5a5a"
+        app:sliderIndicatorUnselectedColor="#fff"
+        app:sliderScrollTimeInSec="2"
+        app:sliderStartAutoCycle="true"/>
+
 </LinearLayout>
