@@ -75,8 +75,8 @@ public class TransactionFragment extends Fragment {
 
     private void getTransaction(){
         APIReport data = ServerConnection.connection().create(APIReport.class);
-        Call<ResponseModel> getDataIn = data.statCashIn(user,week, month, year, "yearly");
-        Call<ResponseModel> getDataOut = data.statCashOut(user,week, month, year, "yearly");
+        Call<ResponseModel> getDataIn = data.statCashInAll(user);
+        Call<ResponseModel> getDataOut = data.statCashOutAll(user);
 
         getDataIn.enqueue(new Callback<ResponseModel>() {
             @Override

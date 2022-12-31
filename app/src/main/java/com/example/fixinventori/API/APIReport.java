@@ -191,6 +191,18 @@ public interface APIReport {
     );
 
     @FormUrlEncoded
+    @POST("statCashInAll.php")
+    Call<ResponseModel> statCashInAll(
+            @Field("user") String user
+    );
+
+    @FormUrlEncoded
+    @POST("statCashOutAll.php")
+    Call<ResponseModel> statCashOutAll(
+            @Field("user") String user
+    );
+
+    @FormUrlEncoded
     @POST("bahanin.php")
     Call<ResponseModel> bahanIn(
             @Field("user") String user
